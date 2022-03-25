@@ -82,9 +82,9 @@ print("Ready\n")
 while True:
     try:
         counter(sub_stream,0)
-        sleep(15)
+        sleep(10)
         counter(com_stream,1)
-        sleep(15)
+        sleep(10)
     except BaseException as error:
         print(str(error))
-        sleep(30)
+        sleep(10)
