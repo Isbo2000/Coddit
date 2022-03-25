@@ -84,6 +84,7 @@
 						<h1 class="w3-animate-top" style="display:inline;">r/TeenagersButPog's Official Coddit</h1>
 					</div>
 				</div>
+				<p id="disp-p-s" style="margin-left:10px;" style="margin-top:10px;">This Month</p>
 			</div>
 			<table id="user_data" style="width:70%" style="margin-left:250px;">
 				<tr>
@@ -109,6 +110,9 @@
 						$(document).ready(function () {
 							url = "https://isbo-coddit-default-rtdb.firebaseio.com/"+page+".json"
 							fetch(url).then(response => {return response.json();}).then(function (data) {
+								if(page=="data"){disp="This Month"}else if(page=="all-time"){disp="All Time"}else{disp=page}
+								if(n==0){srt="posts and comments"}else if(n==1){srt="posts"}else if(n==2){srt="comments"}
+								document.getElementById("disp-p-s").textContent = disp+" ~ sorted by "+srt
 								var sortable = [];
 								for (var user in data) {
 									sortable.push([user, data[user][0], data[user][1]]);
