@@ -3,7 +3,6 @@ import sys
 import praw
 import json
 import getpass
-import requests
 from time import sleep
 import firebase_admin
 from firebase_admin import db
