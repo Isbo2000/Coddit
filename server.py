@@ -57,8 +57,8 @@ def counter(stream, con_type):
         data = ref.get()
         if (author in data):
             ref = db.reference("/data/"+str(author)+"/")
-            value = data[author][con_type] + 1
-            ref.child(str(con_type)).update(dict(value))
+            author[con_type] = data[author][con_type] + 1
+            ref.update(author[con_type])
         else:
             data[author] = [0, 0]
             data[author][con_type] +=1
@@ -67,8 +67,8 @@ def counter(stream, con_type):
         all_data = ref.get()
         if (author in all_data):
             ref = db.reference("/data/"+str(author)+"/")
-            value = all_data[author][con_type] + 1
-            ref.child(str(con_type)).update(dict(value))
+            author[con_type] = all_data[author][con_type] + 1
+            ref.update(author[con_type])
         else:
             all_data[author] = [0, 0]
             all_data[author][con_type] +=1
