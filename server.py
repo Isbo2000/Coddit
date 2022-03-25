@@ -45,7 +45,6 @@ reddit = checklogin()
 sub_stream = reddit.subreddit("teenagersbutpog").stream.submissions(pause_after = 0, skip_existing = True)
 com_stream = reddit.subreddit("teenagersbutpog").stream.comments(pause_after = 0, skip_existing = True)
 banned = ["Isbot2000","DimittrikovBot","AutoModerator"]
-ref = db.reference("/")
 
 def counter(stream, con_type):
     for thing in stream:
