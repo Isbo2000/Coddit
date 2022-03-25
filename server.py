@@ -56,9 +56,9 @@ def counter(stream, con_type):
         ref = db.reference("/data/")
         data = ref.get()
         if (author in data):
-            ref = db.reference("/data/"+author+"/"+con_type+"/")
+            ref = db.reference("/data/"+str(author)+"/")
             value = data[author][con_type] + 1
-            ref.update(value)
+            ref.update({con_type:value})
         else:
             data[author] = [0, 0]
             data[author][con_type] +=1
@@ -66,25 +66,25 @@ def counter(stream, con_type):
         ref = db.reference("/all-time/")
         all_data = ref.get()
         if (author in all_data):
-            ref = db.reference("/data/"+author+"/"+con_type+"/")
+            ref = db.reference("/data/"+str(author)+"/")
             value = all_data[author][con_type] + 1
-            ref.update(value)
+            ref.update({con_type:value})
         else:
             all_data[author] = [0, 0]
             all_data[author][con_type] +=1
             ref.set(all_data)
         if(con_type==0):ty="Submission"
         elif(con_type==1):ty="Comment"
-        print("{ty} added for {author}")
+        print(ty+" added for "+author)
         sleep(5)
 
 print("Ready\n")
 while True:
     try:
         counter(sub_stream,0)
-        sleep(15)
+        sleep(10)
         counter(com_stream,1)
-        sleep(15)
+        sleep(10)
     except BaseException as error:
         print(str(error))
-        sleep(30)
+        sleep(20)
