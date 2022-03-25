@@ -1,0 +1,422 @@
+/********************************************
+*********************************************
+
+The background and colors on this website have been changed to a certain extent. If you want this site to look even more like its original counterpart, scroll down and find directions along the way
+in the form of comments.
+
+*********************************************
+*********************************************/
+
+body {
+	/* If you want your lovely background back, simply uncomment what's below */
+
+	/* background-image: url('https://cdn.discordapp.com/attachments/904059941407563806/904077362415677521/coddit_background.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover; */
+
+	/* These are transitions, they make things feel smoother. It is added to the body tag on this file because of the dark mode feature, to make it feel more like a smooth *transition*/
+	/* You can edit the length of the fade transition by changing the 0.2s, it stands for 0.2 seconds. Or revert by deleting this line and following other directions */
+	transition: all 0.2s ease;
+	background-color: #2C2F33;
+	color: white;
+}
+
+::selection {
+    background-color: rgb(147, 184, 231, 0.5);
+    color: #fff;
+}
+
+/*** Mozilla based browsers ***/
+::-moz-selection {
+    background-color: rgb(147, 184, 231, 0.5);
+    color: #fff;
+}
+
+/***For Other Browsers ***/
+::-o-selection {
+    background-color: rgb(147, 184, 231, 0.5);
+    color: #fff;
+}
+
+::-ms-selection {
+    background-color: rgb(147, 184, 231, 0.5);
+    color: #fff;
+}
+
+/*** For Webkit ***/
+::-webkit-selection {
+    background-color: rgba(147, 183, 231, 0.5);
+    color: #fff;
+}
+
+h1 {
+	font:bold;
+	font-size:175%;
+}
+
+table {
+	margin-left: 250px;
+	margin-top: 3%;
+	width:100%;
+
+	/* The original background color of the table, directly below, is the new background color. Uncomment what's below and follow the next comment to revert.*/
+	/* background-color: #7db6fe; */
+
+	color: white;
+	align-tracks: center;
+
+	/* This is the border. It looks more sleek and modern without a border. If you want to revert, uncomment the line below, and comment out or delete the border: none; line */
+	/* border: 1px solid black */
+
+	border: none;
+
+}
+
+table a {
+    text-decoration: none;
+    color: white;
+}
+table a:hover {
+    color: rgb(93, 93, 255);
+}
+
+tr {
+	border-bottom: 1px solid grey;
+}
+
+.extlink {
+	font-size: x-small;
+}
+
+tr:hover {
+	background-color: #1e2124;
+}
+
+table tr:nth-child(1):hover {background-color:transparent;}
+table tr:nth-child(2):hover {background-color:transparent;}
+
+/* This is an HTML element added by the addition of the Bootstrap 5 CDN framework for the front end, go to the HTML page to revert. */
+small {
+	color: grey;
+}
+
+th, td {
+	color:white;
+
+	/* uncomment the line below and comment out or delete the lines below THAT to revert, same explanation as in the table tag */
+	/* border: 1px solid black */
+
+	border: none;
+	padding: 6px;
+}
+
+/* All below this comment is new references to new objects in the HTML file */
+/* To revert, delete everything below */
+
+.dropdown {
+	width: 10%;
+	float:right;
+}
+
+#listheader {
+	margin-left: 5px;
+	padding: 2px;
+}
+
+/***/
+
+.tab {
+	float: left;
+	width: 20%;
+	transition: all 0.3s ease;
+	background-color: #2C2F33;
+	color: white;
+}
+
+.tab ul {
+  margin-top: 10px;
+}
+
+.tab button {
+	display: block;
+	background-color: inherit;
+	color: white;
+	padding: 22px 16px;
+	width: 100%;
+	border: none;
+	outline: none;
+	text-align: left;
+	cursor: pointer;
+	font-size: 17px;
+	transition: all 0.3s ease;
+}
+
+.tab a {
+	display: block;
+	background-color: inherit;
+	color: white;
+	padding: 22px 16px;
+	width: 100%;
+	border: none;
+	outline: none;
+	text-align: left;
+	cursor: pointer;
+	font-size: 17px;
+	transition: all 0.3s ease;
+}
+
+.tab button:hover {
+	background-color: #23272A;
+	transition: all 0.3s ease;
+}
+
+.tab a:hover {
+	background-color: #23272A;
+	transition: all 0.3s ease;
+}
+
+.tab button.active {
+	background-color: rgb(212, 212, 212);
+	transition: all 0.3s ease;
+}
+
+.tabcontent {
+	float: left;
+	padding: 12px;
+	width: 80%;
+	height: 100%;
+	transition: all 0.3s ease;
+}
+
+
+.panel {
+	padding: 0 18px;
+	display: none;
+	background-color: white;
+	overflow: hidden;
+}
+
+#searchtable {
+	width: 100%;
+	font-size: 16px;
+	padding: 12px 20px 12px 40px;
+	margin-bottom: 12px;
+	outline: none;
+	border-radius: 16px;
+	border: 1px solid grey;
+	color: white;
+	transition: all 0.5s ease;
+	background-color: #23272A;
+}
+
+#searchtable:focus {
+	border: 1px solid #5865F2;
+}
+
+.dropdown-menu {
+	background-color: #23272A;
+	color: white;
+}
+
+.dropdown-menu a:hover {
+	transition: all 0.3s ease;
+}
+
+#dropdownbtn {
+	background-color: transparent;
+	border: none;
+	height: 100%;
+	margin-left:10%;
+}
+
+#navigation {
+	top:0;
+	margin:0;
+	position:sticky;
+	display:none
+}
+
+#closebtn {
+	display:none;
+}
+
+#titleteal {
+	background-image: linear-gradient(to bottom right, rgb(160, 68, 235), rgb(153, 115, 1));
+	display: flex;
+}
+
+#dropdownandtitle {
+	display: flex;
+	flex: 1;
+}
+
+#openNav {
+	background-color: transparent;
+}
+
+#title {
+	position:sticky;
+	top:0;
+}
+
+@media screen and (max-width: 991px) {
+	body {
+		margin: 0;
+	}
+	h2, h3, h4, h5, h6 {
+		font-size: 3.5vw;
+	}
+	h1 {
+		top: 20%;
+	}
+	.tab {
+		display:none;
+		font-size: 2.5vw;
+		width:25%;
+		height: 100%;
+	}
+	.tabcontent {
+		font-size: 3.5vw;
+		width: 100%;
+	}
+	#alltabcontent {
+		width: 100%;
+	}
+	#closebtn {
+		display:block;
+		background-color: rgba(121, 32, 32, 0.5);
+	}
+	#closebtn:hover {
+		background-color: rgba(78, 20, 20, 0.5);
+	}
+	#titleteal {
+		padding-bottom: 5px;
+		padding: 10px;
+	}
+	table {
+		margin: auto;
+	}
+  #infodropdown {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+	.tab {
+		width:25%;
+	}
+}
+
+@media screen and (min-width: 991px) {
+	.tab {
+		display:none;
+		width: 25%;
+		height: 100%;
+	}
+	.tabcontent {
+		margin-left:200px;
+	}
+	#titleteal {
+		padding: 15px;
+	}
+}
+
+/********************/
+.dark-mode {
+	background-color: white;
+	color: black;
+	transition: all 0.3s ease;
+}
+
+.dark-mode .dropdown-menu {
+	background-color: white;
+	color: black;
+}
+
+.dark-mode .dropdown-menu a {
+	color: black;
+}
+
+.dark-mode .dropdown-menu a:hover {
+	background-color: #ccc;
+	transition: all 0.3s ease;
+}
+
+.dark-mode .tab {
+	background-color: #f1f1f1;
+	color: black;
+	border-right: none;
+}
+
+.dark-mode .tab button {
+	color: black;
+}
+
+.dark-mode .tab button:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.dark-mode .tab a {
+	color: black;
+}
+
+.dark-mode .tab a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.dark-mode .tab button.active {
+	background-color: #ccc;
+	color: black;
+}
+
+.dark-mode th {
+	color: black;
+}
+
+.dark-mode tr:hover {background-color: #d6e0ee;}
+
+.dark-mode td {
+	color: black;
+}
+
+.dark-mode small {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.dark-mode .panel {
+	background-color: transparent;
+	color: black;
+}
+
+.dark-mode #dropdownbtn {
+	/*background-image: linear-gradient(to bottom right, #1e3e64, #092846);*/
+	background-color: transparent;
+}
+
+.dark-mode #titleteal {
+	background-image: linear-gradient(to bottom right, rgb(181, 106, 242), rgb(255, 190, 0));
+	color: black;
+}
+
+.dark-mode #searchtable {
+	background-color: transparent;
+	border: 1px solid rgb(192, 192, 192);
+	color: black;
+	transition: all 0.5s ease;
+}
+
+.dark-mode a {
+	color: #0000EE;
+}
+
+.dark-mode table a {
+    text-decoration: none;
+    color: black;
+}
+
+.dark-mode table a:hover {
+    color: #0000EE;
+}
