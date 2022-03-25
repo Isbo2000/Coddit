@@ -3,14 +3,14 @@ import sys
 import praw
 import json
 import getpass
+import requests
 from time import sleep
 import firebase_admin
+from firebase_admin import db
 from firebase_admin import credentials
 print("Starting script...\n")
 try:
-    firebase_admin.initialize_app(
-        credentials.Certificate("firebase-login.json")
-    )
+    app = firebase_admin.initialize_app(credentials.Certificate("firebase-login.json"))
 except:
     print("Please add or fix 'firebase-login.json'")
     sys.exit()
@@ -46,42 +46,45 @@ reddit = checklogin()
 sub_stream = reddit.subreddit("teenagersbutpog").stream.submissions(pause_after = 0, skip_existing = True)
 com_stream = reddit.subreddit("teenagersbutpog").stream.comments(pause_after = 0, skip_existing = True)
 banned = ["Isbot2000","DimittrikovBot","AutoModerator"]
+ref = db.reference("/")
 
 def counter(stream, con_type):
     for thing in stream:
         if (not(thing)):return
         author = str(thing.author)
         if (author in banned):return
-        with open('static/data.json') as data_file:
-            data=json.load(data_file)
-        with open('static/all-time.json') as all_data_file:
-            all_data=json.load(all_data_file)
-        logs = [data,all_data]
-        for log in logs:
-            if (author in log):
-                log[author][con_type] +=1
-            else:
-                log[author] = [0, 0]
-                log[author][con_type] +=1
-            if(log==data):
-                with open('static/data.json','w') as data_file:
-                    json.dump(log,data_file,indent=3)
-            elif(log==all_data):
-                with open('static/all-time.json','w') as all_data_file:
-                    json.dump(log,all_data_file,indent=3)
+        ref = db.reference("/data/")
+        data = ref.get()
+        if (author in data):
+            ref = db.reference("/data/"+author+"/"+con_type+"/")
+            value = data[author][con_type] + 1
+            ref.update(value)
+        else:
+            data[author] = [0, 0]
+            data[author][con_type] +=1
+            ref.set(data)
+        ref = db.reference("/all-time/")
+        all_data = ref.get()
+        if (author in all_data):
+            ref = db.reference("/data/"+author+"/"+con_type+"/")
+            value = all_data[author][con_type] + 1
+            ref.update(value)
+        else:
+            all_data[author] = [0, 0]
+            all_data[author][con_type] +=1
+            ref.set(all_data)
         if(con_type==0):ty="Submission"
         elif(con_type==1):ty="Comment"
         print(f'{ty} added for {author}')
-        sleep(1)
+        sleep(5)
 
 print("Ready\n")
 while True:
     try:
         counter(sub_stream,0)
-        sleep(5)
+        sleep(15)
         counter(com_stream,1)
-        sleep(5)
+        sleep(15)
     except BaseException as error:
         print(str(error))
         sleep(30)
-
