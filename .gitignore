@@ -1,2 +1,4 @@
 login.json
 firebase-login.json
+
+__pycache__/
