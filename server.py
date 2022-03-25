@@ -9,7 +9,9 @@ from firebase_admin import db
 from firebase_admin import credentials
 print("Starting script...\n")
 try:
-    app = firebase_admin.initialize_app(credentials.Certificate("firebase-login.json"))
+    cred = credentials.Certificate("firebase-login.json")
+    durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
+    firebase_admin.initialize_app(cred, durl)
 except:
     print("Please add or fix 'firebase-login.json'")
     sys.exit()
