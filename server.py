@@ -74,7 +74,7 @@ def counter(stream, con_type):
             ref.set(all_data)
         if(con_type==0):ty="Submission"
         elif(con_type==1):ty="Comment"
-        print(f'{ty} added for {author}')
+        print("{ty} added for {author}")
         sleep(5)
 
 print("Ready\n")
