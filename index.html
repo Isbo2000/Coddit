@@ -190,21 +190,6 @@
 			function darkmode() {
 				document.body.classList.toggle("dark-mode");
 			}
-			function searchoptions() {
-				var input, filter, ul, li, a, i;
-				input = document.getElementById("search");
-				filter = input.value.toUpperCase();
-				ul = document.getElementById("menu");
-				li = ul.getElementsByTagName("li");
-				for (i = 0; i < li.length; i++) {
-					a = li[i].getElementsByTagName("button")[0];
-					if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-						li[i].style.display = "";
-					} else {
-						li[i].style.display = "none";
-					}
-				}
-			}
 			function w3_open() {
 				document.getElementById("mySidebar").style.display = "block";
 				document.getElementById("mySidebar").style.width = "65%";
