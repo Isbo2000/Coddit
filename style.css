@@ -96,6 +96,8 @@ tr:hover {
 table tr:nth-child(1):hover {background-color:transparent;}
 table tr:nth-child(2):hover {background-color:transparent;}
 
+table #sort:hover {color: rgb(93, 93, 255);}
+
 /* This is an HTML element added by the addition of the Bootstrap 5 CDN framework for the front end, go to the HTML page to revert. */
 small {
 	color: grey;
