@@ -1,5 +1,7 @@
 function start() {
     $(document).ready(function () {
+        storetable = [];
+        sortable = [];
         page = "data";
         n = 0;
         getpage(page,n)
@@ -36,69 +38,90 @@ function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
 }
 
-function getpage(page,n,s) {
+function search() {
+    document.body.classList.add("load");
+    var sch = document.getElementById("searchtable");
+    var input = sch.value.toUpperCase();
+    var rowCount = user_data.rows.length;
+    for (var i = rowCount - 1; i > 1; i--) {
+        user_data.deleteRow(i);
+    }
+    var stbl = []
+    for (var i = 0; i < storetable.length; i++) {
+        var name = storetable[i].split('</td><td><a href= https://reddit.com/user/').pop().split('</a></td><td>')[0].split('>').pop()
+        if (name.toUpperCase().indexOf(input) > -1) {
+            stbl.push(storetable[i])
+        }
+    }
+    if (stbl.length > 1000) {
+        var stlen = 1000
+    } else {
+        var stlen = stbl.length
+    }
+    for (var i = 0; i < stlen; i++) {
+        $('#user_data').append(stbl[i]);
+    }
+    setTimeout(() => {document.body.classList.remove("load");}, 300)
+}
+
+function sortpage(n,l) {
+    if(!l){document.body.classList.add("load");}
+    $(document).ready(function () {
+        document.getElementById("searchtable").value = ""
+        if(page=="data"){disp="This Month"}else if(page=="all-time"){disp="All Time"}else{disp=page}
+        if(n==0){srt="total"}else if(n==1){srt="posts"}else if(n==2){srt="comments"}
+        document.getElementById("disp-p-s").textContent = disp+" ~ sorted by "+srt
+        if (n==0){
+            sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
+        else if (n==1){
+            sortable.sort(function(a, b) {return b[1] - a[1]});
+        }
+        else if (n==2){
+            sortable.sort(function(a, b) {return b[2] - a[2]});
+        }
+        var rowCount = user_data.rows.length;
+        for (var i = rowCount - 1; i > 1; i--) {
+            user_data.deleteRow(i);
+        }
+        storetable = [];
+        for (var i = 0; i < sortable.length; i++) {
+            var student = "<tr><td>";
+            student += i + 1;
+            student += "</td><td>";
+            student += "<a href= https://reddit.com/user/" + sortable[i][0] + ">";
+            student += sortable[i][0];
+            student += "</a>";
+            student += "</td><td>";
+            student += sortable[i][1];
+            student += "</td><td>";
+            student += sortable[i][2];
+            student += "</td><td>";
+            student += sortable[i][1] + sortable[i][2];
+            student += "</td></tr>";
+            storetable.push(student)
+        };
+        if (storetable.length > 1000) {
+            var stlen = 1000
+        } else {
+            var stlen = storetable.length
+        }
+        for (var i = 0; i < stlen; i++) {
+            $('#user_data').append(storetable[i]);
+        }
+        if(!l){setTimeout(() => {document.body.classList.remove("load");}, 400)}
+    })
+}
+
+function getpage(page,n) {
     document.body.classList.add("load");
     $(document).ready(function () {
         url = "https://isbo-coddit-default-rtdb.firebaseio.com/"+page+".json"
         fetch(url).then(response => {return response.json();}).then(function (data) {
-            if(page=="data"){disp="This Month"}else if(page=="all-time"){disp="All Time"}else{disp=page}
-            if(n==0){srt="total"}else if(n==1){srt="posts"}else if(n==2){srt="comments"}
-            document.getElementById("disp-p-s").textContent = disp+" ~ sorted by "+srt
-            var sortable = [];
+            sortable = [];
             for (var user in data) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
-            if (n==0){
-                sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
-            else if (n==1){
-                sortable.sort(function(a, b) {return b[1] - a[1]});
-            }
-            else if (n==2){
-                sortable.sort(function(a, b) {return b[2] - a[2]});
-            }
-            var rowCount = user_data.rows.length;
-            for (var i = rowCount - 1; i > 1; i--) {
-                user_data.deleteRow(i);
-            }
-            var storetable = []
-            for (var i = 0; i < sortable.length; i++) {
-                var student = "<tr><td>";
-                student += i + 1;
-                student += "</td><td>";
-                student += "<a href= https://reddit.com/user/" + sortable[i][0] + ">";
-                student += sortable[i][0];
-                student += "</a>";
-                student += "</td><td>";
-                student += sortable[i][1];
-                student += "</td><td>";
-                student += sortable[i][2];
-                student += "</td><td>";
-                student += sortable[i][1] + sortable[i][2];
-                student += "</td></tr>";
-                storetable.push(student)
-            };
-            if (s) {
-                var sch = document.getElementById("searchtable");
-                var input = sch.value.toUpperCase();
-                var stbl = []
-                for (var i = 0; i < storetable.length; i++) {
-                    var name = storetable[i].split('</td><td><a href= https://reddit.com/user/').pop().split('</a></td><td>')[0].split('>').pop()
-                    if (name.toUpperCase().indexOf(input) > -1) {
-                        stbl.push(storetable[i])
-                    }
-                }
-                storetable = stbl
-            } else {
-                document.getElementById("searchtable").value = ""
-            }
-            if (storetable.length > 1000) {
-                var stlen = 1000
-            } else {
-                var stlen = storetable.length
-            }
-            for (var i = 0; i < stlen; i++) {
-                $('#user_data').append(storetable[i]);
-            }
+            sortpage(n,true)
             setTimeout(() => {document.body.classList.remove("load");}, 500)
         });
     });

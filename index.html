@@ -70,14 +70,14 @@
 			</div>
 			<table id="user_data" style="width:70%" style="margin-left:250px;">
 				<tr>
-					<td colspan="5"><i id="help"></i><br><input type="text" id="searchtable" onkeyup="getpage(page,n,true)" placeholder="Search Users..." title="Type a user"></td>
+					<td colspan="5"><i id="help"></i><br><input type="text" id="searchtable" onkeyup="search()" placeholder="Search Users..." title="Type a user"></td>
 				</tr>
 				<tr>
 					<th style="width: 10%">Rank</th>
 					<th style="width: 30%"><a id="tbhd" href="https://www.reddit.com/users/">Username <i class="extlink fa fa-external-link"></i></a></th>
-					<th style="width: 20%"><button onclick="getpage(page,n=1);" id="sort">Posts</button></a></th>
-					<th style="width: 20%"><button onclick="getpage(page,n=2);" id="sort">Comments</button></a></th>
-					<th style="width: 20%"><button onclick="getpage(page,n=0);" id="sort">Total</button></a></th>
+					<th style="width: 20%"><button onclick="sortpage(n=1);" id="sort">Posts</button></a></th>
+					<th style="width: 20%"><button onclick="sortpage(n=2);" id="sort">Comments</button></a></th>
+					<th style="width: 20%"><button onclick="sortpage(n=0);" id="sort">Total</button></a></th>
 				</tr>
 			</table>
 		</div>
