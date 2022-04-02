@@ -77,6 +77,7 @@ table a {
     text-decoration: none;
     color: white;
 }
+
 table a:hover {
     color: rgb(93, 93, 255);
 }
@@ -93,10 +94,31 @@ tr:hover {
 	background-color: #1e2124;
 }
 
-table tr:nth-child(1):hover {background-color:transparent;}
-table tr:nth-child(2):hover {background-color:transparent;}
+table tr:nth-child(1):hover {
+	background-color:transparent;
+}
+table tr:nth-child(2):hover {
+	background-color:transparent;
+}
 
+/**/
 table #sort:hover {color: rgb(93, 93, 255);}
+#sort {
+	display: block;
+	background-color: inherit;
+	color: white;
+	border: none;
+	outline: none;
+	text-align: left;
+	cursor: pointer;
+	font-size: 17px;
+	transition: all 0.3s ease;
+}
+.dark-mode #sort {
+	color: black;
+	border-right: none;
+}
+/**/
 
 /* This is an HTML element added by the addition of the Bootstrap 5 CDN framework for the front end, go to the HTML page to revert. */
 small {
@@ -191,7 +213,6 @@ th, td {
 	transition: all 0.3s ease;
 }
 
-
 .panel {
 	padding: 0 18px;
 	display: none;
@@ -257,11 +278,6 @@ th, td {
 	background-color: transparent;
 }
 
-#title {
-	position:sticky;
-	top:0;
-}
-
 @media screen and (max-width: 991px) {
 	body {
 		margin: 0;
@@ -325,6 +341,29 @@ th, td {
 }
 
 /********************/
+.load {
+	cursor: progress
+}
+.load .main {
+	cursor: progress
+}
+.load table a {
+	cursor: progress
+}
+.load #sort {
+	cursor: progress
+}
+.load #tbhd {
+	cursor: progress
+}
+.load .tab button {
+	cursor: progress
+}
+.load .tab a {
+	cursor: progress
+}
+
+/********************/
 .dark-mode {
 	background-color: white;
 	color: black;
@@ -378,7 +417,9 @@ th, td {
 	color: black;
 }
 
-.dark-mode tr:hover {background-color: #d6e0ee;}
+.dark-mode tr:hover {
+	background-color: #d6e0ee;
+}
 
 .dark-mode td {
 	color: black;
