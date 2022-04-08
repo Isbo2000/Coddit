@@ -43,8 +43,8 @@ print("Ready\n")
 while True:
     try:
         streams = [
-            {"content":[sub_stream], "name":"Submission", "num":0},
-            {"content":[com_stream], "name":"Comment", "num":1}
+            {"content":sub_stream, "name":"Submission", "num":0},
+            {"content":com_stream, "name":"Comment", "num":1}
         ]
         for stream in streams:
             for con in stream["content"]:
@@ -63,4 +63,4 @@ while True:
                 time.sleep(5)
     except BaseException as error:
         print(str(error))
-        time.sleep(30)
+        time.sleep(10)
