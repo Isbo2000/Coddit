@@ -40,17 +40,11 @@ while True:
     try:
         banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
         datdbs = [db.reference("data"), db.reference("all-time")]
+        sub_stream = subreddit.stream.submissions(pause_after = 10, skip_existing = True)
+        com_stream = subreddit.stream.comments(pause_after = 10, skip_existing = True)
         streams = [
-            {
-                "content": subreddit.stream.submissions(pause_after = 10, skip_existing = True),
-                "name": "Submission",
-                "num": 0
-            },
-            {
-                "content": subreddit.stream.comments(pause_after = 10, skip_existing = True),
-                "name": "Comment",
-                "num": 1
-            }
+            {"content":sub_stream, "name":"Submission", "num":0},
+            {"content":com_stream, "name":"Comment", "num":1}
         ]
         for stream in streams:
             for con in stream["content"]:
