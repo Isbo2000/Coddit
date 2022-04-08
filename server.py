@@ -1,21 +1,14 @@
-import os
-import sys
-import praw
-import json
-import getpass
-from time import sleep
+from firebase_admin import credentials,db
+import os,sys,json,time,getpass
 import firebase_admin
-from firebase_admin import db
-from firebase_admin import credentials
+import praw
+
 print("Starting script...\n")
 try:
     cred = credentials.Certificate("firebase-login.json")
     durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
     firebase_admin.initialize_app(cred, durl)
-except:
-    print("Please add or fix 'firebase-login.json'")
-    sys.exit()
-
+except:print("Please add or fix 'firebase-login.json'");sys.exit()
 def redlog(login):
     return praw.Reddit(
         client_id = login["id"], 
@@ -31,9 +24,7 @@ def asklogin():
     login = {"id":i,"secret":s,"username":u,"password":p}
     with open('login.json', 'w') as lgn:json.dump(login, lgn)
     try:redlog(login).user.me()
-    except:
-        os.remove('login.json')
-        sys.exit()
+    except:os.remove('login.json');sys.exit()
     return redlog(login)
 def checklogin():
     if os.path.exists('login.json'):
@@ -42,45 +33,42 @@ def checklogin():
         except:return asklogin()
     else:return asklogin()
     return redlog(login)
-reddit = checklogin()
-
-sub_stream = reddit.subreddit("teenagersbutpog").stream.submissions(pause_after = 0, skip_existing = True)
-com_stream = reddit.subreddit("teenagersbutpog").stream.comments(pause_after = 0, skip_existing = True)
-banned = ["Isbot2000","DimittrikovBot","AutoModerator"]
-
-def counter(stream, con_type):
-    for thing in stream:
-        if (not(thing)):return
-        author = str(thing.author)
-        if (author in banned):return
-        ref = db.reference("/data/")
-        data = ref.get()
-        if (author in data):
-            data[author][con_type] += 1
-        else:
-            data[author] = [0, 0]
-            data[author][con_type] +=1
-        ref.set(data)
-        ref = db.reference("/all-time/")
-        all_data = ref.get()
-        if (author in all_data):
-            all_data[author][con_type] += 1
-        else:
-            all_data[author] = [0, 0]
-            all_data[author][con_type] +=1
-        ref.set(all_data)
-        if(con_type==0):ty="Submission"
-        elif(con_type==1):ty="Comment"
-        print(ty+" added for "+author)
-        sleep(5)
-
+subreddit = checklogin().subreddit("teenagersbutpog")
 print("Ready\n")
+
 while True:
     try:
-        counter(sub_stream,0)
-        sleep(10)
-        counter(com_stream,1)
-        sleep(10)
+        banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
+        datdbs = [db.reference("data"), db.reference("all-time")]
+        streams = [
+            {
+                "content": [subreddit.stream.submissions(pause_after = 10, skip_existing = True)],
+                "name": "Submission",
+                "num": 0
+            },
+            {
+                "content": [subreddit.stream.comments(pause_after = 10, skip_existing = True)],
+                "name": "Comment",
+                "num": 1
+            }
+        ]
+        for stream in streams:
+            for con in stream["content"]:
+                if con is not None:
+                    author = str(con.author)
+                    if (author not in banned):
+                        for datdb in datdbs:
+                            data = datdb.get()
+                            if (author in data):
+                                data[author][stream["num"]] += 1
+                            else:
+                                data[author] = [0, 0]
+                                data[author][stream["num"]] += 1
+                            datdb.set(data)
+                        print(stream["name"]+" added for "+author)
+                        time.sleep(5)
+                    else:print(author+" is banned, nothing added")
+                else:time.sleep(30)
     except BaseException as error:
         print(str(error))
-        sleep(20)
+        time.sleep(30)
