@@ -40,8 +40,8 @@ while True:
     try:
         banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
         datdbs = [db.reference("data"), db.reference("all-time")]
-        sub_stream = subreddit.stream.submissions(pause_after = 10, skip_existing = True)
-        com_stream = subreddit.stream.comments(pause_after = 10, skip_existing = True)
+        sub_stream = subreddit.stream.submissions(pause_after = 0, skip_existing = True)
+        com_stream = subreddit.stream.comments(pause_after = 0, skip_existing = True)
         streams = [
             {"content":sub_stream, "name":"Submission", "num":0},
             {"content":com_stream, "name":"Comment", "num":1}
@@ -62,7 +62,7 @@ while True:
                         print(stream["name"]+" added for "+author)
                         time.sleep(5)
                     else:print(author+" is banned, nothing added")
-                else:time.sleep(30)
+                else:time.sleep(10)
     except BaseException as error:
         print(str(error))
         time.sleep(30)
