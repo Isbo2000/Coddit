@@ -34,14 +34,20 @@ def checklogin():
     else:return asklogin()
     return redlog(login)
 subreddit = checklogin().subreddit("teenagersbutpog")
+banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
+datdbs = [db.reference("data"), db.reference("all-time")]
+sub_stream = subreddit.stream.submissions(pause_after = 10, skip_existing = True)
+com_stream = subreddit.stream.comments(pause_after = 10, skip_existing = True)
+streams = [
+    {"content":sub_stream, "name":"Submission", "num":0},
+    {"content":com_stream, "name":"Comment", "num":1}
+]
 print("Ready\n")
 
 while True:
     try:
-        banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
-        datdbs = [db.reference("data"), db.reference("all-time")]
-        sub_stream = subreddit.stream.submissions(pause_after = 0, skip_existing = True)
-        com_stream = subreddit.stream.comments(pause_after = 0, skip_existing = True)
+        sub_stream = subreddit.stream.submissions(pause_after = 10, skip_existing = True)
+        com_stream = subreddit.stream.comments(pause_after = 10, skip_existing = True)
         streams = [
             {"content":sub_stream, "name":"Submission", "num":0},
             {"content":com_stream, "name":"Comment", "num":1}
