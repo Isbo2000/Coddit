@@ -62,3 +62,4 @@ while True:
         time.sleep(1)
     except BaseException as error:
         print(str(error))
+        time.sleep(20)
