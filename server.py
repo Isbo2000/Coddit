@@ -33,11 +33,11 @@ def checklogin():
         except:return asklogin()
     else:return asklogin()
     return redlog(login)
-subreddit = checklogin().subreddit("teenagersbutpog")
+reddit = checklogin()
 banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
 datdbs = [db.reference("data"), db.reference("all-time")]
-sub_stream = subreddit.stream.submissions(skip_existing = True)
-com_stream = subreddit.stream.comments(skip_existing = True)
+sub_stream = reddit.subreddit("teenagersbutpog").stream.submissions(skip_existing = True)
+com_stream = reddit.subreddit("teenagersbutpog").stream.comments(skip_existing = True)
 print("Ready\n")
 
 def counter(stream, name, num):
