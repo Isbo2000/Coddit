@@ -42,12 +42,12 @@ while True:
         datdbs = [db.reference("data"), db.reference("all-time")]
         streams = [
             {
-                "content": [subreddit.stream.submissions(pause_after = 10, skip_existing = True)],
+                "content": subreddit.stream.submissions(pause_after = 10, skip_existing = True),
                 "name": "Submission",
                 "num": 0
             },
             {
-                "content": [subreddit.stream.comments(pause_after = 10, skip_existing = True)],
+                "content": subreddit.stream.comments(pause_after = 10, skip_existing = True),
                 "name": "Comment",
                 "num": 1
             }
