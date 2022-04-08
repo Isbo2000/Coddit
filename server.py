@@ -42,25 +42,53 @@ print("Ready\n")
 
 while True:
     try:
-        streams = [
-            {"content":sub_stream, "name":"Submission", "num":0},
-            {"content":com_stream, "name":"Comment", "num":1}
-        ]
-        for stream in streams:
-            for con in stream["content"]:
-                if (con is None):time.sleep(1);continue
-                author = str(con.author)
-                if (author in banned):time.sleep(1);continue
-                for datdb in datdbs:
-                    data = datdb.get()
-                    if (author in data):
-                        data[author][stream["num"]] += 1
-                    else:
-                        data[author] = [0, 0]
-                        data[author][stream["num"]] += 1
-                    datdb.set(data)
-                print(stream["name"]+" added for "+author)
-                time.sleep(5)
+        #streams = [
+        #    {"content":sub_stream, "name":"Submission", "num":0},
+        #    {"content":com_stream, "name":"Comment", "num":1}
+        #]
+        for con in sub_stream:
+            if (con is None):time.sleep(1);continue
+            author = str(con.author)
+            if (author in banned):time.sleep(1);continue
+            for datdb in datdbs:
+                data = datdb.get()
+                if (author in data):
+                    data[author][0] += 1
+                else:
+                    data[author] = [0, 0]
+                    data[author][0] += 1
+                datdb.set(data)
+            print("Submission"+" added for "+author)
+            time.sleep(5)
+        for con in com_stream:
+            if (con is None):time.sleep(1);continue
+            author = str(con.author)
+            if (author in banned):time.sleep(1);continue
+            for datdb in datdbs:
+                data = datdb.get()
+                if (author in data):
+                    data[author][1] += 1
+                else:
+                    data[author] = [0, 0]
+                    data[author][1] += 1
+                datdb.set(data)
+            print("Comment"+" added for "+author)
+            time.sleep(5)
     except BaseException as error:
         print(str(error))
         time.sleep(10)
+
+#for con in stream["content"]:
+#    if (con is None):time.sleep(1);continue
+#    author = str(con.author)
+#    if (author in banned):time.sleep(1);continue
+#    for datdb in datdbs:
+#        data = datdb.get()
+#        if (author in data):
+#            data[author][stream["num"]] += 1
+#        else:
+#            data[author] = [0, 0]
+#            data[author][stream["num"]] += 1
+#        datdb.set(data)
+#    print(stream["name"]+" added for "+author)
+#    time.sleep(5)
