@@ -36,28 +36,26 @@ def checklogin():
 subreddit = checklogin().subreddit("teenagersbutpog")
 banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
 datdbs = [db.reference("data"), db.reference("all-time")]
+sub_stream = subreddit.stream.submissions(skip_existing = True)
+com_stream = subreddit.stream.comments(skip_existing = True)
 print("Ready\n")
 
 def counter(stream, name, num):
     for con in stream:
-        if con is not None:
-            author = str(con.author)
-            if (author not in banned):
-                for datdb in datdbs:
-                    data = datdb.get()
-                    if (author in data):
-                        data[author][num] += 1
-                    else:
-                        data[author] = [0, 0]
-                        data[author][num] += 1
-                    datdb.set(data)
-                print(name+" added for "+author)
-            else:print(author+" is banned, nothing added");continue
-        else:time.sleep(1);continue
+        author = str(con.author)
+        if (author not in banned):
+            for datdb in datdbs:
+                data = datdb.get()
+                if (author in data):
+                    data[author][num] += 1
+                else:
+                    data[author] = [0, 0]
+                    data[author][num] += 1
+                datdb.set(data)
+            print(name+" added for "+author)
+        else:print(author+" is banned, nothing added")
 while True:
     try:
-        sub_stream = subreddit.stream.submissions(pause_after = 0, skip_existing = True)
-        com_stream = subreddit.stream.comments(pause_after = 0, skip_existing = True)
         counter(sub_stream,"Submission",0)
         time.sleep(1)
         counter(com_stream,"Comment",1)
