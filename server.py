@@ -37,8 +37,8 @@ subreddit = checklogin().subreddit("teenagersbutpog")
 banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
 datdbs = [db.reference("data"), db.reference("all-time")]
 streams = [
-    [subreddit.stream.submissions(pause_after = 0, skip_existing = True), "Submission", 0],
-    [subreddit.stream.comments(pause_after = 0, skip_existing = True), "Comment", 1]
+    [subreddit.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+    [subreddit.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
 ]
 print("Ready\n")
 
@@ -62,8 +62,12 @@ while True:
                     datdb.set(data)
                 print(stream[1]+" added for "+author)
     except BaseException as error:
-        print(str(error))
-        streams = [
-            [subreddit.stream.submissions(pause_after = 0, skip_existing = True), "Submission", 0],
-            [subreddit.stream.comments(pause_after = 0, skip_existing = True), "Comment", 1]
-        ]
+        if error == KeyboardInterrupt:
+            sys.exit()
+        else:
+            print(str(error))
+            time.sleep(30)
+            streams = [
+                [subreddit.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+                [subreddit.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
+            ]
