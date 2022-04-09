@@ -48,9 +48,9 @@ while True:
             print(stream[1])
             for con in stream[0]:
                 print(1)
-                if (con is None): time.sleep(5);break
+                if (con is None): break
                 author = str(con.author)
-                if (author in banned): time.sleep(5);break
+                if (author in banned): break
                 for datdb in datdbs:
                     print(2)
                     data = datdb.get()
