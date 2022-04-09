@@ -36,59 +36,35 @@ def checklogin():
 subreddit = checklogin().subreddit("teenagersbutpog")
 banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
 datdbs = [db.reference("data"), db.reference("all-time")]
-sub_stream = subreddit.stream.submissions(skip_existing = True)
-com_stream = subreddit.stream.comments(skip_existing = True)
 print("Ready\n")
 
 while True:
     try:
-        #streams = [
-        #    {"content":sub_stream, "name":"Submission", "num":0},
-        #    {"content":com_stream, "name":"Comment", "num":1}
-        #]
-        for con in sub_stream:
-            if (con is None):time.sleep(1);continue
-            author = str(con.author)
-            if (author in banned):time.sleep(1);continue
-            for datdb in datdbs:
-                data = datdb.get()
-                if (author in data):
-                    data[author][0] += 1
-                else:
-                    data[author] = [0, 0]
-                    data[author][0] += 1
-                datdb.set(data)
-            print("Submission"+" added for "+author)
-            time.sleep(5)
-        for con in com_stream:
-            if (con is None):time.sleep(1);continue
-            author = str(con.author)
-            if (author in banned):time.sleep(1);continue
-            for datdb in datdbs:
-                data = datdb.get()
-                if (author in data):
-                    data[author][1] += 1
-                else:
-                    data[author] = [0, 0]
-                    data[author][1] += 1
-                datdb.set(data)
-            print("Comment"+" added for "+author)
-            time.sleep(5)
+        streams = [
+            {
+                "content": (subreddit.stream.submissions(pause_after = 0, skip_existing = True)),
+                "name": "Submission", "num": 0
+            },
+            {
+                "content": (subreddit.stream.comments(pause_after = 0, skip_existing = True)),
+                "name": "Comment", "num": 1
+            }
+        ]
+        for stream in streams:
+            for con in stream["content"]:
+                if (con is None):continue
+                author = str(con.author)
+                if (author in banned):continue
+                for datdb in datdbs:
+                    data = datdb.get()
+                    if (author in data):
+                        data[author][stream["num"]] += 1
+                    else:
+                        data[author] = [0, 0]
+                        data[author][stream["num"]] += 1
+                    datdb.set(data)
+                print(stream["name"]+" added for "+author)
+                time.sleep(5)
     except BaseException as error:
         print(str(error))
         time.sleep(10)
-
-#for con in stream["content"]:
-#    if (con is None):time.sleep(1);continue
-#    author = str(con.author)
-#    if (author in banned):time.sleep(1);continue
-#    for datdb in datdbs:
-#        data = datdb.get()
-#        if (author in data):
-#            data[author][stream["num"]] += 1
-#        else:
-#            data[author] = [0, 0]
-#            data[author][stream["num"]] += 1
-#        datdb.set(data)
-#    print(stream["name"]+" added for "+author)
-#    time.sleep(5)
