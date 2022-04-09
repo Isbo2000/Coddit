@@ -41,10 +41,11 @@ print("Ready\n")
 while True:
     try:
         streams = [
-            [[subreddit.stream.submissions(pause_after = 0, skip_existing = True)], "Submission", 0],
-            [[subreddit.stream.comments(pause_after = 0, skip_existing = True)], "Comment", 1]
+            [(subreddit.stream.submissions(pause_after = 0, skip_existing = True)), ("Submission"), (0)],
+            [(subreddit.stream.comments(pause_after = 0, skip_existing = True)), ("Comment"), (1)]
         ]
         for stream in streams:
+            print(stream[1])
             for con in stream[0]:
                 if (con is None):continue
                 author = str(con.author)
