@@ -41,29 +41,23 @@ print("Ready\n")
 while True:
     try:
         streams = [
-            {
-                "content": (subreddit.stream.submissions(pause_after = 0, skip_existing = True)),
-                "name": "Submission", "num": 0
-            },
-            {
-                "content": (subreddit.stream.comments(pause_after = 0, skip_existing = True)),
-                "name": "Comment", "num": 1
-            }
+            [[subreddit.stream.submissions(pause_after = 0, skip_existing = True)], "Submission", 0],
+            [[subreddit.stream.comments(pause_after = 0, skip_existing = True)], "Comment", 1]
         ]
         for stream in streams:
-            for con in stream["content"]:
+            for con in stream[0]:
                 if (con is None):continue
                 author = str(con.author)
                 if (author in banned):continue
                 for datdb in datdbs:
                     data = datdb.get()
                     if (author in data):
-                        data[author][stream["num"]] += 1
+                        data[author][stream[2]] += 1
                     else:
                         data[author] = [0, 0]
-                        data[author][stream["num"]] += 1
+                        data[author][stream[2]] += 1
                     datdb.set(data)
-                print(stream["name"]+" added for "+author)
+                print(stream[1]+" added for "+author)
                 time.sleep(5)
     except BaseException as error:
         print(str(error))
