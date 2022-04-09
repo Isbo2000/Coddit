@@ -46,7 +46,7 @@ while True:
     try:
         for stream in streams:
             for con in stream[0]:
-                if (con is None): time.sleep(5);break
+                if (con is None): time.sleep(1);break
                 author = str(con.author)
                 if (author in banned): print(author+" banned");break
                 for datdb in datdbs:
@@ -60,7 +60,7 @@ while True:
                 print(stream[1]+" added for "+author)
                 time.sleep(1)
     except KeyboardInterrupt:
-        print("Exiting...")
+        print("\nExiting...")
         sys.exit()
     except BaseException as error:
         print(str(error))
