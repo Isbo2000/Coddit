@@ -41,16 +41,16 @@ print("Ready\n")
 while True:
     try:
         streams = [
-            [subreddit.stream.submissions(pause_after = 0, skip_existing = True), "Submission", 0],
-            [subreddit.stream.comments(pause_after = 0, skip_existing = True), "Comment", 1]
+            [subreddit.stream.submissions(pause_after = 5, skip_existing = True), "Submission", 0],
+            [subreddit.stream.comments(pause_after = 5, skip_existing = True), "Comment", 1]
         ]
         for stream in streams:
             print(stream[1])
             for con in stream[0]:
                 print(1)
-                if (con is None): break
+                if (con is None): time.sleep(5);break
                 author = str(con.author)
-                if (author in banned): break
+                if (author in banned): time.sleep(5);break
                 for datdb in datdbs:
                     print(2)
                     data = datdb.get()
