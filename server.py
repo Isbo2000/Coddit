@@ -45,14 +45,11 @@ print("Ready\n")
 while True:
     try:
         for stream in streams:
-            print(stream[1])
             for con in stream[0]:
-                print(1)
-                if (con is None): break
+                if (con is None): time.sleep(5);break
                 author = str(con.author)
-                if (author in banned): break
+                if (author in banned): print(author+" banned");break
                 for datdb in datdbs:
-                    print(2)
                     data = datdb.get()
                     if (author in data):
                         data[author][stream[2]] += 1
@@ -61,11 +58,13 @@ while True:
                         data[author][stream[2]] += 1
                     datdb.set(data)
                 print(stream[1]+" added for "+author)
+                time.sleep(1)
     except KeyboardInterrupt:
+        print("Exiting...")
         sys.exit()
     except BaseException as error:
         print(str(error))
-        time.sleep(30)
+        time.sleep(10)
         streams = [
             [subreddit.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
             [subreddit.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
