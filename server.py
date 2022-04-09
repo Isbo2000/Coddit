@@ -61,13 +61,12 @@ while True:
                         data[author][stream[2]] += 1
                     datdb.set(data)
                 print(stream[1]+" added for "+author)
+    except KeyboardInterrupt:
+        sys.exit()
     except BaseException as error:
-        if error == KeyboardInterrupt:
-            sys.exit()
-        else:
-            print(str(error))
-            time.sleep(30)
-            streams = [
-                [subreddit.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
-                [subreddit.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
-            ]
+        print(str(error))
+        time.sleep(30)
+        streams = [
+            [subreddit.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+            [subreddit.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
+        ]
