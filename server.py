@@ -22,53 +22,50 @@ def asklogin():
     u = input('Username: ')
     p = getpass.getpass('Password: ')
     login = {"id":i,"secret":s,"username":u,"password":p}
-    with open('login.json', 'w') as lgn:json.dump(login, lgn)
-    try:redlog(login).user.me()
-    except:os.remove('login.json');sys.exit()
+    with open('login.json', 'w') as lgn: json.dump(login, lgn)
+    try: redlog(login).user.me()
+    except: os.remove('login.json'); sys.exit()
     return redlog(login)
 def checklogin():
     if os.path.exists('login.json'):
-        with open('login.json') as lgn:login=json.load(lgn)
-        try:redlog(login).user.me()
-        except:return asklogin()
-    else:return asklogin()
+        with open('login.json') as lgn: login=json.load(lgn)
+        try: redlog(login).user.me()
+        except: return asklogin()
+    else: return asklogin()
     return redlog(login)
-subreddit = checklogin().subreddit("teenagersbutpog")
+subred = checklogin().subreddit("teenagersbutpog")
+banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
+datdbs = [db.reference("data"), db.reference("all-time")]
+streams = [
+    [subred.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+    [subred.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
+]
 print("Ready\n")
 
 while True:
     try:
-        banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
-        datdbs = [db.reference("data"), db.reference("all-time")]
-        streams = [
-            {
-                "content": subreddit.stream.submissions(pause_after = 10, skip_existing = True),
-                "name": "Submission",
-                "num": 0
-            },
-            {
-                "content": subreddit.stream.comments(pause_after = 10, skip_existing = True),
-                "name": "Comment",
-                "num": 1
-            }
-        ]
         for stream in streams:
-            for con in stream["content"]:
-                if con is not None:
-                    author = str(con.author)
-                    if (author not in banned):
-                        for datdb in datdbs:
-                            data = datdb.get()
-                            if (author in data):
-                                data[author][stream["num"]] += 1
-                            else:
-                                data[author] = [0, 0]
-                                data[author][stream["num"]] += 1
-                            datdb.set(data)
-                        print(stream["name"]+" added for "+author)
-                        time.sleep(5)
-                    else:print(author+" is banned, nothing added")
-                else:time.sleep(30)
+            for con in stream[0]:
+                if (con is None): time.sleep(1); break
+                author = str(con.author)
+                if (author in banned): print(author+" banned"); break
+                for datdb in datdbs:
+                    data = datdb.get()
+                    if (author in data):
+                        data[author][stream[2]] += 1
+                    else:
+                        data[author] = [0, 0]
+                        data[author][stream[2]] += 1
+                    datdb.set(data)
+                print(stream[1]+" added for "+author)
+                time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nExiting..."); sys.exit()
     except BaseException as error:
         print(str(error))
-        time.sleep(30)
+        try: streams = [
+            [subred.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+            [subred.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
+        ]
+        except: sys.exit()
+        finally: time.sleep(10)
