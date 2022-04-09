@@ -36,19 +36,19 @@ def checklogin():
 subreddit = checklogin().subreddit("teenagersbutpog")
 banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
 datdbs = [db.reference("data"), db.reference("all-time")]
+streams = [
+    [subreddit.stream.submissions(pause_after = 0, skip_existing = True), "Submission", 0],
+    [subreddit.stream.comments(pause_after = 0, skip_existing = True), "Comment", 1]
+]
 print("Ready\n")
 
 while True:
     try:
-        streams = [
-            [subreddit.stream.submissions(pause_after = 1, skip_existing = True), "Submission", 0],
-            [subreddit.stream.comments(pause_after = 1, skip_existing = True), "Comment", 1]
-        ]
         for stream in streams:
             print(stream[1])
             for con in stream[0]:
                 print(1)
-                if (con is None): time.sleep(1);break
+                if (con is None): break
                 author = str(con.author)
                 if (author in banned): break
                 for datdb in datdbs:
@@ -61,7 +61,9 @@ while True:
                         data[author][stream[2]] += 1
                     datdb.set(data)
                 print(stream[1]+" added for "+author)
-                time.sleep(5)
     except BaseException as error:
         print(str(error))
-        time.sleep(10)
+        streams = [
+            [subreddit.stream.submissions(pause_after = 0, skip_existing = True), "Submission", 0],
+            [subreddit.stream.comments(pause_after = 0, skip_existing = True), "Comment", 1]
+        ]
