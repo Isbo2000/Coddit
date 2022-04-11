@@ -1,25 +1,12 @@
-/********************************************
-*********************************************
-
-The background and colors on this website have been changed to a certain extent. If you want this site to look even more like its original counterpart, scroll down and find directions along the way
-in the form of comments.
-
-*********************************************
-*********************************************/
-
 body {
-	/* If you want your lovely background back, simply uncomment what's below */
-
-	/* background-image: url('https://cdn.discordapp.com/attachments/904059941407563806/904077362415677521/coddit_background.jpg');
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-size: cover; */
-
-	/* These are transitions, they make things feel smoother. It is added to the body tag on this file because of the dark mode feature, to make it feel more like a smooth *transition*/
-	/* You can edit the length of the fade transition by changing the 0.2s, it stands for 0.2 seconds. Or revert by deleting this line and following other directions */
 	transition: all 0.2s ease;
 	background-color: #2C2F33;
 	color: white;
+	font-family: "Roboto";
+}
+
+#help {
+	font-family: "Lato";
 }
 
 ::selection {
@@ -50,6 +37,10 @@ body {
     color: #fff;
 }
 
+#NoResults {
+	display:none;
+}
+
 h1 {
 	font:bold;
 	font-size:175%;
@@ -57,7 +48,6 @@ h1 {
 
 table {
 	margin-left: 250px;
-	margin-top: 1%;
 	width:100%;
 
 	/* The original background color of the table, directly below, is the new background color. Uncomment what's below and follow the next comment to revert.*/
@@ -73,6 +63,21 @@ table {
 
 }
 
+h1, #listheader {
+	font-family: "Work Sans";
+}
+
+#NoResults {
+	margin-left: 300px;
+	margin-top: 3%;
+	width:100%;
+
+	color: white;
+	align-tracks: center;
+
+	border: none;
+	font-size: larger;
+}
 table a {
     text-decoration: none;
     color: white;
@@ -80,10 +85,6 @@ table a {
 
 table a:hover {
     color: rgb(93, 93, 255);
-}
-
-tr {
-	border-bottom: 1px solid grey;
 }
 
 .extlink {
@@ -105,7 +106,7 @@ table tr:nth-child(2):hover {
 table #sort:hover {color: rgb(93, 93, 255);}
 #sort {
 	display: block;
-	background-color: inherit;
+	background-color: transparent;
 	color: white;
 	border: none;
 	outline: none;
@@ -126,13 +127,34 @@ small {
 }
 
 th, td {
-	color:white;
-
-	/* uncomment the line below and comment out or delete the lines below THAT to revert, same explanation as in the table tag */
-	/* border: 1px solid black */
 
 	border: none;
-	padding: 6px;
+	padding: 10px 7px 7px 10px;
+}
+
+td {
+	padding-left: 15px;
+}
+
+th {
+	padding: 16px;
+	background-color:#232ea780;
+	color:white;
+	font-family: "Work Sans";
+}
+
+#ltheader {
+	border-bottom-left-radius: 16px;
+	border-top-left-radius: 16px;
+}
+
+#rtheader {
+	border-bottom-right-radius: 16px;
+	border-top-right-radius: 16px;
+}
+
+table {
+	margin-left: 300px;
 }
 
 /* All below this comment is new references to new objects in the HTML file */
@@ -146,9 +168,24 @@ th, td {
 #listheader {
 	margin-left: 5px;
 	padding: 2px;
+	font-size:medium;
+}
+
+#user_data {
+	width: 90%;
 }
 
 /***/
+
+#OldData {
+	padding: 10px 6px;
+	padding-left: 35px;
+}
+
+#olderSorts {
+	padding: 22px 16px;
+	padding-left: 40px;
+}
 
 .tab {
 	float: left;
@@ -156,10 +193,6 @@ th, td {
 	transition: all 0.3s ease;
 	background-color: #2C2F33;
 	color: white;
-}
-
-.tab ul {
-  margin-top: 10px;
 }
 
 .tab button {
@@ -174,6 +207,7 @@ th, td {
 	cursor: pointer;
 	font-size: 17px;
 	transition: all 0.3s ease;
+	padding-left: 35px;
 }
 
 .tab a {
@@ -188,6 +222,7 @@ th, td {
 	cursor: pointer;
 	font-size: 17px;
 	transition: all 0.3s ease;
+	padding-left: 35px;
 }
 
 .tab button:hover {
@@ -208,9 +243,17 @@ th, td {
 .tabcontent {
 	float: left;
 	padding: 12px;
-	width: 80%;
+	width: 90%;
 	height: 100%;
 	transition: all 0.3s ease;
+}
+
+#help {
+	margin-left: 300px;
+	width:70%;
+	margin-top:5px;
+	float:left;
+	margin-bottom:5px;
 }
 
 .panel {
@@ -221,13 +264,16 @@ th, td {
 }
 
 #searchtable {
-	width: 100%;
+	margin-top: 5px;
+	width: 96%;
 	font-size: 16px;
 	padding: 12px 20px 12px 40px;
 	margin-bottom: 12px;
 	outline: none;
-	border-radius: 16px;
-	border: 1px solid grey;
+	border-bottom-right-radius: 16px;
+	border-top-right-radius: 16px;
+	border: 1px solid rgb(68, 68, 68);
+	border-left: none;
 	color: white;
 	transition: all 0.5s ease;
 	background-color: #23272A;
@@ -235,6 +281,21 @@ th, td {
 
 #searchtable:focus {
 	border: 1px solid #5865F2;
+	border-left: none;
+	outline: none;
+	box-shadow: none;
+}
+
+#searchIcon {
+	margin-top: 5px;
+	padding: 14px 0px 0px 0px;
+	height:50px;
+	width:4%;
+	background-color:#1e2124;
+	border-bottom-left-radius: 16px;
+	border-top-left-radius: 16px;
+	transition: all 0.5s ease;
+	border: 1px solid rgb(68, 68, 68);
 }
 
 .dropdown-menu {
@@ -244,6 +305,11 @@ th, td {
 
 .dropdown-menu a:hover {
 	transition: all 0.3s ease;
+}
+
+#listheader {
+	padding-left: 15px;
+	padding-top: 15px;
 }
 
 #dropdownbtn {
@@ -265,8 +331,10 @@ th, td {
 }
 
 #titleteal {
-	background-image: linear-gradient(to bottom right, rgb(160, 68, 235), rgb(153, 115, 1));
+	/* background-image: linear-gradient(to bottom right, rgb(160, 68, 235), rgb(153, 115, 1)); */
+	background-image: linear-gradient(to bottom right, rgb(75, 48, 97), rgb(92, 81, 50));
 	display: flex;
+	padding:20px;
 }
 
 #dropdownandtitle {
@@ -276,6 +344,39 @@ th, td {
 
 #openNav {
 	background-color: transparent;
+	border: none;
+	padding: 5px;
+}
+
+#openNav:hover {
+	background-color: #272a2e80;
+}
+
+#closeBtn {
+	text-align:center;
+	border:none;
+	border-bottom:1px solid gray;
+	padding: 5px;
+}
+
+#backToTop {
+	display: none;
+	position: fixed;
+	bottom: 20px;
+	right: 30px;
+	z-index: 99;
+	font-size: 18px;
+	border: none;
+	outline: none;
+	background-color: rgb(214, 119, 119);
+	color: white;
+	cursor: pointer;
+	padding: 15px;
+	border-radius: 4px;
+  }
+  
+#backToTop:hover {
+	background-color: #555;
 }
 
 @media screen and (max-width: 991px) {
@@ -295,11 +396,19 @@ th, td {
 		height: 100%;
 	}
 	.tabcontent {
-		font-size: 3.5vw;
-		width: 100%;
+		margin-left: 10px;
+		margin-right: 10px;
+		font-size: 2.5vw;
+		width: 80%;
+	}
+	#sort {
+		margin-left: 10px;
+		margin-right: 10px;
+		font-size: 2.5vw;
+		width: 80%;
 	}
 	#alltabcontent {
-		width: 100%;
+		width: 80%;
 	}
 	#closebtn {
 		display:block;
@@ -313,20 +422,82 @@ th, td {
 		padding: 10px;
 	}
 	table {
-		margin: auto;
+		margin-left: 0;
 	}
-  #infodropdown {
-    display: none;
-  }
+	#ltheader {
+		margin-left: 10px;
+	}
+	#rtheader {
+		margin-right: 10px;
+	}
+	#infodropdown {
+		display: none;
+	}
+	#out {
+		display: none;
+	}
+	#searchIcon {
+		width:20%
+	}
+	#searchtable {
+		width:80%
+	}
+	#NoResults {
+		font-size: 3.5vw;
+	}
+	#help {
+		float: left;
+		margin-left: 5px;
+	}
+}
+
+#longTitle {
+	display: inline;
+ }
+
+#shortTitle {
+	display: none;
+}
+
+@media screen and (max-width: 555px) {
+	#longTitle {
+		display:none;
+	}
+	#shortTitle {
+		display:inline;
+	}
+	.tabcontent {
+		margin-left: 0px;
+		width:70%;
+	}
+	th {
+		padding-left:5px;
+		padding-right:5px;
+		width: 10%;
+	}
+	td {
+		padding-left:5px;
+		padding-right:0px;
+		width:10%;
+	}
+	#user_data {
+		width:60%;
+	}
 }
 
 @media screen and (max-width: 1250px) {
 	.tab {
 		width:25%;
 	}
+	#searchIcon {
+		width:10%
+	}
+	#searchtable {
+		width:90%
+	}
 }
 
-@media screen and (min-width: 991px) {
+/*@media screen and (min-width: 991px) {
 	.tab {
 		display:none;
 		width: 25%;
@@ -338,7 +509,7 @@ th, td {
 	#titleteal {
 		padding: 15px;
 	}
-}
+}*/
 
 /********************/
 .load {
@@ -447,6 +618,20 @@ th, td {
 .dark-mode #searchtable {
 	background-color: transparent;
 	border: 1px solid rgb(192, 192, 192);
+	color: black;
+	border-left: none;
+	transition: all 0.5s ease;
+}
+
+.dark-mode #searchtable:focus {
+	border: 1px solid #5865F2;
+	border-left: none;
+}
+
+.dark-mode #searchIcon {
+	background-color: #ccc;
+	border: 1px solid rgb(68, 68, 68);
+	border-right: none;
 	color: black;
 	transition: all 0.5s ease;
 }

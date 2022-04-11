@@ -3,44 +3,61 @@ import os,sys,json,time,getpass
 import firebase_admin
 import praw
 
-print("Starting script...\n")
-try:
-    cred = credentials.Certificate("firebase-login.json")
-    durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
-    firebase_admin.initialize_app(cred, durl)
-except:print("Please add or fix 'firebase-login.json'");sys.exit()
 def redlog(login):
     return praw.Reddit(
         client_id = login["id"], 
         client_secret = login["secret"], 
         username = login["username"], 
         password = login["password"], 
-        user_agent = "Isbo2000 Coddit 5.0")
+        user_agent = "Isbot2000 ~ Coddit")
 def asklogin():
+    print("PLease enter your bot login info (dw, it is only stored locally)\n")
     i = getpass.getpass('Id: ')
     s = getpass.getpass('Secret: ')
     u = input('Username: ')
     p = getpass.getpass('Password: ')
     login = {"id":i,"secret":s,"username":u,"password":p}
-    with open('login.json', 'w') as lgn: json.dump(login, lgn)
-    try: redlog(login).user.me()
-    except: os.remove('login.json'); sys.exit()
+    with open('./login.json', 'w') as lgn:
+        json.dump(login, lgn)
+    try:
+        print("\nChecking details...\n")
+        redlog(login).user.me()
+    except:
+        print("ERROR: Invalid login\n")
+        os.remove('./login.json')
+        checklogin()
+    print("Logging in...\n")
     return redlog(login)
 def checklogin():
-    if os.path.exists('login.json'):
-        with open('login.json') as lgn: login=json.load(lgn)
-        try: redlog(login).user.me()
-        except: return asklogin()
-    else: return asklogin()
+    if os.path.exists('./login.json'):
+        with open('./login.json') as lgn:
+            login = json.load(lgn)
+        try:
+            print("\nChecking details...\n")
+            redlog(login).user.me()
+        except:
+            return asklogin()
+    else:
+        return asklogin()
+    print("Logging in...\n")
     return redlog(login)
-subred = checklogin().subreddit("teenagersbutpog")
-banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
-datdbs = [db.reference("data"), db.reference("all-time")]
-streams = [
-    [subred.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
-    [subred.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
-]
-print("Ready\n")
+
+try:
+    print("Starting script...\n")
+    try:
+        cred = credentials.Certificate("firebase-login.json")
+        durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
+        firebase_admin.initialize_app(cred, durl)
+    except: print("Please add or fix 'firebase-login.json'"); sys.exit()
+    subred = checklogin().subreddit("teenagersbutpog")
+    banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
+    datdbs = [db.reference("data"), db.reference("all-time")]
+    streams = [
+        [subred.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+        [subred.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
+    ]
+    print("Ready\n")
+except KeyboardInterrupt: sys.exit()
 
 while True:
     try:

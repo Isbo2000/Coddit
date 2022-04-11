@@ -9,46 +9,84 @@
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 		<link rel="stylesheet" href="style.css">
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 		<script type="text/javascript" src="script.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
 	</head>
 	<body onload="start();">
-		<div class="tab w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:200px;" id="mySidebar">
-			<button class="w3-bar-item w3-button w3-large w3-hide-large" style="text-align:center;border-bottom:1px solid gray;" onclick="w3_close()">Close &times;</button>
+		<button onclick="topFunction()" class="rounded-circle" id="backToTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
+		<div class="tab w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:250px;" id="mySidebar">
+			<button class="w3-bar-item w3-large w3-hide-large" id="closeBtn" onclick="w3_close()">Close &times;</button>
 			<ul style="list-style-type:none;padding:0;margin:0;" id="menu">
 				<li id="listheader"> <b>Sort By</b></li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='data',n);w3_close()">This Month</button>
+					<button class="tablinks" onclick="getpage(page='data',n);w3_close()">
+						This Month
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
+					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='all-time',n);w3_close()">All Time</button>
+					<button class="tablinks" onclick="getpage(page='all-time',n);w3_close()">
+						All Time
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
+					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='October2021',n);w3_close()">October 2021</button>
+					<button class="tablinks" onclick="getpage(page='October2021',n);w3_close()">
+						October 2021
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from October 2021"></i>
+					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='November2021',n);w3_close()">November 2021</button>
+					<button class="tablinks" onclick="getpage(page='November2021',n);w3_close()">
+						November 2021
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for November 2021 is inaccurate"></i>
+					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='December2021',n);w3_close()">December 2021</button>
+					<button class="tablinks" onclick="getpage(page='December2021',n);w3_close()">
+						December 2021
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for December 2021 is inaccurate"></i>
+					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='January2022',n);w3_close()">January 2022</button>
+					<button class="tablinks" onclick="getpage(page='January2022',n);w3_close()">
+						January 2022
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from January 2022"></i>
+					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='February2022',n);w3_close()">February 2022</button>
+					<button class="tablinks" onclick="getpage(page='February2022',n);w3_close()">
+						February 2022
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from February 2022"></i>
+					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='March2022',n);w3_close()">March 2022</button>
+					<button class="tablinks" onclick="getpage(page='March2022',n);w3_close()">
+						March 2022
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from March 2022"></i>
+					</button>
 				</li>
+				<br>
 				<li id="listheader"><b>Tools</b></i></li>
 				<li>
-					<button class="tablinks" onclick="darkmode();w3_close()">Toggle Light Mode</button>
+					<button class="tablinks" onclick="darkmode();w3_close()">
+						Toggle Light Mode
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Toggles light mode or dark mode"></i>
+					</button>
 				</li>
 				<li>
-					<a class="tablinks" href="https://www.reddit.com/r/teenagersbutpog" style="text-decoration: none;">Back to Subreddit</a>
+					<a class="tablinks" href="https://www.reddit.com/r/teenagersbutpog" style="text-decoration: none;">
+						Back to Subreddit
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="r/TeenagersButPog"></i>
+					</a>
 				</li>
 				<li>
 					<a class="tablinks" href="https://github.com/Isbo2000/Coddit" style="text-decoration: none;">Link to Github</a>
@@ -56,27 +94,36 @@
 			</ul>
 		</div>
 		<div id="main">
-			<div class="w3-main" style="margin-left:200px;" id="title">
+			<div class="w3-main" style="margin-left:250px;" id="title">
 				<div id="titleteal">
-					<button id="openNav" class="w3-button w3-xlarge w3-hide-large" onclick="w3_open()"><i class="fa fa-bars"></i></button>
+					<button id="openNav" class=" w3-xlarge w3-hide-large" onclick="w3_open()"><i class="bi bi-list"></i></button>
 					<div class="w3-container" id="dropdownandtitle">
-						<h1 class="w3-animate-top" style="display:inline;">r/TeenagersButPog's Official Coddit</h1>
+						<h1 class="w3-animate-top" id="longTitle">r/TeenagersButPog's Official Coddit</h1>
+						<h1 class="w3-animate-top" id="shortTitle">r/tbp's Official Coddit</h1>
 					</div>
 				</div>
-				<p id="disp-p-s" style="margin-left:10px;" style="margin-top:10px;"></p>
+				<p id="disp-p-s" style="margin:5px;"></p>
 			</div>
-			<table id="user_data" style="width:70%" style="margin-left:250px;">
-				<tr>
-					<td colspan="5"><i id="help"></i><br><input type="text" id="searchtable" onkeyup="search()" placeholder="Search Users..." title="Type a user"></td>
-				</tr>
-				<tr>
-					<th style="width: 10%">Rank</th>
-					<th style="width: 30%"><a id="tbhd" href="https://www.reddit.com/users/">Username <i class="extlink fa fa-external-link"></i></a></th>
-					<th style="width: 20%"><button onclick="sortpage(n=1);" id="sort">Posts</button></a></th>
-					<th style="width: 20%"><button onclick="sortpage(n=2);" id="sort">Comments</button></a></th>
-					<th style="width: 20%"><button onclick="sortpage(n=0);" id="sort">Total</button></a></th>
-				</tr>
-			</table>
+			<div class="tabcontent">
+				<table id="user_data">
+					<tr>
+						<p id="help" ></p>
+						<td colspan="5">
+							<div class="input-group" id="group">
+								<div id="searchIcon" class="text-center"><i class="bi bi-search"></i></div>
+								<input type="text" class="form-control" id="searchtable" onkeyup="search()" placeholder="Search Users..." title="Type a user">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th id="ltheader" style="width: 10%">Rank</th>
+						<th style="width: 30%"><a id="tbhd" href="https://www.reddit.com/users/">Username <i class="extlink bi bi-box-arrow-up-right" id="out"></i></a></th>
+						<th style="width: 20%"><button onclick="sortpage(n=1);" id="sort">Posts</button></a></th>
+						<th style="width: 20%"><button onclick="sortpage(n=2);" id="sort">Comments</button></a></th>
+						<th id="rtheader" style="width: 20%"><button onclick="sortpage(n=0);" id="sort">Total</button></a></th>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</body>
 </html>

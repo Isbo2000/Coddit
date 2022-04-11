@@ -5,8 +5,38 @@ function start() {
         page = "data";
         n = 0;
         getpage(page,n)
+        splashtext();
+        tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+        sq = document.querySelector('#searchtable');
+        sq.addEventListener('focus', ()=>{
+            document.getElementById("searchIcon").style.border = '1px solid #5865F2';
+            document.getElementById("searchIcon").style.borderRight = 'none';
+        });
+        sq.addEventListener('focusout', ()=>{
+            document.getElementById("searchIcon").style.border = '1px solid rgb(68, 68, 68)';
+            document.getElementById("searchIcon").style.borderRight = 'none';
+        });
     });
-    splashtext();
+    window.onscroll = function() {
+        scrollFunction()
+    };
+}
+
+function scrollFunction() {
+    mybutton = document.getElementById("backToTop");
+    if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250) {
+        mybutton.style.display = "block";
+    } else {
+        mybutton.style.display = "none";
+    }
+}
+
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
 }
 
 function splashtext() {
