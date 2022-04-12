@@ -177,14 +177,22 @@ table {
 
 /***/
 
-#OldData {
-	padding: 10px 6px;
-	padding-left: 35px;
+#OldData[aria-expanded=true] .bi-caret-left {
+	transition: .3s transform ease-in-out;
+	transform: rotate(-90deg);
 }
 
-#olderSorts {
-	padding: 22px 16px;
-	padding-left: 40px;
+#months {
+	padding-left: 60px;
+}
+
+#credits[aria-expanded=true] .bi-caret-left {
+	transition: .3s transform ease-in-out;
+	transform: rotate(-90deg);
+}
+
+#credit {
+	padding-left: 60px;
 }
 
 .tab {
@@ -531,6 +539,15 @@ table {
 	cursor: progress
 }
 .load .tab a {
+	cursor: progress
+}
+.load #backtotop {
+	cursor: progress
+}
+.load #searchtable {
+	cursor: progress
+}
+.load .tabcontent {
 	cursor: progress
 }
 
