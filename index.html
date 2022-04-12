@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,18 +21,14 @@
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
 	</head>
+
 	<body onload="start();">
 		<button onclick="topFunction()" class="rounded-circle" id="backToTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
 		<div class="tab w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:250px;" id="mySidebar">
 			<button class="w3-bar-item w3-large w3-hide-large" id="closeBtn" onclick="w3_close()">Close &times;</button>
 			<ul style="list-style-type:none;padding:0;margin:0;" id="menu">
+
 				<li id="listheader"> <b>Sort By</b></li>
-				<li>
-					<button class="tablinks" onclick="getpage(page='data',n);w3_close()">
-						This Month
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
-					</button>
-				</li>
 				<li>
 					<button class="tablinks" onclick="getpage(page='all-time',n);w3_close()">
 						All Time
@@ -39,41 +36,58 @@
 					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='October2021',n);w3_close()">
-						October 2021
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from October 2021"></i>
+					<button class="tablinks" onclick="getpage(page='data',n);w3_close()">
+						This Month
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
 					</button>
 				</li>
 				<li>
-					<button class="tablinks" onclick="getpage(page='November2021',n);w3_close()">
-						November 2021
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for November 2021 is inaccurate"></i>
+					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderSorts" id="OldData">
+						Legacy Data
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous months"></i>
+						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
 					</button>
 				</li>
-				<li>
-					<button class="tablinks" onclick="getpage(page='December2021',n);w3_close()">
-						December 2021
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for December 2021 is inaccurate"></i>
-					</button>
-				</li>
-				<li>
-					<button class="tablinks" onclick="getpage(page='January2022',n);w3_close()">
-						January 2022
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from January 2022"></i>
-					</button>
-				</li>
-				<li>
-					<button class="tablinks" onclick="getpage(page='February2022',n);w3_close()">
-						February 2022
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from February 2022"></i>
-					</button>
-				</li>
-				<li>
-					<button class="tablinks" onclick="getpage(page='March2022',n);w3_close()">
-						March 2022
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from March 2022"></i>
-					</button>
-				</li>
+
+				<div id="olderSorts" class="collapse">
+					<li>
+						<button id="months" class="tablinks" onclick="getpage(page='October2021',n);w3_close()">
+							October 2021
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from October 2021"></i>
+						</button>
+					</li>
+					<li>
+						<button id="months" class="tablinks" onclick="getpage(page='November2021',n);w3_close()">
+							November 2021
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for November 2021 is inaccurate"></i>
+						</button>
+					</li>
+					<li>
+						<button id="months" class="tablinks" onclick="getpage(page='December2021',n);w3_close()">
+							December 2021
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for December 2021 is inaccurate"></i>
+						</button>
+					</li>
+					<li>
+						<button id="months" class="tablinks" onclick="getpage(page='January2022',n);w3_close()">
+							January 2022
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from January 2022"></i>
+						</button>
+					</li>
+					<li>
+						<button id="months" class="tablinks" onclick="getpage(page='February2022',n);w3_close()">
+							February 2022
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from February 2022"></i>
+						</button>
+					</li>
+					<li>
+						<button id="months" class="tablinks" onclick="getpage(page='March2022',n);w3_close()">
+							March 2022
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from March 2022"></i>
+						</button>
+					</li>
+				</div>
+
 				<br>
 				<li id="listheader"><b>Tools</b></i></li>
 				<li>
@@ -89,11 +103,45 @@
 					</a>
 				</li>
 				<li>
-					<a class="tablinks" href="https://github.com/Isbo2000/Coddit" style="text-decoration: none;">Link to Github</a>
+					<a class="tablinks" href="https://github.com/Isbo2000/Coddit" style="text-decoration: none;">
+						Link to Github
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Isbo2000 ~ Coddit"></i>
+					</a>
 				</li>
+				<li>
+					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#creditlist" id="credits">
+						Credits
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="idk"></i>
+						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
+					</button>
+				</li>
+
+				<div id="creditlist" class="collapse">
+					<li>
+						<a id="credit" class="tablinks" href="https://www.reddit.com/user/Dimittrikovk2/" style="text-decoration: none;">
+							Dimittrikov
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Developed most of it"></i>
+						</a>
+					</li>
+					<li>
+						<a id="credit" class="tablinks" href="https://www.reddit.com/user/Daniel_R013/" style="text-decoration: none;">
+							Daniel_R013
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Developed most of the way it looks"></i>
+						</a>
+					</li>
+					<li>
+						<a id="credit" class="tablinks" href="https://www.reddit.com/user/Isbo2000/" style="text-decoration: none;">
+							Isbo2000
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Currently maintaining and hosting it"></i>
+						</a>
+					</li>
+				</div>
+
 			</ul>
 		</div>
+
 		<div id="main">
+
 			<div class="w3-main" style="margin-left:250px;" id="title">
 				<div id="titleteal">
 					<button id="openNav" class=" w3-xlarge w3-hide-large" onclick="w3_open()"><i class="bi bi-list"></i></button>
@@ -104,6 +152,7 @@
 				</div>
 				<p id="disp-p-s" style="margin:5px;"></p>
 			</div>
+
 			<div class="tabcontent">
 				<table id="user_data">
 					<tr>
@@ -124,6 +173,8 @@
 					</tr>
 				</table>
 			</div>
+			<p id="NoResults">Whoops, Doesn't look like anyone goes by that name ):<br>Try again!<br><small>psst! check your spelling...</small></p>
 		</div>
+
 	</body>
 </html>

@@ -1,28 +1,29 @@
 function start() {
+    document.body.classList.add("load");
+    tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    sq = document.querySelector('#searchtable');
+    sq.addEventListener('focus', ()=>{
+        document.getElementById("searchIcon").style.border = '1px solid #5865F2';
+        document.getElementById("searchIcon").style.borderRight = 'none';
+    });
+    sq.addEventListener('focusout', ()=>{
+        document.getElementById("searchIcon").style.border = '1px solid rgb(68, 68, 68)';
+        document.getElementById("searchIcon").style.borderRight = 'none';
+    });
+    window.onscroll = function() {
+        scrollFunction()
+    };
     $(document).ready(function () {
         storetable = [];
         sortable = [];
         page = "data";
         n = 0;
-        getpage(page,n)
         splashtext();
-        tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-        sq = document.querySelector('#searchtable');
-        sq.addEventListener('focus', ()=>{
-            document.getElementById("searchIcon").style.border = '1px solid #5865F2';
-            document.getElementById("searchIcon").style.borderRight = 'none';
-        });
-        sq.addEventListener('focusout', ()=>{
-            document.getElementById("searchIcon").style.border = '1px solid rgb(68, 68, 68)';
-            document.getElementById("searchIcon").style.borderRight = 'none';
-        });
+        getpage(page,n,true)
     });
-    window.onscroll = function() {
-        scrollFunction()
-    };
 }
 
 function scrollFunction() {
@@ -85,13 +86,17 @@ function search() {
     }
     if (stbl.length > 1000) {
         var stlen = 1000
+        document.getElementById("NoResults").style.display = "none";
+    } else if (stbl.length < 1) {
+        document.getElementById("NoResults").style.display = "inline-block";
     } else {
         var stlen = stbl.length
+        document.getElementById("NoResults").style.display = "none";
     }
     for (var i = 0; i < stlen; i++) {
         $('#user_data').append(stbl[i]);
     }
-    setTimeout(() => {document.body.classList.remove("load");}, 300)
+    setTimeout(() => {document.body.classList.remove("load");}, 400)
 }
 
 function sortpage(n,l) {
@@ -138,12 +143,12 @@ function sortpage(n,l) {
         for (var i = 0; i < stlen; i++) {
             $('#user_data').append(storetable[i]);
         }
-        if(!l){setTimeout(() => {document.body.classList.remove("load");}, 400)}
+        if(!l){setTimeout(() => {document.body.classList.remove("load");}, 500)}
     })
 }
 
-function getpage(page,n) {
-    document.body.classList.add("load");
+function getpage(page,n,l) {
+    if(!l){document.body.classList.add("load");}
     $(document).ready(function () {
         url = "https://isbo-coddit-default-rtdb.firebaseio.com/"+page+".json"
         fetch(url).then(response => {return response.json();}).then(function (data) {
@@ -152,7 +157,8 @@ function getpage(page,n) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             sortpage(n,true)
-            setTimeout(() => {document.body.classList.remove("load");}, 500)
+            if(l){setTimeout(() => {document.body.classList.remove("load");}, 700)}
+            else{setTimeout(() => {document.body.classList.remove("load");}, 600)}
         });
     });
 }
