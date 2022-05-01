@@ -96,7 +96,7 @@ function search() {
     for (var i = 0; i < stlen; i++) {
         $('#user_data').append(stbl[i]);
     }
-    setTimeout(() => {document.body.classList.remove("load");}, 400)
+    setTimeout(() => {document.body.classList.remove("load");}, 200)
 }
 
 function sortpage(n,l) {
@@ -143,7 +143,7 @@ function sortpage(n,l) {
         for (var i = 0; i < stlen; i++) {
             $('#user_data').append(storetable[i]);
         }
-        if(!l){setTimeout(() => {document.body.classList.remove("load");}, 500)}
+        if(!l){setTimeout(() => {document.body.classList.remove("load");}, 300)}
     })
 }
 
@@ -157,8 +157,8 @@ function getpage(page,n,l) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             sortpage(n,true)
-            if(l){setTimeout(() => {document.body.classList.remove("load");}, 700)}
-            else{setTimeout(() => {document.body.classList.remove("load");}, 600)}
+            if(l){setTimeout(() => {document.body.classList.remove("load");}, 500)}
+            else{setTimeout(() => {document.body.classList.remove("load");}, 400)}
         });
     });
 }
