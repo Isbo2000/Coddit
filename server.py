@@ -3,6 +3,7 @@ import os,sys,json,time,getpass
 import firebase_admin
 import praw
 
+#checks for login info and logs into reddit bot
 def redlog(login):
     return praw.Reddit(
         client_id = login["id"], 
@@ -42,13 +43,16 @@ def checklogin():
     print("Logging in...\n")
     return redlog(login)
 
+#define certain variables and other things
 try:
     print("Starting script...\n")
+    #checks for login info and logs into firebase
     try:
         cred = credentials.Certificate("firebase-login.json")
         durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
         firebase_admin.initialize_app(cred, durl)
     except: print("Please add or fix 'firebase-login.json'"); sys.exit()
+    #defines nececary variables
     subred = checklogin().subreddit("teenagersbutpog")
     banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
     datdbs = [db.reference("data"), db.reference("all-time")]
@@ -59,20 +63,29 @@ try:
     print("Ready\n")
 except KeyboardInterrupt: sys.exit()
 
+#main script
 while True:
     try:
+        #runs through for each of the 2 streams
         for stream in streams:
+            #runs through for each post or comment in said stream
             for con in stream[0]:
+                #checks if the author of post/comment exists or is banned
                 if (con is None): time.sleep(1); break
                 author = str(con.author)
                 if (author in banned): print(author+" banned"); break
+                #goes through the 2 databases (this month and all time) and updates them
                 for datdb in datdbs:
+                    #fetches data
                     data = datdb.get()
+                    #if the author is already there, update the existing data for them
                     if (author in data):
                         data[author][stream[2]] += 1
+                    #if the author isnt there, add them then update the data for them
                     else:
                         data[author] = [0, 0]
                         data[author][stream[2]] += 1
+                    #pushes changes to firabase database
                     datdb.set(data)
                 print(stream[1]+" added for "+author)
                 time.sleep(1)
@@ -80,6 +93,7 @@ while True:
         print("\nExiting..."); sys.exit()
     except BaseException as error:
         print(str(error))
+        #restarts streams after an error
         try: streams = [
             [subred.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
             [subred.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]

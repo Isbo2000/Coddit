@@ -1,9 +1,12 @@
+//runs when the page loads in
 function start() {
     document.body.classList.add("load");
+    //define/initialize tooltip for navigation sidebar
     tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
+    //define/initialize search bar
     sq = document.querySelector('#searchtable');
     sq.addEventListener('focus', ()=>{
         document.getElementById("searchIcon").style.border = '1px solid #5865F2';
@@ -13,9 +16,11 @@ function start() {
         document.getElementById("searchIcon").style.border = '1px solid rgb(68, 68, 68)';
         document.getElementById("searchIcon").style.borderRight = 'none';
     });
+    //define/initialize scroll to top button
     window.onscroll = function() {
         scrollFunction()
     };
+    //define/initialize splash text and display table
     $(document).ready(function () {
         storetable = [];
         sortable = [];
@@ -26,6 +31,7 @@ function start() {
     });
 }
 
+//scroll to top button
 function scrollFunction() {
     mybutton = document.getElementById("backToTop");
     if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250) {
@@ -34,12 +40,12 @@ function scrollFunction() {
         mybutton.style.display = "none";
     }
 }
-
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
 
+//random display text
 function splashtext() {
     var items = ["Take breaks!", "Developed by Dimittrikov and Daniel_R013 (and me hehe)", "It's important to stay independent", "Remember to breathe", "In through the nose and out through the mouth",
         "Call your local crisis line when things get especially sticky", "We love having you around", "You're worthy", "A break from reddit every so often is always helpful!", "Stay true to you!",
@@ -54,29 +60,33 @@ function splashtext() {
     document.getElementById("help").innerHTML = item;
 }
 
+//darkmode
 function darkmode() {
     document.body.classList.toggle("dark-mode");
 }
 
+//opening and closing the navigation sidebar
 function w3_open() {
     document.getElementById("mySidebar").style.display = "block";
     document.getElementById("mySidebar").style.width = "65%";
     document.getElementById("main").style.opacity = "0.6";
 }
-
 function w3_close() {
     document.getElementById("main").style.opacity = "1";
     document.getElementById("mySidebar").style.display = "none";
 }
 
+//searching through data
 function search() {
     document.body.classList.add("load");
     var sch = document.getElementById("searchtable");
     var input = sch.value.toUpperCase();
     var rowCount = user_data.rows.length;
+    //clears currently displayed table
     for (var i = rowCount - 1; i > 1; i--) {
         user_data.deleteRow(i);
     }
+    //gets search results and stores them in variable
     var stbl = []
     for (var i = 0; i < storetable.length; i++) {
         var name = storetable[i].split('</td><td><a href= https://reddit.com/user/').pop().split('</a></td><td>')[0].split('>').pop()
@@ -84,6 +94,7 @@ function search() {
             stbl.push(storetable[i])
         }
     }
+    //to limit display table to 1000 rows
     if (stbl.length > 1000) {
         var stlen = 1000
         document.getElementById("NoResults").style.display = "none";
@@ -93,12 +104,14 @@ function search() {
         var stlen = stbl.length
         document.getElementById("NoResults").style.display = "none";
     }
+    //adds search results to displayed table
     for (var i = 0; i < stlen; i++) {
         $('#user_data').append(stbl[i]);
     }
     setTimeout(() => {document.body.classList.remove("load");}, 200)
 }
 
+//sorting data by either posts comments or both
 function sortpage(n,l) {
     if(!l){document.body.classList.add("load");}
     $(document).ready(function () {
@@ -106,18 +119,24 @@ function sortpage(n,l) {
         if(page=="data"){disp="This Month"}else if(page=="all-time"){disp="All Time"}else{disp=page}
         if(n==0){srt="total"}else if(n==1){srt="posts"}else if(n==2){srt="comments"}
         document.getElementById("disp-p-s").textContent = disp+" ~ sorted by "+srt
+        //different sort methods
         if (n==0){
+            //total
             sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
         else if (n==1){
+            //posts
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
         else if (n==2){
+            //comments
             sortable.sort(function(a, b) {return b[2] - a[2]});
         }
+        //clears currently displayed table
         var rowCount = user_data.rows.length;
         for (var i = rowCount - 1; i > 1; i--) {
             user_data.deleteRow(i);
         }
+        //adds sorted data to variable
         storetable = [];
         for (var i = 0; i < sortable.length; i++) {
             var student = "<tr><td>";
@@ -135,11 +154,13 @@ function sortpage(n,l) {
             student += "</td></tr>";
             storetable.push(student)
         };
+        //to limit display table to 1000 rows
         if (storetable.length > 1000) {
             var stlen = 1000
         } else {
             var stlen = storetable.length
         }
+        //adds data to displayed table
         for (var i = 0; i < stlen; i++) {
             $('#user_data').append(storetable[i]);
         }
@@ -147,15 +168,19 @@ function sortpage(n,l) {
     })
 }
 
+//fetches data on page load or when different data selected
 function getpage(page,n,l) {
     if(!l){document.body.classList.add("load");}
     $(document).ready(function () {
+        //fetches data from database
         url = "https://isbo-coddit-default-rtdb.firebaseio.com/"+page+".json"
         fetch(url).then(response => {return response.json();}).then(function (data) {
+            //stores data in variable
             sortable = [];
             for (var user in data) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
+            //calls sort function to display+sort data
             sortpage(n,true)
             if(l){setTimeout(() => {document.body.classList.remove("load");}, 500)}
             else{setTimeout(() => {document.body.classList.remove("load");}, 400)}

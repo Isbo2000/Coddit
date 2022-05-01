@@ -2,6 +2,7 @@
 <html lang="en">
 
 	<head>
+		<!-- defines/initializes a bunch of nececary things -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Tbp Coddit</title>
@@ -23,25 +24,31 @@
 	</head>
 
 	<body onload="start();">
+		<!-- scroll to top button -->
 		<button onclick="topFunction()" class="rounded-circle" id="backToTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
+		<!-- navigation sidebar -->
 		<div class="tab w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:250px;" id="mySidebar">
 			<button class="w3-bar-item w3-large w3-hide-large" id="closeBtn" onclick="w3_close()">Close &times;</button>
 			<ul style="list-style-type:none;padding:0;margin:0;" id="menu">
 
+				<!-- lists different datasets -->
 				<li id="listheader"> <b>Sort By</b></li>
 				<li>
+					<!--for all time-->
 					<button class="tablinks" onclick="getpage(page='all-time',n);w3_close()">
 						All Time
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
 					</button>
 				</li>
 				<li>
+					<!--for this month-->
 					<button class="tablinks" onclick="getpage(page='data',n);w3_close()">
 						This Month
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
 					</button>
 				</li>
 				<li>
+					<!--dropdown of older months-->
 					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderSorts" id="OldData">
 						Legacy Data
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous months"></i>
@@ -49,44 +56,52 @@
 					</button>
 				</li>
 
+				<!-- lists data from older months -->
 				<div id="olderSorts" class="collapse">
 					<li>
+						<!--for October 2021-->
 						<button id="months" class="tablinks" onclick="getpage(page='October2021',n);w3_close()">
 							October 2021
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from October 2021"></i>
 						</button>
 					</li>
 					<li>
+						<!--for November 2021-->
 						<button id="months" class="tablinks" onclick="getpage(page='November2021',n);w3_close()">
 							November 2021
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for November 2021 is inaccurate"></i>
 						</button>
 					</li>
 					<li>
+						<!--for December 2021-->
 						<button id="months" class="tablinks" onclick="getpage(page='December2021',n);w3_close()">
 							December 2021
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for December 2021 is inaccurate"></i>
 						</button>
 					</li>
 					<li>
+						<!--January 2022-->
 						<button id="months" class="tablinks" onclick="getpage(page='January2022',n);w3_close()">
 							January 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from January 2022"></i>
 						</button>
 					</li>
 					<li>
+						<!--for February 2022-->
 						<button id="months" class="tablinks" onclick="getpage(page='February2022',n);w3_close()">
 							February 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from February 2022"></i>
 						</button>
 					</li>
 					<li>
+						<!--for March 2022-->
 						<button id="months" class="tablinks" onclick="getpage(page='March2022',n);w3_close()">
 							March 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from March 2022"></i>
 						</button>
 					</li>
 					<li>
+						<!--for April 2022-->
 						<button id="months" class="tablinks" onclick="getpage(page='April2022',n);w3_close()">
 							April 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from April 2022"></i>
@@ -94,26 +109,31 @@
 					</li>
 				</div>
 
+				<!-- lists usefull buttons/links -->
 				<li id="listheader"><b>Tools</b></i></li>
 				<li>
+					<!--for toggling light mode or dark mode-->
 					<button class="tablinks" onclick="darkmode();w3_close()">
 						Toggle Light Mode
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Toggles light mode or dark mode"></i>
 					</button>
 				</li>
 				<li>
+					<!--link back to r/teenagersbutpog-->
 					<a class="tablinks" href="https://www.reddit.com/r/teenagersbutpog" style="text-decoration: none;">
 						Back to Subreddit
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="r/TeenagersButPog"></i>
 					</a>
 				</li>
 				<li>
+					<!--link to the github-->
 					<a class="tablinks" href="https://github.com/Isbo2000/Coddit" style="text-decoration: none;">
 						Link to Github
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Isbo2000 ~ Coddit"></i>
 					</a>
 				</li>
 				<li>
+					<!--dropdown of credits-->
 					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#creditlist" id="credits">
 						Credits
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="because crediting people is nice"></i>
@@ -121,20 +141,31 @@
 					</button>
 				</li>
 
+				<!-- lists creddits for main contributors and whatnot -->
 				<div id="creditlist" class="collapse">
 					<li>
-						<a id="credit" class="tablinks" href="https://www.reddit.com/user/Dimittrikovk2/" style="text-decoration: none;">
+						<!--abe-->
+						<a id="credit" class="tablinks" href="https://www.reddit.com/user/-i-hate-this-place-/" style="text-decoration: none;">
+							Abe
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Basically started the whole thing"></i>
+						</a>
+					</li>
+					<li>
+						<!--dimi-->
+						<a id="credit" class="tablinks" href="https://www.reddit.com/user/Dimittrikov1995/" style="text-decoration: none;">
 							Dimittrikov
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Developed most of it"></i>
 						</a>
 					</li>
 					<li>
+						<!--daniel-->
 						<a id="credit" class="tablinks" href="https://www.reddit.com/user/Daniel_R013/" style="text-decoration: none;">
 							Daniel_R013
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Developed most of the way it looks"></i>
 						</a>
 					</li>
 					<li>
+						<!--isbo-->
 						<a id="credit" class="tablinks" href="https://www.reddit.com/user/Isbo2000/" style="text-decoration: none;">
 							Isbo2000
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Currently maintaining and hosting it"></i>
@@ -145,23 +176,31 @@
 			</ul>
 		</div>
 
+		<!-- main part of page -->
 		<div id="main">
 
+			<!-- title bar -->
 			<div class="w3-main" style="margin-left:250px;" id="title">
 				<div id="titleteal">
+					<!-- displays open navigation sidebar button on smaller screens -->
 					<button id="openNav" class=" w3-xlarge w3-hide-large" onclick="w3_open()"><i class="bi bi-list"></i></button>
+					<!-- displays short or long title depending on screen size-->
 					<div class="w3-container" id="dropdownandtitle">
 						<h1 class="w3-animate-top" id="longTitle">r/TeenagersButPog's Official Coddit</h1>
 						<h1 class="w3-animate-top" id="shortTitle">r/tbp's Official Coddit</h1>
 					</div>
 				</div>
+				<!-- displays current month and sort method -->
 				<p id="disp-p-s" style="margin:5px;"></p>
 			</div>
 
+			<!-- data table -->
 			<div class="tabcontent">
 				<table id="user_data">
 					<tr>
+						<!-- splash text -->
 						<p id="help" ></p>
+						<!-- search bar -->
 						<td colspan="5">
 							<div class="input-group" id="group">
 								<div id="searchIcon" class="text-center"><i class="bi bi-search"></i></div>
@@ -169,6 +208,7 @@
 							</div>
 						</td>
 					</tr>
+					<!-- table headers -->
 					<tr>
 						<th id="ltheader" style="width: 10%">Rank</th>
 						<th style="width: 30%"><a id="tbhd" href="https://www.reddit.com/users/">Username <i class="extlink bi bi-box-arrow-up-right" id="out"></i></a></th>
@@ -178,6 +218,7 @@
 					</tr>
 				</table>
 			</div>
+			<!-- displays when there are no results from search -->
 			<p id="NoResults">Whoops, Doesn't look like anyone goes by that name ):<br>Try again!<br><small>psst! check your spelling...</small></p>
 		</div>
 
