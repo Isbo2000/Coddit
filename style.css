@@ -452,6 +452,7 @@ table {
 	}
 	#NoResults {
 		font-size: 3.5vw;
+		margin-left: 0;
 	}
 	#help {
 		float: left;
