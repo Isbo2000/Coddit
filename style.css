@@ -264,6 +264,14 @@ table {
 	margin-bottom:5px;
 }
 
+#git {
+	margin-left: 300px;
+	width:70%;
+	margin-top:0px;
+	float:left;
+	margin-bottom:0px;
+}
+
 .panel {
 	padding: 0 18px;
 	display: none;
@@ -455,6 +463,10 @@ table {
 		margin-left: 0;
 	}
 	#help {
+		float: left;
+		margin-left: 5px;
+	}
+	#git {
 		float: left;
 		margin-left: 5px;
 	}
