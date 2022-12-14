@@ -1,6 +1,5 @@
 //runs when the page loads in
 function start() {
-    document.body.classList.add("load");
     //define/initialize tooltip for navigation sidebar
     tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -31,6 +30,13 @@ function start() {
     });
 }
 
+//change cursor when loading things
+function load(func) {
+    document.body.classList.remove("load");
+    func
+    setTimeout(() => {document.body.classList.add("load");}, 200)
+}
+
 //scroll to top button
 function scrollFunction() {
     mybutton = document.getElementById("backToTop");
@@ -54,7 +60,7 @@ function splashtext() {
         "There's a subreddit vent chat, go check it out!", "HEY! YOU, YES YOU, YOU. YOU'RE AMAZING!", "It's only embarrassing if you're embarrassed", "Holding on to anger is like drinking poison and hoping the other person dies",
         "When life shuts a door, open it again, it's a door, that's how they work", "You will meet people that see a lot more in you than you do in yourself", "You are an incredible person", "Work it!", "Those who matter don't mind and those who mind don't matter",
         "You matter", "You matter to us", "Be yourself more", "Show the world who you are, because who you are is an amazing person", "We love you for you", "Keep on swimming", "Good work!", "Treat yourself", "Treat yourself you deserve it", "I like your style",
-        "You’re perfect just the way you are", "You make people's days", "You're probably smart enough to do a crossword puzzle in pen", "Chill oooouuuuutttt B)", "Square up!", "Pleasure to meet you", "Welcome!", "Woah, impressive",
+        "You're perfect just the way you are", "You make people's days", "You're probably smart enough to do a crossword puzzle in pen", "Chill oooouuuuutttt B)", "Square up!", "Pleasure to meet you", "Welcome!", "Woah, impressive",
         "Talk to a trusted family member or friend whenever you get into a pickle", "Your friends probably love you more than you realize, damn", "People who are goodlooking but have terrible personalities are basically real life clickbaits"]
     var item = items[Math.floor(Math.random() * items.length)];
     document.getElementById("help").innerHTML = item;
@@ -77,11 +83,23 @@ function w3_close() {
 }
 
 //searching through data
+function entsearch() {
+    $(document).ready(function() {
+        var sch = document.getElementById("searchtable");
+        var input = sch.value.toUpperCase();
+        if(!input){load(sortpage(n))}
+        $(document).bind('keyup',function(e){
+            if (e.keyCode == 13) {
+                load(search())
+            }
+        })
+    })
+}
 function search() {
-    document.body.classList.add("load");
     var sch = document.getElementById("searchtable");
     var input = sch.value.toUpperCase();
     var rowCount = user_data.rows.length;
+    if(!input){sortpage(n)}
     //clears currently displayed table
     for (var i = rowCount - 1; i > 1; i--) {
         user_data.deleteRow(i);
@@ -108,12 +126,10 @@ function search() {
     for (var i = 0; i < stlen; i++) {
         $('#user_data').append(stbl[i]);
     }
-    setTimeout(() => {document.body.classList.remove("load");}, 200)
 }
 
 //sorting data by either posts comments or both
 function sortpage(n,l) {
-    if(!l){document.body.classList.add("load");}
     $(document).ready(function () {
         document.getElementById("searchtable").value = ""
         if(page=="data"){disp="This Month"}else if(page=="all-time"){disp="All Time"}else{disp=page}
@@ -164,14 +180,14 @@ function sortpage(n,l) {
         for (var i = 0; i < stlen; i++) {
             $('#user_data').append(storetable[i]);
         }
-        if(!l){setTimeout(() => {document.body.classList.remove("load");}, 300)}
+        if(l){setTimeout(() => {document.body.classList.add("load");}, 200)}
     })
 }
 
 //fetches data on page load or when different data selected
 function getpage(page,n,l) {
-    if(!l){document.body.classList.add("load");}
     $(document).ready(function () {
+        w3_close()
         //fetches data from database
         url = "https://isbo-coddit-default-rtdb.firebaseio.com/"+page+".json"
         fetch(url).then(response => {return response.json();}).then(function (data) {
@@ -181,9 +197,7 @@ function getpage(page,n,l) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             //calls sort function to display+sort data
-            sortpage(n,true)
-            if(l){setTimeout(() => {document.body.classList.remove("load");}, 500)}
-            else{setTimeout(() => {document.body.classList.remove("load");}, 400)}
+            sortpage(n,l)
         });
     });
 }

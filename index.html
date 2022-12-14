@@ -25,7 +25,7 @@
 
 	<body onload="start();">
 		<!-- scroll to top button -->
-		<button onclick="topFunction()" class="rounded-circle" id="backToTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
+		<button onclick="load(topFunction())" class="rounded-circle" id="backToTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
 		<!-- navigation sidebar -->
 		<div class="tab w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:250px;" id="mySidebar">
 			<button class="w3-bar-item w3-large w3-hide-large" id="closeBtn" onclick="w3_close()">Close &times;</button>
@@ -35,14 +35,14 @@
 				<li id="listheader"> <b>Sort By</b></li>
 				<li>
 					<!--for all time-->
-					<button class="tablinks" onclick="getpage(page='all-time',n);w3_close()">
+					<button class="tablinks" onclick="load(getpage(page='all-time',n));">
 						All Time
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this month-->
-					<button class="tablinks" onclick="getpage(page='data',n);w3_close()">
+					<button class="tablinks" onclick="load(getpage(page='data',n));">
 						This Month
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
 					</button>
@@ -50,94 +50,94 @@
 				<li>
 					<!--dropdown of older months-->
 					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderSorts" id="OldData">
-						Legacy Data
+						Past Months
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous months"></i>
 						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
 					</button>
 				</li>
-
+				
 				<!-- lists data from older months -->
 				<div id="olderSorts" class="collapse">
 					<li>
 						<!--for October 2021-->
-						<button id="months" class="tablinks" onclick="getpage(page='October2021',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='October2021',n));">
 							October 2021
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from October 2021"></i>
 						</button>
 					</li>
 					<li>
 						<!--for November 2021-->
-						<button id="months" class="tablinks" onclick="getpage(page='November2021',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='November2021',n));">
 							November 2021
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for November 2021 is inaccurate"></i>
 						</button>
 					</li>
 					<li>
 						<!--for December 2021-->
-						<button id="months" class="tablinks" onclick="getpage(page='December2021',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='December2021',n));">
 							December 2021
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for December 2021 is inaccurate"></i>
 						</button>
 					</li>
 					<li>
 						<!--January 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='January2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='January2022',n));">
 							January 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from January 2022"></i>
 						</button>
 					</li>
 					<li>
 						<!--for February 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='February2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='February2022',n));">
 							February 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from February 2022"></i>
 						</button>
 					</li>
 					<li>
 						<!--for March 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='March2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='March2022',n));">
 							March 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from March 2022"></i>
 						</button>
 					</li>
 					<li>
 						<!--for April 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='April2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='April2022',n));">
 							April 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from April 2022"></i>
 						</button>
 					</li>
 					<li>
 						<!--for May 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='May2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='May2022',n));">
 							May 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from May 2022"></i>
 						</button>
 					</li>
 					<li>
 						<!--for June 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='June2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='June2022',n));">
 							June 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from June 2022"></i>
 						</button>
 					</li>
 					<li>
 						<!--for July 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='July2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='July2022',n));">
 							July 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to Isbo being stupid, this includes data from some of August 2022 as well"></i>
 						</button>
 					</li>
 					<li>
 						<!--for October 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='October2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='October2022',n));">
 							October 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from October 2022"></i>
 						</button>
 					</li>
 					<li>
 						<!--for November 2022-->
-						<button id="months" class="tablinks" onclick="getpage(page='November2022',n);w3_close()">
+						<button id="months" class="tablinks" onclick="load(getpage(page='November2022',n));">
 							November 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from November 2022"></i>
 						</button>
@@ -148,7 +148,7 @@
 				<li id="listheader"><b>Tools</b></i></li>
 				<li>
 					<!--for toggling light mode or dark mode-->
-					<button class="tablinks" onclick="darkmode();w3_close()">
+					<button class="tablinks" onclick="load(darkmode());w3_close()">
 						Toggle Light/Dark Mode
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Toggles light mode or dark mode"></i>
 					</button>
@@ -246,8 +246,8 @@
 						<!-- search bar -->
 						<td colspan="5">
 							<div class="input-group" id="group">
-								<div id="searchIcon" class="text-center"><i class="bi bi-search"></i></div>
-								<input type="text" class="form-control" id="searchtable" onkeyup="search()" placeholder="Search Users..." title="Type a user">
+								<div onclick="load(search())" id="searchIcon" class="text-center"><i class="bi bi-search"></i></div>
+								<input type="text" class="form-control" id="searchtable" onkeyup="entsearch()" placeholder="Search Users..." title="Type a user">
 							</div>
 						</td>
 					</tr>
@@ -255,9 +255,9 @@
 					<tr>
 						<th id="ltheader" style="width: 10%">Rank</th>
 						<th style="width: 30%"><a id="tbhd" href="https://www.reddit.com/users/">Username <i class="extlink bi bi-box-arrow-up-right" id="out"></i></a></th>
-						<th style="width: 20%"><button onclick="sortpage(n=1);" id="sort">Posts</button></a></th>
-						<th style="width: 20%"><button onclick="sortpage(n=2);" id="sort">Comments</button></a></th>
-						<th id="rtheader" style="width: 20%"><button onclick="sortpage(n=0);" id="sort">Total</button></a></th>
+						<th style="width: 20%"><button onclick="load(sortpage(n=1));" id="sort">Posts</button></a></th>
+						<th style="width: 20%"><button onclick="load(sortpage(n=2));" id="sort">Comments</button></a></th>
+						<th id="rtheader" style="width: 20%"><button onclick="load(sortpage(n=0));" id="sort">Total</button></a></th>
 					</tr>
 				</table>
 			</div>

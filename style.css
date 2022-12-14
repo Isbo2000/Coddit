@@ -3,6 +3,7 @@ body {
 	background-color: #2C2F33;
 	color: white;
 	font-family: "Roboto";
+	cursor: progress;
 }
 
 #help {
@@ -81,6 +82,7 @@ h1, #listheader {
 table a {
     text-decoration: none;
     color: white;
+	cursor: progress;
 }
 
 table a:hover {
@@ -111,7 +113,7 @@ table #sort:hover {color: rgb(93, 93, 255);}
 	border: none;
 	outline: none;
 	text-align: left;
-	cursor: pointer;
+	cursor: progress;
 	font-size: 17px;
 	transition: all 0.3s ease;
 }
@@ -155,6 +157,10 @@ th {
 
 table {
 	margin-left: 300px;
+}
+
+#tbhd {
+	cursor: progress;
 }
 
 /* All below this comment is new references to new objects in the HTML file */
@@ -212,7 +218,7 @@ table {
 	border: none;
 	outline: none;
 	text-align: left;
-	cursor: pointer;
+	cursor: progress;
 	font-size: 17px;
 	transition: all 0.3s ease;
 	padding-left: 35px;
@@ -227,7 +233,7 @@ table {
 	border: none;
 	outline: none;
 	text-align: left;
-	cursor: pointer;
+	cursor: progress;
 	font-size: 17px;
 	transition: all 0.3s ease;
 	padding-left: 35px;
@@ -293,6 +299,7 @@ table {
 	color: white;
 	transition: all 0.5s ease;
 	background-color: #23272A;
+	cursor: progress;
 }
 
 #searchtable:focus {
@@ -312,6 +319,7 @@ table {
 	border-top-left-radius: 16px;
 	transition: all 0.5s ease;
 	border: 1px solid rgb(68, 68, 68);
+	cursor: progress;
 }
 
 .dropdown-menu {
@@ -534,34 +542,37 @@ table {
 
 /********************/
 .load {
-	cursor: progress
+	cursor: default;
 }
 .load .main {
-	cursor: progress
+	cursor: default;
 }
 .load table a {
-	cursor: progress
+	cursor: pointer;
 }
 .load #sort {
-	cursor: progress
+	cursor: pointer;
 }
 .load #tbhd {
-	cursor: progress
+	cursor: pointer;
 }
 .load .tab button {
-	cursor: progress
+	cursor: pointer;
 }
 .load .tab a {
-	cursor: progress
+	cursor: pointer;
 }
 .load #backtotop {
-	cursor: progress
+	cursor: pointer;
 }
 .load #searchtable {
-	cursor: progress
+	cursor: text;
+}
+.load #searchIcon {
+	cursor: pointer;
 }
 .load .tabcontent {
-	cursor: progress
+	cursor: default;
 }
 
 /********************/
