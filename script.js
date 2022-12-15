@@ -15,6 +15,15 @@ function start() {
         document.getElementById("searchIcon").style.border = '1px solid rgb(68, 68, 68)';
         document.getElementById("searchIcon").style.borderRight = 'none';
     });
+    sq.addEventListener('keyup', function(e){
+        var sch = document.getElementById("searchtable");
+        var input = sch.value.toUpperCase();
+        if(!input){load(sortpage(n))}else{
+            if (e.keyCode == 13) {
+                load(search())
+            }
+        }
+    })
     //define/initialize scroll to top button
     window.onscroll = function() {
         scrollFunction()
@@ -69,6 +78,7 @@ function splashtext() {
 //darkmode
 function darkmode() {
     document.body.classList.toggle("dark-mode");
+    document.getElementById("theme").textContent == "Light Mode" ? document.getElementById("theme").textContent = "Dark Mode" : document.getElementById("theme").textContent = "Light Mode";
 }
 
 //opening and closing the navigation sidebar
@@ -83,48 +93,37 @@ function w3_close() {
 }
 
 //searching through data
-function entsearch() {
-    $(document).ready(function() {
-        var sch = document.getElementById("searchtable");
-        var input = sch.value.toUpperCase();
-        if(!input){load(sortpage(n))}
-        $(document).bind('keyup',function(e){
-            if (e.keyCode == 13) {
-                load(search())
-            }
-        })
-    })
-}
 function search() {
     var sch = document.getElementById("searchtable");
     var input = sch.value.toUpperCase();
     var rowCount = user_data.rows.length;
-    if(!input){sortpage(n)}
-    //clears currently displayed table
-    for (var i = rowCount - 1; i > 1; i--) {
-        user_data.deleteRow(i);
-    }
-    //gets search results and stores them in variable
-    var stbl = []
-    for (var i = 0; i < storetable.length; i++) {
-        var name = storetable[i].split('</td><td><a href= https://reddit.com/user/').pop().split('</a></td><td>')[0].split('>').pop()
-        if (name.toUpperCase().indexOf(input) > -1) {
-            stbl.push(storetable[i])
+    if(!input){sortpage(n)}else{
+        //clears currently displayed table
+        for (var i = rowCount - 1; i > 1; i--) {
+            user_data.deleteRow(i);
         }
-    }
-    //to limit display table to 1000 rows
-    if (stbl.length > 1000) {
-        var stlen = 1000
-        document.getElementById("NoResults").style.display = "none";
-    } else if (stbl.length < 1) {
-        document.getElementById("NoResults").style.display = "inline-block";
-    } else {
-        var stlen = stbl.length
-        document.getElementById("NoResults").style.display = "none";
-    }
-    //adds search results to displayed table
-    for (var i = 0; i < stlen; i++) {
-        $('#user_data').append(stbl[i]);
+        //gets search results and stores them in variable
+        var stbl = []
+        for (var i = 0; i < storetable.length; i++) {
+            var name = storetable[i].split('</td><td><a href= https://reddit.com/user/').pop().split('</a></td><td>')[0].split('>').pop()
+            if (name.toUpperCase().indexOf(input) > -1) {
+                stbl.push(storetable[i])
+            }
+        }
+        //to limit display table to 1000 rows
+        if (stbl.length > 1000) {
+            var stlen = 1000
+            document.getElementById("NoResults").style.display = "none";
+        } else if (stbl.length < 1) {
+            document.getElementById("NoResults").style.display = "inline-block";
+        } else {
+            var stlen = stbl.length
+            document.getElementById("NoResults").style.display = "none";
+        }
+        //adds search results to displayed table
+        for (var i = 0; i < stlen; i++) {
+            $('#user_data').append(stbl[i]);
+        }
     }
 }
 

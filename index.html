@@ -149,7 +149,7 @@
 				<li>
 					<!--for toggling light mode or dark mode-->
 					<button class="tablinks" onclick="load(darkmode());w3_close()">
-						Toggle Light/Dark Mode
+						<span id="theme">Light Mode</span>
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Toggles light mode or dark mode"></i>
 					</button>
 				</li>
@@ -247,7 +247,7 @@
 						<td colspan="5">
 							<div class="input-group" id="group">
 								<div onclick="load(search())" id="searchIcon" class="text-center"><i class="bi bi-search"></i></div>
-								<input type="text" class="form-control" id="searchtable" onkeyup="entsearch()" placeholder="Search Users..." title="Type a user">
+								<input type="text" class="form-control" id="searchtable" placeholder="Search Users..." title="Type a user">
 							</div>
 						</td>
 					</tr>
