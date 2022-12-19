@@ -35,21 +35,21 @@
 				<li id="listheader"> <b>Sort By</b></li>
 				<li>
 					<!--for all time-->
-					<button class="tablinks" onclick="load(getpage(page='all-time',n));">
+					<button class="tablinks" onclick="load(getpage(page='All Time',n));">
 						All Time
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this month-->
-					<button class="tablinks" onclick="load(getpage(page='data',n));">
+					<button class="tablinks" onclick="load(getpage(page='This Month',n));">
 						This Month
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this year-->
-					<button class="tablinks" onclick="">
+					<button class="tablinks" onclick="load(getpage(page='This Year',n));">
 						This Year
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current year"></i>
 					</button>
@@ -164,14 +164,14 @@
 				<div id="olderYears" class="collapse">
 					<li>
 						<!--for 2021-->
-						<button id="years" class="tablinks" onclick="">
+						<button id="years" class="tablinks" onclick="load(getpage(page='2021',n));">
 							2021
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for 2021 is inaccurate"></i>
 						</button>
 					</li>
 					<li>
 						<!--for 2022-->
-						<button id="years" class="tablinks" onclick="">
+						<button id="years" class="tablinks" onclick="load(getpage(page='2022',n));">
 							2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to technical problems data for 2022 is inaccurate"></i>
 						</button>
