@@ -32,7 +32,7 @@ function start() {
         srch = false;
         storetable = [];
         sortable = [];
-        page = "data";
+        page = "This Month";
         n = 0;
         splashtext();
         getpage(page,n,true)
@@ -137,9 +137,8 @@ function sortpage(n,l) {
     srch = false;
     $(document).ready(function () {
         document.getElementById("searchtable").value = ""
-        if(page=="data"){disp="This Month"}else if(page=="all-time"){disp="All Time"}else{disp=page}
         if(n==0){srt="total"}else if(n==1){srt="posts"}else if(n==2){srt="comments"}
-        document.getElementById("disp-p-s").textContent = disp+" ~ sorted by "+srt
+        document.getElementById("disp-p-s").textContent = page+" ~ sorted by "+srt
         //different sort methods
         if (n==0){
             //total

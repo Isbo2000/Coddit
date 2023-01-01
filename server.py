@@ -55,7 +55,7 @@ try:
     #defines nececary variables
     subred = checklogin().subreddit("teenagersbutpog")
     banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
-    datdbs = [db.reference("data"), db.reference("all-time")]
+    datdbs = [db.reference("This Month"), db.reference("This Year"), db.reference("All Time")]
     streams = [
         [subred.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
         [subred.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]

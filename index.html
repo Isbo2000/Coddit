@@ -35,21 +35,28 @@
 				<li id="listheader"> <b>Sort By</b></li>
 				<li>
 					<!--for all time-->
-					<button class="tablinks" onclick="load(getpage(page='all-time',n));">
+					<button class="tablinks" onclick="load(getpage(page='All Time',n));">
 						All Time
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this month-->
-					<button class="tablinks" onclick="load(getpage(page='data',n));">
+					<button class="tablinks" onclick="load(getpage(page='This Month',n));">
 						This Month
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
 					</button>
 				</li>
 				<li>
+					<!--for this year-->
+					<button class="tablinks" onclick="load(getpage(page='This Year',n));">
+						This Year
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current year"></i>
+					</button>
+				</li>
+				<li>
 					<!--dropdown of older months-->
-					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderSorts" id="OldData">
+					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderMonths" id="OldMonths">
 						Past Months
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous months"></i>
 						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
@@ -57,7 +64,7 @@
 				</li>
 				
 				<!-- lists data from older months -->
-				<div id="olderSorts" class="collapse">
+				<div id="olderMonths" class="collapse">
 					<li>
 						<!--for October 2021-->
 						<button id="months" class="tablinks" onclick="load(getpage(page='October2021',n));">
@@ -140,6 +147,40 @@
 						<button id="months" class="tablinks" onclick="load(getpage(page='November2022',n));">
 							November 2022
 							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from November 2022"></i>
+						</button>
+					</li>
+					<li>
+						<!--for December 2022-->
+						<button id="months" class="tablinks" onclick="load(getpage(page='December2022',n));">
+							December 2022
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from December 2022"></i>
+						</button>
+					</li>
+				</div>
+
+				<li>
+					<!--dropdown of older years-->
+					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderYears" id="OldYears">
+						Past Years
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous years"></i>
+						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
+					</button>
+				</li>
+
+				<!-- lists data from older years -->
+				<div id="olderYears" class="collapse">
+					<li>
+						<!--for 2021-->
+						<button id="years" class="tablinks" onclick="load(getpage(page='2021',n));">
+							2021
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to coddit not running the whole year data from 2021 is incomplete"></i>
+						</button>
+					</li>
+					<li>
+						<!--for 2022-->
+						<button id="years" class="tablinks" onclick="load(getpage(page='2022',n));">
+							2022
+							<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Due to coddit not running the whole year data from 2022 is incomplete"></i>
 						</button>
 					</li>
 				</div>

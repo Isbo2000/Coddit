@@ -183,12 +183,21 @@ table {
 
 /***/
 
-#OldData[aria-expanded=true] .bi-caret-left {
+#OldMonths[aria-expanded=true] .bi-caret-left {
 	transition: .3s transform ease-in-out;
 	transform: rotate(-90deg);
 }
 
 #months {
+	padding-left: 60px;
+}
+
+#OldYears[aria-expanded=true] .bi-caret-left {
+	transition: .3s transform ease-in-out;
+	transform: rotate(-90deg);
+}
+
+#years {
 	padding-left: 60px;
 }
 
