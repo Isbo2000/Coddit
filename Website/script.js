@@ -34,8 +34,8 @@ function start() {
         sortable = [];
         page = "This Month";
         n = 0;
-        splashtext();
-        getpage(page,n,true)
+        document.getElementById("help").innerHTML = splash[Math.floor(Math.random() * splash.length)];
+        getpage(page,n,true);
     });
 }
 
@@ -58,12 +58,6 @@ function scrollFunction() {
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-}
-
-//random display text
-function splashtext() {
-    let item = splash[Math.floor(Math.random() * splash.length)];
-    document.getElementById("help").innerHTML = item
 }
 
 //darkmode
