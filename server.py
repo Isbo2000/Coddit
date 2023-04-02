@@ -18,20 +18,20 @@ def asklogin():
     u = input('Username: ')
     p = getpass.getpass('Password: ')
     login = {"id":i,"secret":s,"username":u,"password":p}
-    with open('./login.json', 'w') as lgn:
+    with open('./Assets/login.json', 'w') as lgn:
         json.dump(login, lgn)
     try:
         print("\nChecking details...\n")
         redlog(login).user.me()
     except:
         print("ERROR: Invalid login\n")
-        os.remove('./login.json')
+        os.remove('./Assets/login.json')
         checklogin()
     print("Logging in...\n")
     return redlog(login)
 def checklogin():
-    if os.path.exists('./login.json'):
-        with open('./login.json') as lgn:
+    if os.path.exists('./Assets/login.json'):
+        with open('./Assets/login.json') as lgn:
             login = json.load(lgn)
         try:
             print("\nChecking details...\n")
@@ -48,7 +48,7 @@ try:
     print("Starting script...\n")
     #checks for login info and logs into firebase
     try:
-        cred = credentials.Certificate("firebase-login.json")
+        cred = credentials.Certificate("./Assets/firebase-login.json")
         durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
         firebase_admin.initialize_app(cred, durl)
     except: print("Please add or fix 'firebase-login.json'"); sys.exit()
