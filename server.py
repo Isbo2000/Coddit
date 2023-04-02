@@ -3,10 +3,6 @@ import os,sys,json,time,getpass
 import firebase_admin
 import praw
 
-#open config file
-with open('./Assets/config.json') as cfg:
-    config = json.load(cfg)
-
 #checks for login info and logs into reddit bot
 def redlog(login):
     return praw.Reddit(
@@ -22,20 +18,20 @@ def asklogin():
     u = input('Username: ')
     p = getpass.getpass('Password: ')
     login = {"id":i,"secret":s,"username":u,"password":p}
-    with open('./Assets/login.json', 'w') as lgn:
+    with open('./login.json', 'w') as lgn:
         json.dump(login, lgn)
     try:
         print("\nChecking details...\n")
         redlog(login).user.me()
     except:
         print("ERROR: Invalid login\n")
-        os.remove('./Assets/login.json')
+        os.remove('./login.json')
         checklogin()
     print("Logging in...\n")
     return redlog(login)
 def checklogin():
-    if os.path.exists('./Assets/login.json'):
-        with open('./Assets/login.json') as lgn:
+    if os.path.exists('./login.json'):
+        with open('./login.json') as lgn:
             login = json.load(lgn)
         try:
             print("\nChecking details...\n")
@@ -52,12 +48,13 @@ try:
     print("Starting script...\n")
     #checks for login info and logs into firebase
     try:
-        cred = credentials.Certificate("./Assets/firebase-login.json")
-        durl = {"databaseURL":config["database"]}
+        cred = credentials.Certificate("./firebase-login.json")
+        durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
         firebase_admin.initialize_app(cred, durl)
     except: print("Please add or fix 'firebase-login.json'"); sys.exit()
     #defines nececary variables
     subred = checklogin().subreddit("teenagersbutpog")
+    banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
     datdbs = [db.reference("This Month"), db.reference("This Year"), db.reference("All Time")]
     streams = [
         [subred.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
@@ -76,7 +73,7 @@ while True:
                 #checks if the author of post/comment exists or is banned
                 if (con is None): time.sleep(1); break
                 author = str(con.author)
-                if (author in config["banned"]): print(author+" banned"); break
+                if (author in banned): print(author+" banned"); break
                 #goes through the 2 databases (this month and all time) and updates them
                 for datdb in datdbs:
                     #fetches data
