@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<!-- defines/initializes a bunch of nececary things -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Tbp Coddit</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" type="image/png" href="https://cdn.discordapp.com/attachments/742845528806522903/905083099505913886/communityIcon_tl264bd22xw71.png"/>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+		<script type="text/javascript" src="data.js"></script>
+		<script type="text/javascript" src="script.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+	</head>
+
+	<body onload="start();">
+		<!-- scroll to top button -->
+		<button onclick="load(topFunction())" class="rounded-circle" id="backToTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
+		<!-- navigation sidebar -->
+		<div class="tab w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:250px;" id="mySidebar">
+			<button class="w3-bar-item w3-large w3-hide-large" id="closeBtn" onclick="w3_close()">Close &times;</button>
+			<ul style="list-style-type:none;padding:0;margin:0;" id="menu">
+
+				<!-- lists different datasets -->
+				<li id="listheader"> <b>Sort By</b></li>
+				<li>
+					<!--for all time-->
+					<button class="tablinks" onclick="load(getpage(page='All Time',n));">
+						All Time
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
+					</button>
+				</li>
+				<li>
+					<!--for this month-->
+					<button class="tablinks" onclick="load(getpage(page='This Month',n));">
+						This Month
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
+					</button>
+				</li>
+				<li>
+					<!--for this year-->
+					<button class="tablinks" onclick="load(getpage(page='This Year',n));">
+						This Year
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current year"></i>
+					</button>
+				</li>
+				<li>
+					<!--dropdown of older months-->
+					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderMonths" id="OldMonths">
+						Past Months
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous months"></i>
+						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
+					</button>
+				</li>
+				
+				<!-- lists data from older months -->
+				<div id="olderMonths" class="collapse"></div>
+
+				<li>
+					<!--dropdown of older years-->
+					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderYears" id="OldYears">
+						Past Years
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous years"></i>
+						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
+					</button>
+				</li>
+
+				<!-- lists data from older years -->
+				<div id="olderYears" class="collapse"></div>
+
+				<!-- lists usefull buttons/links -->
+				<li id="listheader"><b>Tools</b></i></li>
+				<li>
+					<!--for toggling light mode or dark mode-->
+					<button class="tablinks" onclick="load(darkmode());w3_close()">
+						<span id="theme">Light Mode</span>
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Toggles light mode or dark mode"></i>
+					</button>
+				</li>
+				<li>
+					<!--link back to r/teenagersbutpog-->
+					<a class="tablinks" href="https://www.reddit.com/r/teenagersbutpog" style="text-decoration: none;">
+						Back to Subreddit
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="r/TeenagersButPog"></i>
+					</a>
+				</li>
+				<li>
+					<!--link to the github-->
+					<a class="tablinks" href="https://github.com/Isbo2000/Coddit" style="text-decoration: none;">
+						Link to Github
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Isbo2000 ~ Coddit"></i>
+					</a>
+				</li>
+				<li>
+					<!--dropdown of credits-->
+					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#creditlist" id="credits">
+						Credits
+						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="because crediting people is nice"></i>
+						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
+					</button>
+				</li>
+
+				<!-- lists creddits for main contributors and whatnot -->
+				<div id="creditlist" class="collapse"></div>
+
+			</ul>
+		</div>
+
+		<!-- main part of page -->
+		<div id="main">
+
+			<!-- title bar -->
+			<div class="w3-main" style="margin-left:250px;" id="title">
+				<div id="titleteal">
+					<!-- displays open navigation sidebar button on smaller screens -->
+					<button id="openNav" class=" w3-xlarge w3-hide-large" onclick="w3_open()"><i class="bi bi-list"></i></button>
+					<!-- displays short or long title depending on screen size-->
+					<div class="w3-container" id="dropdownandtitle">
+						<h1 class="w3-animate-top" id="longTitle">r/TeenagersButPog's Official Coddit</h1>
+						<h1 class="w3-animate-top" id="shortTitle">r/tbp's Official Coddit</h1>
+					</div>
+				</div>
+				<!-- displays current month and sort method -->
+				<p id="disp-p-s" style="margin:5px;"></p>
+			</div>
+
+			<!-- data table -->
+			<div class="tabcontent">
+				<table id="user_data">
+					<tr>
+						<!-- splash text -->
+						<p id="git" >In honor of Git/Jacob</p>
+						<p id="help" ></p>
+						<!-- search bar -->
+						<td colspan="5">
+							<div class="input-group" id="group">
+								<div onclick="entsearch()" id="searchIcon" class="text-center"><i class="bi bi-search"></i></div>
+								<input type="text" id="searchtable" placeholder="Search Users..." title="Type a user">
+							</div>
+						</td>
+					</tr>
+					<!-- table headers -->
+					<tr>
+						<th id="ltheader" style="width: 10%">Rank</th>
+						<th style="width: 30%"><a id="tbhd" href="https://www.reddit.com/users/">Username <i class="extlink bi bi-box-arrow-up-right" id="out"></i></a></th>
+						<th style="width: 20%"><button onclick="load(sortpage(n=1));" id="sort">Posts</button></a></th>
+						<th style="width: 20%"><button onclick="load(sortpage(n=2));" id="sort">Comments</button></a></th>
+						<th id="rtheader" style="width: 20%"><button onclick="load(sortpage(n=0));" id="sort">Total</button></a></th>
+					</tr>
+				</table>
+			</div>
+			<!-- displays when there are no results from search -->
+			<p id="NoResults">Whoops, Doesn't look like anyone goes by that name ):<br>Try again!<br><small>psst! check your spelling...</small></p>
+		</div>
+
+	</body>
+</html>

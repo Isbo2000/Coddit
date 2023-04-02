@@ -29,13 +29,14 @@ function start() {
     };
     //define/initialize splash text and display table
     $(document).ready(function () {
+        pastdata();
         srch = false;
         storetable = [];
         sortable = [];
         page = "This Month";
         n = 0;
-        splashtext();
-        getpage(page,n,true)
+        document.getElementById("help").innerHTML = splash[Math.floor(Math.random() * splash.length)];
+        getpage(page,n,true);
     });
 }
 
@@ -58,21 +59,6 @@ function scrollFunction() {
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-}
-
-//random display text
-function splashtext() {
-    var items = ["Take breaks!", "Developed by Dimittrikov and Daniel_R013 (and me hehe)", "It's important to stay independent", "Remember to breathe", "In through the nose and out through the mouth",
-        "Call your local crisis line when things get especially sticky", "We love having you around", "You're worthy", "A break from reddit every so often is always helpful!", "Stay true to you!",
-        "Be you", "You look wonderful! You should show everyone sometime", "Keep it up", "r/teenagersbutpog, since April 2021", "Woah, quite the reddit usage there!", "Impressive",
-        "All things are difficult before they are easy", "Don't light yourself on fire to keep others warm", "The secret of getting ahead is getting started", "When something is important enough, you do it even if the odds are not in your favor",
-        "There's a subreddit vent chat, go check it out!", "HEY! YOU, YES YOU, YOU. YOU'RE AMAZING!", "It's only embarrassing if you're embarrassed", "Holding on to anger is like drinking poison and hoping the other person dies",
-        "When life shuts a door, open it again, it's a door, that's how they work", "You will meet people that see a lot more in you than you do in yourself", "You are an incredible person", "Work it!", "Those who matter don't mind and those who mind don't matter",
-        "You matter", "You matter to us", "Be yourself more", "Show the world who you are, because who you are is an amazing person", "We love you for you", "Keep on swimming", "Good work!", "Treat yourself", "Treat yourself you deserve it", "I like your style",
-        "You're perfect just the way you are", "You make people's days", "You're probably smart enough to do a crossword puzzle in pen", "Chill oooouuuuutttt B)", "Square up!", "Pleasure to meet you", "Welcome!", "Woah, impressive",
-        "Talk to a trusted family member or friend whenever you get into a pickle", "Your friends probably love you more than you realize, damn", "People who are goodlooking but have terrible personalities are basically real life clickbaits"]
-    var item = items[Math.floor(Math.random() * items.length)];
-    document.getElementById("help").innerHTML = item;
 }
 
 //darkmode
@@ -203,5 +189,46 @@ function getpage(page,n,l) {
             //calls sort function to display+sort data
             sortpage(n,l)
         });
+    });
+}
+
+//loads past data sidebar options
+function pastdata() {
+    $(document).ready(function () {
+        //months
+        for (let i = 0; i < months.length; i++) {
+            let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
+            month += months[i].name.replace(" ","");
+            month += "',n));>";
+            month += months[i].name;
+            month += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+            month += (months[i].tooltip ? months[i].tooltip : `Data from ${months[i].name}`);
+            month += "'></i></button></li>";
+            $('#olderMonths').append(month);
+        }
+
+        //years
+        for (let i = 0; i < years.length; i++) {
+            let year = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
+            year += years[i].name;
+            year += "',n));>";
+            year += years[i].name;
+            year += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+            year += (years[i].tooltip ? years[i].tooltip : `Data from ${years[i].name}`);
+            year += "'></i></button></li>";
+            $('#olderYears').append(year);
+        }
+
+        //credits
+        for (let i = 0; i < credits.length; i++) {
+            let credit = "<li><a id='credit' class='tablinks' href='";
+            credit += credits[i].url;
+            credit += "' style='text-decoration: none;'>";
+            credit += credits[i].name;
+            credit += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+            credit += credits[i].tooltip;
+            credit += "'></i></a></li>";
+            $('#creditlist').append(credit);
+        }
     });
 }

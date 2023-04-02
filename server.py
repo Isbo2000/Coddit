@@ -10,7 +10,7 @@ def redlog(login):
         client_secret = login["secret"], 
         username = login["username"], 
         password = login["password"], 
-        user_agent = "Isbot2000 ~ Coddit")
+        user_agent = f"{login['username']} ~ Coddit")
 def asklogin():
     print("PLease enter your bot login info (dw, it is only stored locally)\n")
     i = getpass.getpass('Id: ')
@@ -48,7 +48,7 @@ try:
     print("Starting script...\n")
     #checks for login info and logs into firebase
     try:
-        cred = credentials.Certificate("firebase-login.json")
+        cred = credentials.Certificate("./firebase-login.json")
         durl = {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
         firebase_admin.initialize_app(cred, durl)
     except: print("Please add or fix 'firebase-login.json'"); sys.exit()
