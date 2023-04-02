@@ -218,5 +218,17 @@ function pastdata() {
             year += "'></i></button></li>";
             $('#olderYears').append(year);
         }
+
+        //credits
+        for (let i = 0; i < credits.length; i++) {
+            let credit = "<li><a id='credit' class='tablinks' href='";
+            credit += credits[i].url;
+            credit += "' style='text-decoration: none;'>";
+            credit += credits[i].name;
+            credit += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+            credit += credits[i].tooltip;
+            credit += "'></i></a></li>";
+            $('#creditlist').append(credit);
+        }
     });
 }
