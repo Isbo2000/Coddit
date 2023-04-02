@@ -1,1 +1,3 @@
 docs/** -linguist-documentation
+
+docs/data.js linguist-language=json
