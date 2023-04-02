@@ -1,0 +1,9 @@
+{
+    "database": "https://isbo-coddit-default-rtdb.firebaseio.com/",
+
+    "banned": [
+        "Isbot2000",
+        "DimittrikovBot",
+        "AutoModerator"
+    ]
+}
