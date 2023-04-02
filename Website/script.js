@@ -29,6 +29,7 @@ function start() {
     };
     //define/initialize splash text and display table
     $(document).ready(function () {
+        pastdata();
         srch = false;
         storetable = [];
         sortable = [];
@@ -188,5 +189,22 @@ function getpage(page,n,l) {
             //calls sort function to display+sort data
             sortpage(n,l)
         });
+    });
+}
+
+//loads past data sidebar options
+function pastdata() {
+    $(document).ready(function () {
+        //months
+        for (let i = 0; i < months.length; i++) {
+            let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
+            month += months[i].name.replace(" ","");
+            month += "',n));>";
+            month += months[i].name;
+            month += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+            month += (months[i].tooltip ? months[i].tooltip : `Data from ${months[i].name}`);
+            month += "'></i></button></li>";
+            $('#olderMonths').append(month);
+        }
     });
 }
