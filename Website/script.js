@@ -206,5 +206,17 @@ function pastdata() {
             month += "'></i></button></li>";
             $('#olderMonths').append(month);
         }
+
+        //years
+        for (let i = 0; i < years.length; i++) {
+            let year = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
+            year += years[i].name;
+            year += "',n));>";
+            year += years[i].name;
+            year += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+            year += (years[i].tooltip ? years[i].tooltip : `Data from ${years[i].name}`);
+            year += "'></i></button></li>";
+            $('#olderYears').append(year);
+        }
     });
 }
