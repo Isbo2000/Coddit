@@ -1,8 +1,6 @@
-name: Monthly/Yearly reset
+name: Monthly/Yearly Reset
 
 on:
-  schedule:
-  - cron: "4 6 * * *"
   workflow_dispatch:
 
 permissions: read-all
