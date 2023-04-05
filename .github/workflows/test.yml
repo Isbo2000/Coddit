@@ -1,0 +1,18 @@
+name: Monthly/Yearly Reset
+
+on:
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  check_month:
+    name: Check month
+    runs-on: ubuntu-latest
+    
+    outputs:
+      test: ${{ steps.test.outputs.test }}
+    
+    steps:
+      - id: test
+        run: echo "test=hello" >> "$GITHUB_OUTPUT"
