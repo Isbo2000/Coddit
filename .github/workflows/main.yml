@@ -1,4 +1,4 @@
-name: Monthly/Yearly Reset
+name: Monthly/Yearly reset
 
 on:
   schedule:
