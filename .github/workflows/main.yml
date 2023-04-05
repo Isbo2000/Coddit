@@ -1,0 +1,7 @@
+on:
+  schedule:
+  - cron: "4 6 * * *"
+
+jobs:
+  check_month:
+    runs-on: ubuntu-latest
