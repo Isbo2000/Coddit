@@ -1,20 +1,41 @@
 name: Monthly/Yearly Reset
 
 on:
-  schedule:
-    - cron: "4 6 * * *"
-  workflow_dispatch:
+ schedule:
+   - cron: "4 6 1 * *"
+ workflow_dispatch:
 
 permissions: read-all
 
 jobs:
-  check_month:
-    name: Check month
+  checks:
+    runs-on: ubuntu-latest
+    outputs:
+      month: ${{ steps.check.outputs.month }}
+      year: ${{ steps.check.outputs.year }}
+
+    steps:
+      - id: current
+        run: |
+          echo "month=$(date '+%B%C%y')" >> $GITHUB_OUTPUT
+          echo "year=$(date '+%C%y')" >> $GITHUB_OUTPUT
+      - id: month
+        uses: skgandikota/FetchUrl@v1.3
+        with:
+          url: "https://isbo-coddit-default-rtdb.firebaseio.com/${{ steps.current.outputs.month }}.json"
+      - id: year
+        uses: skgandikota/FetchUrl@v1.3
+        with:
+          url: "https://isbo-coddit-default-rtdb.firebaseio.com/${{ steps.current.outputs.year }}.json"
+      - id: check
+        run: |
+          echo "month=${{ (fromJSON(steps.month.outputs.headers)).content-length[0] }}" >> $GITHUB_OUTPUT
+          echo "year=${{ (fromJSON(steps.year.outputs.headers)).content-length[0] }}" >> $GITHUB_OUTPUT
+
+  reset:
+    needs: checks
+    if: (needs.checks.outputs.month > 4) || (needs.checks.outputs.year > 4)
     runs-on: ubuntu-latest
     
-    outputs:
-      test: ${{ steps.test.outputs.test }}
-    
     steps:
-      - id: test
-        run: echo "test=hello" >> "$GITHUB_OUTPUT"
+      - run: echo "test"
