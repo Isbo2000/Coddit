@@ -35,7 +35,7 @@ function start() {
         sortable = [];
         page = "This Month";
         n = 0;
-        document.getElementById("help").innerHTML = splash[Math.floor(Math.random() * splash.length)];
+        splashtext();
         getpage(page,n,true);
     });
 }
@@ -59,6 +59,27 @@ function scrollFunction() {
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+}
+
+//random display text
+function splashtext() {
+    let splash = [
+        "A break from reddit every so often is always helpful!","All things are difficult before they are easy","Be you","Be yourself more",
+        "Call your local crisis line when things get especially sticky","Chill oooouuuuutttt B)","Don't light yourself on fire to keep others warm",
+        "Good work!","Hai B)","HEY! YOU, YES YOU, YOU. YOU'RE AMAZING!","Holding on to anger is like drinking poison and hoping the other person dies",
+        "I like your style","Impressive","In through the nose and out through the mouth","It's important to stay independent",
+        "It's only embarrassing if you're embarrassed","Just keep swimming Just keep swimming Just keep swimming...","Keep it up","Keep on swimming",
+        "People who are goodlooking but have terrible personalities are basically real life clickbaits","Pleasure to meet you","Remember to breathe",
+        "r/teenagersbutpog, since April 10, 2021","Show the world who you are, because who you are is an amazing person","Square up!","Stay true to you!",
+        "Take breaks!","Talk to a trusted family member or friend whenever you get into a pickle","There's a tbp discord, go check it out!",
+        "The secret of getting ahead is getting started","Those who matter don't mind and those who mind don't matter","Treat yourself","Treat yourself you deserve it",
+        "Welcome!","We love having you around","We love you for you","When life shuts a door, open it again, it's a door, that's how they work",
+        "When something is important enough, you do it even if the odds are not in your favor","Woah, impressive","Woah, quite the reddit usage there!",
+        "Work it!","You are an incredible person","You look wonderful! You should show everyone sometime","You make people's days","You matter","You matter to us",
+        "You're perfect just the way you are","You're probably smart enough to do a crossword puzzle in pen","You're worthy",
+        "Your friends probably love you more than you realize, damn","You will meet people that see a lot more in you than you do in yourself"
+    ]
+    document.getElementById("help").innerHTML = splash[Math.floor(Math.random() * splash.length)];
 }
 
 //darkmode
@@ -124,7 +145,7 @@ function sortpage(n,l) {
     $(document).ready(function () {
         document.getElementById("searchtable").value = ""
         if(n==0){srt="total"}else if(n==1){srt="posts"}else if(n==2){srt="comments"}
-        document.getElementById("disp-p-s").textContent = page+" ~ sorted by "+srt
+        document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+srt
         //different sort methods
         if (n==0){
             //total
@@ -179,7 +200,7 @@ function getpage(page,n,l) {
     $(document).ready(function () {
         w3_close()
         //fetches data from database
-        url = "https://isbo-coddit-default-rtdb.firebaseio.com/"+page+".json"
+        url = `https://test-coddit-default-rtdb.firebaseio.com/${page}.json`
         fetch(url).then(response => {return response.json();}).then(function (data) {
             //stores data in variable
             sortable = [];
@@ -195,40 +216,30 @@ function getpage(page,n,l) {
 //loads past data sidebar options
 function pastdata() {
     $(document).ready(function () {
-        //months
-        for (let i = 0; i < months.length; i++) {
-            let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
-            month += months[i].name.replace(" ","");
-            month += "',n));>";
-            month += months[i].name;
-            month += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
-            month += (months[i].tooltip ? months[i].tooltip : `Data from ${months[i].name}`);
-            month += "'></i></button></li>";
-            $('#olderMonths').append(month);
-        }
-
-        //years
-        for (let i = 0; i < years.length; i++) {
-            let year = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
-            year += years[i].name;
-            year += "',n));>";
-            year += years[i].name;
-            year += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
-            year += (years[i].tooltip ? years[i].tooltip : `Data from ${years[i].name}`);
-            year += "'></i></button></li>";
-            $('#olderYears').append(year);
-        }
-
-        //credits
-        for (let i = 0; i < credits.length; i++) {
-            let credit = "<li><a id='credit' class='tablinks' href='";
-            credit += credits[i].url;
-            credit += "' style='text-decoration: none;'>";
-            credit += credits[i].name;
-            credit += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
-            credit += credits[i].tooltip;
-            credit += "'></i></a></li>";
-            $('#creditlist').append(credit);
-        }
+        var url = "https://test-coddit-default-rtdb.firebaseio.com/Index.json"
+        fetch(url).then(response => {return response.json();}).then(function (data) {
+            //months
+            for (let i = 0; i < data.months.length; i++) {
+                let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
+                month += data.months[i].name.replace(" ","_");
+                month += "',n));>";
+                month += data.months[i].name;
+                month += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+                month += (data.months[i].tooltip ? data.months[i].tooltip : `Data from ${data.months[i].name}`);
+                month += "'></i></button></li>";
+                $('#olderMonths').append(month);
+            }
+            //years
+            for (let i = 0; i < data.years.length; i++) {
+                let year = "<li><button id='years' class='tablinks' onclick=load(getpage(page='";
+                year += data.years[i].name;
+                year += "',n));>";
+                year += data.years[i].name;
+                year += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
+                year += (data.years[i].tooltip ? data.years[i].tooltip : `Data from ${data.years[i].name}`);
+                year += "'></i></button></li>";
+                $('#olderYears').append(year);
+            }
+        });
     });
 }

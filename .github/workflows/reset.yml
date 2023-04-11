@@ -1,0 +1,62 @@
+name: Reset
+on:
+ schedule:
+   - cron: '4 6 1 2-12 *'
+   - cron: '4 6 1 1 *'
+ workflow_dispatch:
+permissions: read-all
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: 'month'
+            command: '+%B_%C%y'
+            time: ''
+          - name: 'year'
+            command: '+%C%y'
+            time: '4 6 1 1 *'
+    outputs:
+      month: ${{ steps.check.outputs.month }}
+      year: ${{ steps.check.outputs.year }}
+      current_month: ${{ steps.current.outputs.month }}
+      current_year: ${{ steps.current.outputs.year }}
+    steps:
+      - id: current
+        run: echo "${{ matrix.name }}=$(date ${{ matrix.command }})" >> $GITHUB_OUTPUT
+      - id: fetch
+        uses: skgandikota/FetchUrl@v1.3
+        with:
+          url: "https://test-coddit-default-rtdb.firebaseio.com/${{ steps.current.outputs[matrix.name] }}.json"
+      - id: check
+        run: |
+          if [ '${{ github.event_name }}' == 'workflow_dispatch' ] || [ '' == '${{ matrix.time }}' ] || [ '${{ github.event.schedule }}' == '${{ matrix.time }}' ]; then
+            echo "${{ matrix.name }}=${{ (fromJSON(steps.fetch.outputs.headers)).content-length[0] }}" >> $GITHUB_OUTPUT
+          else
+            echo "${{ matrix.name }}=0" >> $GITHUB_OUTPUT
+          fi
+
+  reset:
+    needs: checks
+    if: (needs.checks.outputs.month == 4) || (needs.checks.outputs.year == 4)
+    runs-on: ubuntu-latest
+    env:
+      project_id: ${{ secrets.firebase_project_id }}
+      private_key_id: ${{ secrets.firebase_private_key_id }}
+      private_key: ${{ secrets.firebase_private_key }}
+      client_email: ${{ secrets.firebase_client_email }}
+      client_id: ${{ secrets.firebase_client_id }}
+      client_x509_cert_url: ${{ secrets.firebase_client_x509_cert_url }}
+      month: ${{ needs.checks.outputs.current_month }}
+      year: ${{ needs.checks.outputs.current_year }}
+      resm: ${{ needs.checks.outputs.month }}
+      resy: ${{ needs.checks.outputs.year }}
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+      - run: python .github/scripts/reset.py
