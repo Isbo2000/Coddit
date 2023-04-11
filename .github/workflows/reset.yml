@@ -29,7 +29,7 @@ jobs:
       - id: fetch
         uses: skgandikota/FetchUrl@v1.3
         with:
-          url: "https://test-coddit-default-rtdb.firebaseio.com/${{ steps.current.outputs[matrix.name] }}.json"
+          url: "https://isbo-coddit-default-rtdb.firebaseio.com/${{ steps.current.outputs[matrix.name] }}.json"
       - id: check
         run: |
           if [ '${{ github.event_name }}' == 'workflow_dispatch' ] || [ '' == '${{ matrix.time }}' ] || [ '${{ github.event.schedule }}' == '${{ matrix.time }}' ]; then
