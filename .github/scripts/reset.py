@@ -20,44 +20,73 @@ firebase_admin.initialize_app(
     {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
 )
 
-#monthly
-if (os.environ.get("resm") == '4'):
-    core.info("Resetting month...")
+#set status badge
+db.reference("Status/reset").set({
+    "message": "in progress",
+    "color": "important",
+    "isError": "false",
+    "label": "reset",
+    "schemaVersion": 1
+})
 
-    index = db.reference("Index").get()
-    index["months"].append({"name":os.environ.get("month").replace("_"," ")})
-    db.reference("Index").set(index)
-    core.info("Added month to index..")
+try:
+    #monthly
+    if (os.environ.get("resm") == '4'):
+        core.info("Resetting month...")
 
-    current = db.reference("This Month")
-    month = db.reference(os.environ.get("month"))
-    core.info("Fetched database pages..")
+        index = db.reference("Index").get()
+        index["months"].append({"name":os.environ.get("month").replace("_"," ")})
+        db.reference("Index").set(index)
+        core.info("Added month to index..")
 
-    month.set(current.get())
-    core.info("Added previous month..")
+        current = db.reference("This Month")
+        month = db.reference(os.environ.get("month"))
+        core.info("Fetched database pages..")
 
-    current.set({"Isbo2000":[0,0]})
-    core.info("Reset current month..")
+        month.set(current.get())
+        core.info("Added previous month..")
 
-#yearly
-if (os.environ.get("resy") == '4'):
-    core.info("Resetting year...")
+        current.set({"Isbo2000":[0,0]})
+        core.info("Reset current month..")
 
-    index = db.reference("Index").get()
-    index["years"].append({"name":os.environ.get("year")})
-    db.reference("Index").set(index)
-    core.info("Added year to index..")
+    #yearly
+    if (os.environ.get("resy") == '4'):
+        core.info("Resetting year...")
 
-    current = db.reference("This Year")
-    year = db.reference(os.environ.get("year"))
-    core.info("Fetched database pages..")
+        index = db.reference("Index").get()
+        index["years"].append({"name":os.environ.get("year")})
+        db.reference("Index").set(index)
+        core.info("Added year to index..")
 
-    year.set(current.get())
-    core.info("Added previous year..")
+        current = db.reference("This Year")
+        year = db.reference(os.environ.get("year"))
+        core.info("Fetched database pages..")
 
-    current.set({"Isbo2000":[0,0]})
-    core.info("Reset current year..")
+        year.set(current.get())
+        core.info("Added previous year..")
 
-#neither??
-else:
-    core.error("Unable to reset month or year")
+        current.set({"Isbo2000":[0,0]})
+        core.info("Reset current year..")
+
+    #neither??
+    else: raise Exception("Unable to reset month or year")
+    
+except BaseException as error:
+    #set status badge
+    db.reference("Status/reset").set({
+        "message": "failed",
+        "color": "critical",
+        "isError": "true",
+        "label": "reset",
+        "schemaVersion": 1
+    })
+    core.set_failed(error)
+
+#set status badge
+db.reference("Status/reset").set({
+    "message": "completed",
+    "color": "success",
+    "isError": "false",
+    "label": "reset",
+    "schemaVersion": 1
+})

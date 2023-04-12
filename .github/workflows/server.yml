@@ -1,0 +1,64 @@
+name: Server
+on:
+  schedule:
+    - cron: '1 5 * * *'
+  workflow_dispatch:
+env:
+  project_id: ${{ secrets.firebase_project_id }}
+  private_key_id: ${{ secrets.firebase_private_key_id }}
+  private_key: ${{ secrets.firebase_private_key }}
+  client_email: ${{ secrets.firebase_client_email }}
+  client_id: ${{ secrets.firebase_client_id }}
+  client_x509_cert_url: ${{ secrets.firebase_client_x509_cert_url }}
+  id: ${{ secrets.reddit_id }}
+  secret: ${{ secrets.reddit_secret }}
+  username: ${{ secrets.reddit_username }}
+  password: ${{ secrets.reddit_password }}
+
+jobs:
+  server_1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+          pip install praw
+      - run: python .github/scripts/server.py
+  
+  server_2:
+    needs: server_1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+          pip install praw
+      - run: python .github/scripts/server.py
+  
+  server_3:
+    needs: server_2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+          pip install praw
+      - run: python .github/scripts/server.py
+  
+  server_4:
+    needs: server_3
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+          pip install praw
+      - run: python .github/scripts/server.py
