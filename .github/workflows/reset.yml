@@ -1,9 +1,6 @@
 name: Reset
 on:
- schedule:
-   - cron: '0 5 1 2-12 *'
-   - cron: '0 5 1 1 *'
- workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   checks:
@@ -12,34 +9,27 @@ jobs:
       matrix:
         include:
           - name: 'month'
-            command: '+%B_%C%y'
-            time: ''
+            command: '-d "last month" +%B_%C%y'
           - name: 'year'
-            command: '+%C%y'
-            time: '4 6 1 1 *'
+            command: '-d "last year" +%C%y'
     outputs:
-      month: ${{ steps.check.outputs.month }}
-      year: ${{ steps.check.outputs.year }}
-      current_month: ${{ steps.current.outputs.month }}
-      current_year: ${{ steps.current.outputs.year }}
+      month: ${{ steps.get_date.outputs.month }}
+      year: ${{ steps.get_date.outputs.year }}
+      reset_month: ${{ steps.check_data.outputs.reset_month }}
+      reset_year: ${{ steps.check_data.outputs.reset_year }}
     steps:
-      - id: current
+      - id: get_date
         run: echo "${{ matrix.name }}=$(date ${{ matrix.command }})" >> $GITHUB_OUTPUT
-      - id: fetch
+      - id: fetch_data
         uses: skgandikota/FetchUrl@v1.3
         with:
-          url: "https://isbo-coddit-default-rtdb.firebaseio.com/${{ steps.current.outputs[matrix.name] }}.json"
-      - id: check
-        run: |
-          if [ '${{ github.event_name }}' == 'workflow_dispatch' ] || [ '' == '${{ matrix.time }}' ] || [ '${{ github.event.schedule }}' == '${{ matrix.time }}' ]; then
-            echo "${{ matrix.name }}=${{ (fromJSON(steps.fetch.outputs.headers)).content-length[0] }}" >> $GITHUB_OUTPUT
-          else
-            echo "${{ matrix.name }}=0" >> $GITHUB_OUTPUT
-          fi
+          url: "https://isbo-coddit-default-rtdb.firebaseio.com/${{ steps.get_date.outputs[matrix.name] }}.json"
+      - id: check_data
+        run: echo "reset_${{ matrix.name }}=${{ (fromJSON(steps.fetch_data.outputs.headers)).content-length[0] }}" >> $GITHUB_OUTPUT
 
   reset:
     needs: checks
-    if: (needs.checks.outputs.month == 4) || (needs.checks.outputs.year == 4)
+    if: (needs.checks.outputs.reset_month == 4) || (needs.checks.outputs.reset_year == 4)
     runs-on: ubuntu-latest
     env:
       project_id: ${{ secrets.firebase_project_id }}
@@ -48,10 +38,10 @@ jobs:
       client_email: ${{ secrets.firebase_client_email }}
       client_id: ${{ secrets.firebase_client_id }}
       client_x509_cert_url: ${{ secrets.firebase_client_x509_cert_url }}
-      month: ${{ needs.checks.outputs.current_month }}
-      year: ${{ needs.checks.outputs.current_year }}
-      resm: ${{ needs.checks.outputs.month }}
-      resy: ${{ needs.checks.outputs.year }}
+      month: ${{ needs.checks.outputs.month }}
+      year: ${{ needs.checks.outputs.year }}
+      reset_month: ${{ needs.checks.outputs.reset_month }}
+      reset_year: ${{ needs.checks.outputs.reset_year }}
     steps:
       - uses: actions/checkout@v2.7.0
       - uses: actions/setup-python@v3.1.3

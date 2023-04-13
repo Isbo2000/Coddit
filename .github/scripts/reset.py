@@ -1,7 +1,6 @@
 from firebase_admin import credentials,db
 from actions_toolkit import core
-import firebase_admin
-import os
+import firebase_admin, os
 
 #log into firebase / initialize firebase
 firebase_admin.initialize_app(
@@ -20,18 +19,18 @@ firebase_admin.initialize_app(
     {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
 )
 
-#set status badge
-db.reference("Status/reset").set({
-    "message": "in progress",
-    "color": "important",
-    "isError": "false",
-    "label": "reset",
-    "schemaVersion": 1
-})
-
 try:
+    #set status badge
+    db.reference("Status/reset").set({
+        "message": "resetting...",
+        "color": "important",
+        "isError": "false",
+        "label": "reset",
+        "schemaVersion": 1
+    })
+
     #monthly
-    if (os.environ.get("resm") == '4'):
+    if (os.environ.get("reset_month") == '4'):
         core.info("Resetting month...")
 
         index = db.reference("Index").get()
@@ -50,7 +49,7 @@ try:
         core.info("Reset current month..")
 
     #yearly
-    if (os.environ.get("resy") == '4'):
+    if (os.environ.get("reset_year") == '4'):
         core.info("Resetting year...")
 
         index = db.reference("Index").get()
@@ -69,7 +68,17 @@ try:
         core.info("Reset current year..")
 
     #neither??
-    else: raise Exception("Unable to reset month or year")
+    if (not(os.environ.get("reset_month") == '4') and not(os.environ.get("reset_year") == '4')):
+        raise Exception("Unable to reset month or year")
+
+    #set status badge
+    db.reference("Status/reset").set({
+        "message": 'completed',
+        "color": "success",
+        "isError": "false",
+        "label": "reset",
+        "schemaVersion": 1
+    })
     
 except BaseException as error:
     #set status badge
@@ -81,12 +90,3 @@ except BaseException as error:
         "schemaVersion": 1
     })
     core.set_failed(error)
-
-#set status badge
-db.reference("Status/reset").set({
-    "message": "completed",
-    "color": "success",
-    "isError": "false",
-    "label": "reset",
-    "schemaVersion": 1
-})

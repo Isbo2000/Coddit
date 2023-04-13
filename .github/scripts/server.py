@@ -1,6 +1,6 @@
 from firebase_admin import credentials,db
 from actions_toolkit import core
-import firebase_admin, praw, os, time
+import firebase_admin, praw, os, time, requests
 
 #start timer
 start = time.perf_counter()
@@ -22,94 +22,113 @@ firebase_admin.initialize_app(
     {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
 )
 
-#set status badge
-db.reference("Status/server").set({
-    "message": "online",
-    "color": "success",
-    "isError": "false",
-    "label": "server",
-    "schemaVersion": 1
-})
+try:
+    #set status badge
+    db.reference("Status/server").set({
+        "message": "online",
+        "color": "success",
+        "isError": "false",
+        "label": "server",
+        "schemaVersion": 1
+    })
 
-#log into reddit / initialize reddit
-reddit = praw.Reddit(
-    client_id = os.environ.get("id"), 
-    client_secret = os.environ.get("secret"), 
-    username = os.environ.get("username"), 
-    password = os.environ.get("password"), 
-    user_agent = f'{os.environ.get("username")} ~ Coddit'
-)
+    #log into reddit / initialize reddit
+    reddit = praw.Reddit(
+        client_id = os.environ.get("id"), 
+        client_secret = os.environ.get("secret"), 
+        username = os.environ.get("username"), 
+        password = os.environ.get("password"), 
+        user_agent = f'{os.environ.get("username")} ~ Coddit'
+    )
 
-#define important variables
-banned = ["Isbot2000", "DimittrikovBot", "AutoModerator", "-thermodynamiclawyer"]
-databases = [db.reference("This Month"), db.reference("This Year"), db.reference("All Time")]
-sub = reddit.subreddit("teenagersbutpog")
-streams = [
-    [sub.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
-    [sub.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
-]
-
-#main script
-while ((time.perf_counter()-start) < 21570):
-    try:
-        #runs through for each of the streams
-        for stream in streams:
-
-            #runs through for all content in the stream
-            for content in stream[0]:
-                #check if content exists
-                if (content is None): break
-
-                #get author and check if they are banned
-                author = str(content.author)
-                if (author in banned): core.info(author+" banned"); break
-
-                #goes through the databases and updates them
-                for database in databases:
-                    #fetches data
-                    data = database.get()
-
-                    #if the author is already there, update the existing data for them
-                    if (author in data):
-                        data[author][stream[2]] += 1
-
-                    #if the author isnt there, add them then update the data for them
-                    else:
-                        data[author] = [0, 0]
-                        data[author][stream[2]] += 1
-
-                    #pushes changes to firabase database
-                    database.set(data)
-                
-                #log success
-                core.info(f'{stream[1]} added for {author}')
-
-    except BaseException as error:
-        #log error and restart streams
+    #define important variables
+    banned = ["Isbot2000", "DimittrikovBot", "AutoModerator", "-thermodynamiclawyer"]
+    databases = [db.reference("This Month"), db.reference("This Year"), db.reference("All Time")]
+    sub = reddit.subreddit("teenagersbutpog")
+    streams = [
+        [sub.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+        [sub.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
+    ]
+    
+    #main script
+    while ((time.perf_counter()-start) < 21560):
         try:
-            core.error(error)
-            streams = [
-                [sub.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
-                [sub.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
-            ]
+            #runs through for each of the streams
+            for stream in streams:
 
-        #if error occurs within the error
+                #runs through for all content in the stream
+                for content in stream[0]:
+                    #check if content exists
+                    if (content is None): break
+
+                    #get author and check if they are banned
+                    author = str(content.author)
+                    if (author in banned): core.info(author+" banned"); break
+
+                    #goes through the databases and updates them
+                    for database in databases:
+                        #fetches data
+                        data = database.get()
+
+                        #if the author is already there, update the existing data for them
+                        if (author in data):
+                            data[author][stream[2]] += 1
+
+                        #if the author isnt there, add them then update the data for them
+                        else:
+                            data[author] = [0, 0]
+                            data[author][stream[2]] += 1
+
+                        #pushes changes to firabase database
+                        database.set(data)
+                    
+                    #log success
+                    core.info(f'{stream[1]} added for {author}')
+
         except BaseException as error:
-            #set status badge
-            db.reference("Status/server").set({
-                "message": "failed",
-                "color": "critical",
-                "isError": "true",
-                "label": "server",
-                "schemaVersion": 1
-            })
-            core.set_failed(error)
+            #log error and restart streams
+            try:
+                core.error(error)
+                streams = [
+                    [sub.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
+                    [sub.stream.comments(pause_after=0,skip_existing=True), "Comment", 1]
+                ]
 
-#set status badge
-db.reference("Status/server").set({
-    "message": "offline",
-    "color": "inactive",
-    "isError": "false",
-    "label": "server",
-    "schemaVersion": 1
-})
+            #if error occurs within the error
+            except BaseException as error:
+                #set status badge
+                db.reference("Status/server").set({
+                    "message": "failed",
+                    "color": "critical",
+                    "isError": "true",
+                    "label": "server",
+                    "schemaVersion": 1
+                })
+                #restart server
+                requests.post(os.environ.get("server_restart_url"), data="Restart server", headers={"Content-Type": "application/json"})
+                core.set_failed(error)
+
+    #set status badge
+    db.reference("Status/server").set({
+        "message": "offline",
+        "color": "inactive",
+        "isError": "false",
+        "label": "server",
+        "schemaVersion": 1
+    })
+
+    #restart server
+    requests.post(os.environ.get("server_restart_url"), data="Restart server", headers={"Content-Type": "application/json"})
+
+except BaseException as error:
+    #set status badge
+    db.reference("Status/server").set({
+        "message": "failed",
+        "color": "critical",
+        "isError": "true",
+        "label": "server",
+        "schemaVersion": 1
+    })
+    #restart server
+    requests.post(os.environ.get("server_restart_url"), data="Restart server", headers={"Content-Type": "application/json"})
+    core.set_failed(error)
