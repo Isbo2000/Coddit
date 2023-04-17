@@ -26,6 +26,7 @@ jobs:
           pip install praw
       - run: python .github/scripts/server.py
   server_2:
+    needs: server_1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.7.0
@@ -36,6 +37,7 @@ jobs:
           pip install praw
       - run: python .github/scripts/server.py
   server_3:
+    needs: server_2
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.7.0
@@ -46,6 +48,7 @@ jobs:
           pip install praw
       - run: python .github/scripts/server.py
   server_4:
+    needs: server_3
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.7.0
