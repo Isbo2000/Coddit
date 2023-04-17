@@ -38,12 +38,8 @@ body {
     color: #fff;
 }
 
-#NoResults {
-	display:none;
-}
-
 h1 {
-	font:bold;
+	font-weight:bold;
 	font-size:175%;
 }
 
@@ -55,7 +51,7 @@ table {
 	/* background-color: #7db6fe; */
 
 	color: white;
-	align-tracks: center;
+	/*align-tracks: center;*/
 
 	/* This is the border. It looks more sleek and modern without a border. If you want to revert, uncomment the line below, and comment out or delete the border: none; line */
 	/* border: 1px solid black */
@@ -69,12 +65,14 @@ h1, #listheader {
 }
 
 #NoResults {
+	display:none;
+
 	margin-left: 300px;
 	margin-top: 3%;
 	width:100%;
 
 	color: white;
-	align-tracks: center;
+	/*align-tracks: center;*/
 
 	border: none;
 	font-size: larger;
