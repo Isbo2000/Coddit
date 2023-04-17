@@ -15,7 +15,37 @@ env:
   server_restart_url: ${{ secrets.server_restart_url }}
 
 jobs:
-  server:
+  server_1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+          pip install praw
+      - run: python .github/scripts/server.py
+  server_2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+          pip install praw
+      - run: python .github/scripts/server.py
+  server_3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      - uses: actions/setup-python@v3.1.3
+      - run: |
+          pip install actions-toolkit
+          pip install firebase-admin
+          pip install praw
+      - run: python .github/scripts/server.py
+  server_4:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.7.0
