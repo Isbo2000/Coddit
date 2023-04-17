@@ -20,6 +20,7 @@ function start() {
             event.preventDefault()
             document.getElementById("searchIcon").click();
         } else if (srch && !sq.value) {
+            document.getElementById("NoResults").style.display = "none";
             load(sortpage(n))
         }
     })
@@ -104,6 +105,7 @@ function entsearch() {
     var sch = document.getElementById("searchtable");
     var input = sch.value.toUpperCase();
     if (srch && !input) {
+        document.getElementById("NoResults").style.display = "none";
         load(sortpage(n))
     } else if (input) {
         load(search(input))
