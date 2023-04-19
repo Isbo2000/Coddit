@@ -33,11 +33,13 @@ function start() {
         pastdata();
         srch = false;
         storetable = [];
-        sortable = [];
-        page = "This Month";
-        n = 0;
+        sortable = []
         splashtext();
-        getpage(page,n,true);
+        getpage(
+            page = "This Month",
+            n = "total",
+            true
+        );
     });
 }
 
@@ -146,17 +148,16 @@ function sortpage(n,l) {
     srch = false;
     $(document).ready(function () {
         document.getElementById("searchtable").value = ""
-        if(n==0){srt="total"}else if(n==1){srt="posts"}else if(n==2){srt="comments"}
-        document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+srt
+        document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+n
         //different sort methods
-        if (n==0){
+        if (n=='total'){
             //total
             sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
-        else if (n==1){
+        else if (n=='posts'){
             //posts
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
-        else if (n==2){
+        else if (n=='comments'){
             //comments
             sortable.sort(function(a, b) {return b[2] - a[2]});
         }
