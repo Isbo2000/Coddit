@@ -26,7 +26,12 @@ function start() {
     })
     //define/initialize scroll to top button
     window.onscroll = function() {
-        scrollFunction()
+        mybutton = document.getElementById("backToTop");
+        if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
     };
     //define/initialize splash text and display table
     $(document).ready(function () {
@@ -51,14 +56,6 @@ function load(func) {
 }
 
 //scroll to top button
-function scrollFunction() {
-    mybutton = document.getElementById("backToTop");
-    if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250) {
-        mybutton.style.display = "block";
-    } else {
-        mybutton.style.display = "none";
-    }
-}
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
