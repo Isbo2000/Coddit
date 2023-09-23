@@ -23,7 +23,7 @@ jobs:
       - id: fetch_data
         uses: skgandikota/FetchUrl@v1.3
         with:
-          url: "https://isbo-coddit-default-rtdb.firebaseio.com/${{ steps.get_date.outputs[matrix.name] }}.json"
+          url: "https://test-coddit-default-rtdb.firebaseio.com/${{ steps.get_date.outputs[matrix.name] }}.json"
       - id: check_data
         run: echo "reset_${{ matrix.name }}=${{ (fromJSON(steps.fetch_data.outputs.headers)).content-length[0] }}" >> $GITHUB_OUTPUT
 

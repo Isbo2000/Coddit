@@ -16,7 +16,7 @@ firebase_admin.initialize_app(
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
         "client_x509_cert_url": os.environ.get("client_x509_cert_url")
     }),
-    {"databaseURL":"https://isbo-coddit-default-rtdb.firebaseio.com/"}
+    {"databaseURL":"https://test-coddit-default-rtdb.firebaseio.com/"}
 )
 
 try:
