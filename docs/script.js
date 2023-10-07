@@ -200,7 +200,7 @@ function getpage(page,n,l) {
     $(document).ready(function () {
         w3_close()
         //fetches data from database
-        url = `https://test-coddit-default-rtdb.firebaseio.com/${page}.json`
+        url = `https://isbo-coddit-default-rtdb.firebaseio.com/${page}.json`
         fetch(url).then(response => {return response.json();}).then(function (data) {
             //stores data in variable
             sortable = [];
@@ -216,7 +216,7 @@ function getpage(page,n,l) {
 //loads past data sidebar options
 function pastdata() {
     $(document).ready(function () {
-        var url = "https://test-coddit-default-rtdb.firebaseio.com/Index.json"
+        var url = "https://isbo-coddit-default-rtdb.firebaseio.com/Index.json"
         fetch(url).then(response => {return response.json();}).then(function (data) {
             //months
             for (let i = 0; i < data.months.length; i++) {
