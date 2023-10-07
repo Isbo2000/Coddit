@@ -42,8 +42,8 @@ try:
     )
 
     #define important variables
-    banned = ["Isbot2000", "DimittrikovBot", "AutoModerator", "-thermodynamiclawyer"]
-    databases = [db.reference("This Month"), db.reference("This Year"), db.reference("All Time")]
+    banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
+    databases = ["test"]#"This Month", "This Year", "All Time"]
     sub = reddit.subreddit("teenagersbutpog")
     streams = [
         [sub.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
@@ -67,20 +67,11 @@ try:
 
                     #goes through the databases and updates them
                     for database in databases:
-                        #fetches data
-                        data = database.get()
+                        data = db.reference(database+"/"+author).get()
 
-                        #if the author is already there, update the existing data for them
-                        if (author in data):
-                            data[author][stream[2]] += 1
+                        data[stream[2]] += 1
 
-                        #if the author isnt there, add them then update the data for them
-                        else:
-                            data[author] = [0, 0]
-                            data[author][stream[2]] += 1
-
-                        #pushes changes to firabase database
-                        database.set(data)
+                        db.reference(database+"/"+author).set(data)
                     
                     #log success
                     core.info(f'{stream[1]} added for {author}')
