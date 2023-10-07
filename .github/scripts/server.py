@@ -51,7 +51,7 @@ try:
     ]
     
     #main script
-    while ((time.perf_counter()-start) < 21560):
+    while ((time.perf_counter()-start) < 21500):
         try:
             #runs through for each of the streams
             for stream in streams:
