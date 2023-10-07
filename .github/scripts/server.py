@@ -43,7 +43,7 @@ try:
 
     #define important variables
     banned = ["Isbot2000", "DimittrikovBot", "AutoModerator"]
-    databases = ["test"]#"This Month", "This Year", "All Time"]
+    databases = ["This Month", "This Year", "All Time"]
     sub = reddit.subreddit("teenagersbutpog")
     streams = [
         [sub.stream.submissions(pause_after=0,skip_existing=True), "Submission", 0],
