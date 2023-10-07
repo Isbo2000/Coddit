@@ -69,6 +69,8 @@ try:
                     for database in databases:
                         data = db.reference(database+"/"+author).get()
 
+                        if (not data): data = [0,0]
+
                         data[stream[2]] += 1
 
                         db.reference(database+"/"+author).set(data)
