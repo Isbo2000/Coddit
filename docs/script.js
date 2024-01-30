@@ -21,7 +21,7 @@ function start() {
             document.getElementById("searchIcon").click();
         } else if (srch && !sq.value) {
             document.getElementById("NoResults").style.display = "none";
-            load(sortpage(n))
+            load(sortpage(sort))
         }
     })
     //define/initialize scroll to top button
@@ -105,7 +105,7 @@ function entsearch() {
     var input = sch.value.toUpperCase();
     if (srch && !input) {
         document.getElementById("NoResults").style.display = "none";
-        load(sortpage(n))
+        load(sortpage(sort))
     } else if (input) {
         load(search(input))
     }
@@ -141,20 +141,20 @@ function search(input) {
 }
 
 //sorting data by either posts comments or both
-function sortpage(n,l) {
+function sortpage(sort,l) {
     srch = false;
     $(document).ready(function () {
         document.getElementById("searchtable").value = ""
-        document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+n
+        document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+sort
         //different sort methods
-        if (n=='total'){
+        if (sort=='total'){
             //total
             sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
-        else if (n=='posts'){
+        else if (sort=='posts'){
             //posts
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
-        else if (n=='comments'){
+        else if (sort=='comments'){
             //comments
             sortable.sort(function(a, b) {return b[2] - a[2]});
         }
@@ -196,7 +196,7 @@ function sortpage(n,l) {
 }
 
 //fetches data on page load or when different data selected
-function getpage(page,n,l) {
+function getpage(page,sort,l) {
     $(document).ready(function () {
         w3_close()
         //fetches data from database
@@ -208,7 +208,7 @@ function getpage(page,n,l) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             //calls sort function to display+sort data
-            sortpage(n,l)
+            sortpage(sort,l)
         });
     });
 }
