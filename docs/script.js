@@ -141,14 +141,18 @@ function search(input) {
 }
 
 //sorting data by either posts comments or both
-function sortpage(sort,l,page,reload) {
+function sortpage(sort,l,reload) {
     srch = false;
     $(document).ready(function () {
         //set url params
-        const params = new URLSearchParams(window.location.search);
         if (!reload){
+            const params = new URLSearchParams(window.location.search);
             params.set("sort", sort);
-            window.location.search = params;
+            const state = {
+                title: window.location.title,
+                url: window.location.href
+            };
+            history.replaceState(state, "", window.location.pathname+"?"+params);
         };
         //clear table and reset info text
         document.getElementById("searchtable").value = ""
@@ -207,10 +211,14 @@ function getpage(page,sort,l,reload) {
     $(document).ready(function () {
         w3_close()
         //set url params
-        const params = new URLSearchParams(window.location.search);
         if (!reload){
+            const params = new URLSearchParams(window.location.search);
             params.set("page", page);
-            window.location.search = params;
+            const state = {
+                title: window.location.title,
+                url: window.location.href
+            };
+            history.replaceState(state, "", window.location.pathname+"?"+params);
         };
         //fetches data from database
         url = `https://isbo-coddit-default-rtdb.firebaseio.com/${page}.json`
@@ -221,7 +229,7 @@ function getpage(page,sort,l,reload) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             //calls sort function to display+sort data
-            sortpage(sort,l,page,reload)
+            sortpage(sort,l,reload)
         });
     });
 }
