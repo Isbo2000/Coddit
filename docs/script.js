@@ -235,7 +235,7 @@ function pastdata() {
             for (let i = 0; i < data.months.length; i++) {
                 let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
                 month += data.months[i].name.replace(" ","_");
-                month += "',n));>";
+                month += "',sort));>";
                 month += data.months[i].name;
                 month += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
                 month += (data.months[i].tooltip ? data.months[i].tooltip : `Data from ${data.months[i].name}`);
@@ -246,7 +246,7 @@ function pastdata() {
             for (let i = 0; i < data.years.length; i++) {
                 let year = "<li><button id='years' class='tablinks' onclick=load(getpage(page='";
                 year += data.years[i].name;
-                year += "',n));>";
+                year += "',sort));>";
                 year += data.years[i].name;
                 year += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
                 year += (data.years[i].tooltip ? data.years[i].tooltip : `Data from ${data.years[i].name}`);
