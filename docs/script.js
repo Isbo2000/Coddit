@@ -40,11 +40,11 @@ function start() {
         storetable = [];
         sortable = []
         splashtext();
-        getpage(
-            page = "This Month",
-            n = "total",
-            true
-        );
+        //get url parameters
+        const params = new URLSearchParams(window.location.search)
+        page = params.get("page") ? params.get("page") : "This Month"
+        sort = params.get("sort") ? params.get("sort") : "total"
+        getpage(page, sort, true, true);
     });
 }
 
@@ -141,9 +141,16 @@ function search(input) {
 }
 
 //sorting data by either posts comments or both
-function sortpage(sort,l) {
+function sortpage(sort,l,page,reload) {
     srch = false;
     $(document).ready(function () {
+        //set url params
+        const params = new URLSearchParams(window.location.search);
+        if (!reload){
+            params.set("sort", sort);
+            window.location.search = params;
+        };
+        //clear table and reset info text
         document.getElementById("searchtable").value = ""
         document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+sort
         //different sort methods
@@ -196,9 +203,15 @@ function sortpage(sort,l) {
 }
 
 //fetches data on page load or when different data selected
-function getpage(page,sort,l) {
+function getpage(page,sort,l,reload) {
     $(document).ready(function () {
         w3_close()
+        //set url params
+        const params = new URLSearchParams(window.location.search);
+        if (!reload){
+            params.set("page", page);
+            window.location.search = params;
+        };
         //fetches data from database
         url = `https://isbo-coddit-default-rtdb.firebaseio.com/${page}.json`
         fetch(url).then(response => {return response.json();}).then(function (data) {
@@ -208,7 +221,7 @@ function getpage(page,sort,l) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             //calls sort function to display+sort data
-            sortpage(sort,l)
+            sortpage(sort,l,page,reload)
         });
     });
 }
