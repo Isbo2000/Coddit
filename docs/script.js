@@ -20,6 +20,13 @@ function start() {
             event.preventDefault()
             document.getElementById("searchIcon").click();
         } else if (srch && !sq.value) {
+            const params = new URLSearchParams(window.location.search);
+            params.delete("q");
+            const state = {
+                title: window.location.title,
+                url: window.location.href
+            };
+            history.replaceState(state, "", window.location.pathname+"?"+params);
             document.getElementById("NoResults").style.display = "none";
             load(sortpage(sort))
         }
@@ -122,15 +129,18 @@ function w3_close() {
 function entsearch() {
     var sch = document.getElementById("searchtable");
     var input = sch.value.toUpperCase();
-    if (srch && !input) {
-        document.getElementById("NoResults").style.display = "none";
-        load(sortpage(sort))
-    } else if (input) {
-        load(search(input))
-    }
+    if (input) {load(search(input))};
 }
 function search(input) {
     srch = true
+    //set url parameters
+    const params = new URLSearchParams(window.location.search);
+    params.set("q", input.toLowerCase());
+    const state = {
+        title: window.location.title,
+        url: window.location.href
+    };
+    history.replaceState(state, "", window.location.pathname+"?"+params);
     //clears currently displayed table
     for (var i = user_data.rows.length - 1; i > 1; i--) {
         user_data.deleteRow(i);
@@ -221,11 +231,20 @@ function sortpage(sort,reload) {
         for (var i = 0; i < stlen; i++) {
             $('#user_data').append(storetable[i]);
         }
+        
+        //check if there is a search query in url parameters and run search
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("q")) {
+            srch = true
+            input = params.get("q")
+            document.getElementById('searchtable').value = input
+            load(search(input.toUpperCase()));
+        }
     })
 }
 
 //fetches data on page load or when different data selected
-function getpage(page,sort,l,reload) {
+function getpage(page,sort,reload) {
     $(document).ready(function () {
         w3_close()
         //set url params
