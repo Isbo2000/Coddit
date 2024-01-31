@@ -45,7 +45,8 @@ function start() {
         page = params.get("p") ? params.get("p") : "This Month"
         sort = params.get("sort") ? params.get("sort") : "total"
         params.get("light_mode") ? darkmode() : null
-        getpage(page, sort, true, true);
+        //get table
+        load(getpage(page, sort, true));
     });
 }
 
@@ -159,7 +160,7 @@ function search(input) {
 }
 
 //sorting data by either posts comments or both
-function sortpage(sort,l,reload) {
+function sortpage(sort,reload) {
     srch = false;
     $(document).ready(function () {
         //set url params
@@ -220,7 +221,6 @@ function sortpage(sort,l,reload) {
         for (var i = 0; i < stlen; i++) {
             $('#user_data').append(storetable[i]);
         }
-        if(l){setTimeout(() => {document.body.classList.add("load");}, 200)}
     })
 }
 
@@ -247,7 +247,7 @@ function getpage(page,sort,l,reload) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             //calls sort function to display+sort data
-            sortpage(sort,l,reload)
+            sortpage(sort,reload)
         });
     });
 }
