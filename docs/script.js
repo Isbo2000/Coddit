@@ -260,6 +260,9 @@ function sortpage(sort,reload) {
 function getpage(page,sort,reload) {
     $(document).ready(function () {
         w3_close()
+        if (document.getElementById(page)) {
+            document.getElementById(page).style.backgroundColor = "blue"
+        };
         //store page value
         localStorage.setItem("page", page);
         //set url params
@@ -293,7 +296,9 @@ function pastdata() {
         fetch(url).then(response => {return response.json();}).then(function (data) {
             //months
             for (let i = 0; i < data.months.length; i++) {
-                let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
+                let month = "<li><button id='"
+                month += data.months[i].name.replace(" ","_");
+                month += "' name='months' class='tablinks' onclick=load(getpage(page='";
                 month += data.months[i].name.replace(" ","_");
                 month += "',sort));>";
                 month += data.months[i].name;
@@ -304,7 +309,9 @@ function pastdata() {
             }
             //years
             for (let i = 0; i < data.years.length; i++) {
-                let year = "<li><button id='years' class='tablinks' onclick=load(getpage(page='";
+                let year = "<li><button id='"
+                year += data.years[i].name;
+                year += "' name='years' class='tablinks' onclick=load(getpage(page='";
                 year += data.years[i].name;
                 year += "',sort));>";
                 year += data.years[i].name;

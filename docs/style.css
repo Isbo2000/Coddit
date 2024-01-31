@@ -186,7 +186,7 @@ table {
 	transform: rotate(-90deg);
 }
 
-#months {
+.tab button[name="months"] {
 	padding-left: 60px;
 }
 
@@ -195,7 +195,7 @@ table {
 	transform: rotate(-90deg);
 }
 
-#years {
+.tab button[name="years"] {
 	padding-left: 60px;
 }
 
