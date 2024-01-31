@@ -44,6 +44,7 @@ function start() {
         const params = new URLSearchParams(window.location.search)
         page = params.get("page") ? params.get("page") : "This Month"
         sort = params.get("sort") ? params.get("sort") : "total"
+        params.get("light_mode") ? darkmode() : null
         getpage(page, sort, true, true);
     });
 }
@@ -84,8 +85,25 @@ function splashtext() {
 
 //darkmode
 function darkmode() {
+    //get the current url
+    const params = new URLSearchParams(window.location.search);
+
+    //toggle dark/light mode
     document.body.classList.toggle("dark-mode");
-    document.getElementById("theme").textContent == "Light Mode" ? document.getElementById("theme").textContent = "Dark Mode" : document.getElementById("theme").textContent = "Light Mode";
+    if (document.getElementById("theme").textContent == "Light Mode") {
+        params.set("light_mode", true);
+        document.getElementById("theme").textContent = "Dark Mode"
+    } else {
+        params.delete("light_mode");
+        document.getElementById("theme").textContent = "Light Mode"
+    };
+
+    //set url parameters
+    const state = {
+        title: window.location.title,
+        url: window.location.href
+    };
+    history.replaceState(state, "", window.location.pathname+"?"+params);
 }
 
 //opening and closing the navigation sidebar
