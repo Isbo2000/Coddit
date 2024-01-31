@@ -193,13 +193,22 @@ function sortpage(sort,reload) {
         //different sort methods
         if (sort=='total'){
             //total
+            document.getElementById("posts").style.color = ""
+            document.getElementById("comments").style.color = ""
+            document.getElementById("total").style.color = "rgb(100, 93, 200)"
             sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
         else if (sort=='posts'){
             //posts
+            document.getElementById("total").style.color = ""
+            document.getElementById("comments").style.color = ""
+            document.getElementById("posts").style.color = "rgb(93, 93, 200)"
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
         else if (sort=='comments'){
             //comments
+            document.getElementById("posts").style.color = ""
+            document.getElementById("total").style.color = ""
+            document.getElementById("comments").style.color = "rgb(100, 93, 200)"
             sortable.sort(function(a, b) {return b[2] - a[2]});
         }
         //clears currently displayed table
