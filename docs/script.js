@@ -191,24 +191,24 @@ function sortpage(sort,reload) {
         document.getElementById("searchtable").value = ""
         document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+sort
         //different sort methods
+        total = document.getElementById("total").style.color
+        posts = document.getElementById("posts").style.color
+        comments = document.getElementById("comments").style.color
         if (sort=='total'){
             //total
-            document.getElementById("posts").style.color = ""
-            document.getElementById("comments").style.color = ""
-            document.getElementById("total").style.color = "rgb(100, 93, 200)"
+            total = "rgb(100, 93, 200)"
+            posts = ""; comments = ""
             sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
         else if (sort=='posts'){
             //posts
-            document.getElementById("total").style.color = ""
-            document.getElementById("comments").style.color = ""
-            document.getElementById("posts").style.color = "rgb(93, 93, 200)"
+            posts = "rgb(93, 93, 200)"
+            total = ""; comments = ""
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
         else if (sort=='comments'){
             //comments
-            document.getElementById("posts").style.color = ""
-            document.getElementById("total").style.color = ""
-            document.getElementById("comments").style.color = "rgb(100, 93, 200)"
+            comments = "rgb(100, 93, 200)"
+            total = "", posts = ""
             sortable.sort(function(a, b) {return b[2] - a[2]});
         }
         //clears currently displayed table
