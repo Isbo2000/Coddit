@@ -201,7 +201,7 @@ function sortpage(sort,reload) {
             //posts
             document.getElementById("total").style.color = ""
             document.getElementById("comments").style.color = ""
-            document.getElementById("posts").style.color = "rgb(93, 93, 200)"
+            document.getElementById("posts").style.color = "rgb(100, 93, 200)"
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
         else if (sort=='comments'){
