@@ -47,11 +47,11 @@ function start() {
         storetable = [];
         sortable = []
         splashtext();
-        //get url parameters
+        //get url parameters or stored variables
         const params = new URLSearchParams(window.location.search)
-        page = params.get("p") ? params.get("p") : "This Month"
-        sort = params.get("sort") ? params.get("sort") : "total"
-        params.get("light_mode") ? darkmode() : null
+        page = params.get("p") ? params.get("p") : localStorage.getItem("page") ? localStorage.getItem("page") : "This Month"
+        sort = params.get("sort") ? params.get("sort") : localStorage.getItem("sort") ? localStorage.getItem("sort") : "total"
+        params.get("light_mode") ? darkmode() : localStorage.getItem("light_mode") == "true" ? darkmode() : null
         //get table
         load(getpage(page, sort, true));
     });
@@ -100,9 +100,11 @@ function darkmode() {
     document.body.classList.toggle("dark-mode");
     if (document.getElementById("theme").textContent == "Light Mode") {
         params.set("light_mode", true);
+        localStorage.setItem("light_mode", true);
         document.getElementById("theme").textContent = "Dark Mode"
     } else {
         params.delete("light_mode");
+        localStorage.setItem("light_mode", false);
         document.getElementById("theme").textContent = "Light Mode"
     };
 
@@ -173,6 +175,8 @@ function search(input) {
 function sortpage(sort,reload) {
     srch = false;
     $(document).ready(function () {
+        //store sort value
+        localStorage.setItem("sort", sort);
         //set url params
         if (!reload){
             const params = new URLSearchParams(window.location.search);
@@ -239,7 +243,7 @@ function sortpage(sort,reload) {
             input = params.get("q")
             document.getElementById('searchtable').value = input
             load(search(input.toUpperCase()));
-        }
+        };
     })
 }
 
@@ -247,6 +251,8 @@ function sortpage(sort,reload) {
 function getpage(page,sort,reload) {
     $(document).ready(function () {
         w3_close()
+        //store page value
+        localStorage.setItem("page", page);
         //set url params
         if (!reload){
             const params = new URLSearchParams(window.location.search);
