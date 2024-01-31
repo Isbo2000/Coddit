@@ -42,7 +42,7 @@ function start() {
         splashtext();
         //get url parameters
         const params = new URLSearchParams(window.location.search)
-        page = params.get("page") ? params.get("page") : "This Month"
+        page = params.get("p") ? params.get("p") : "This Month"
         sort = params.get("sort") ? params.get("sort") : "total"
         params.get("light_mode") ? darkmode() : null
         getpage(page, sort, true, true);
@@ -231,7 +231,7 @@ function getpage(page,sort,l,reload) {
         //set url params
         if (!reload){
             const params = new URLSearchParams(window.location.search);
-            params.set("page", page);
+            params.set("p", page);
             const state = {
                 title: window.location.title,
                 url: window.location.href
