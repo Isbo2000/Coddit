@@ -20,8 +20,15 @@ function start() {
             event.preventDefault()
             document.getElementById("searchIcon").click();
         } else if (srch && !sq.value) {
+            const params = new URLSearchParams(window.location.search);
+            params.delete("q");
+            const state = {
+                title: window.location.title,
+                url: window.location.href
+            };
+            history.replaceState(state, "", window.location.pathname+"?"+params);
             document.getElementById("NoResults").style.display = "none";
-            load(sortpage(n))
+            load(sortpage(sort))
         }
     })
     //define/initialize scroll to top button
@@ -40,11 +47,13 @@ function start() {
         storetable = [];
         sortable = []
         splashtext();
-        getpage(
-            page = "This Month",
-            n = "total",
-            true
-        );
+        //get url parameters
+        const params = new URLSearchParams(window.location.search)
+        page = params.get("p") ? params.get("p") : "This Month"
+        sort = params.get("sort") ? params.get("sort") : "total"
+        params.get("light_mode") ? darkmode() : null
+        //get table
+        load(getpage(page, sort, true));
     });
 }
 
@@ -84,8 +93,25 @@ function splashtext() {
 
 //darkmode
 function darkmode() {
+    //get the current url
+    const params = new URLSearchParams(window.location.search);
+
+    //toggle dark/light mode
     document.body.classList.toggle("dark-mode");
-    document.getElementById("theme").textContent == "Light Mode" ? document.getElementById("theme").textContent = "Dark Mode" : document.getElementById("theme").textContent = "Light Mode";
+    if (document.getElementById("theme").textContent == "Light Mode") {
+        params.set("light_mode", true);
+        document.getElementById("theme").textContent = "Dark Mode"
+    } else {
+        params.delete("light_mode");
+        document.getElementById("theme").textContent = "Light Mode"
+    };
+
+    //set url parameters
+    const state = {
+        title: window.location.title,
+        url: window.location.href
+    };
+    history.replaceState(state, "", window.location.pathname+"?"+params);
 }
 
 //opening and closing the navigation sidebar
@@ -103,15 +129,18 @@ function w3_close() {
 function entsearch() {
     var sch = document.getElementById("searchtable");
     var input = sch.value.toUpperCase();
-    if (srch && !input) {
-        document.getElementById("NoResults").style.display = "none";
-        load(sortpage(n))
-    } else if (input) {
-        load(search(input))
-    }
+    if (input) {load(search(input))};
 }
 function search(input) {
     srch = true
+    //set url parameters
+    const params = new URLSearchParams(window.location.search);
+    params.set("q", input.toLowerCase());
+    const state = {
+        title: window.location.title,
+        url: window.location.href
+    };
+    history.replaceState(state, "", window.location.pathname+"?"+params);
     //clears currently displayed table
     for (var i = user_data.rows.length - 1; i > 1; i--) {
         user_data.deleteRow(i);
@@ -141,20 +170,31 @@ function search(input) {
 }
 
 //sorting data by either posts comments or both
-function sortpage(n,l) {
+function sortpage(sort,reload) {
     srch = false;
     $(document).ready(function () {
+        //set url params
+        if (!reload){
+            const params = new URLSearchParams(window.location.search);
+            params.set("sort", sort);
+            const state = {
+                title: window.location.title,
+                url: window.location.href
+            };
+            history.replaceState(state, "", window.location.pathname+"?"+params);
+        };
+        //clear table and reset info text
         document.getElementById("searchtable").value = ""
-        document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+n
+        document.getElementById("disp-p-s").textContent = page.replace("_"," ")+" ~ sorted by "+sort
         //different sort methods
-        if (n=='total'){
+        if (sort=='total'){
             //total
             sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
-        else if (n=='posts'){
+        else if (sort=='posts'){
             //posts
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
-        else if (n=='comments'){
+        else if (sort=='comments'){
             //comments
             sortable.sort(function(a, b) {return b[2] - a[2]});
         }
@@ -191,14 +231,32 @@ function sortpage(n,l) {
         for (var i = 0; i < stlen; i++) {
             $('#user_data').append(storetable[i]);
         }
-        if(l){setTimeout(() => {document.body.classList.add("load");}, 200)}
+        
+        //check if there is a search query in url parameters and run search
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("q")) {
+            srch = true
+            input = params.get("q")
+            document.getElementById('searchtable').value = input
+            load(search(input.toUpperCase()));
+        }
     })
 }
 
 //fetches data on page load or when different data selected
-function getpage(page,n,l) {
+function getpage(page,sort,reload) {
     $(document).ready(function () {
         w3_close()
+        //set url params
+        if (!reload){
+            const params = new URLSearchParams(window.location.search);
+            params.set("p", page);
+            const state = {
+                title: window.location.title,
+                url: window.location.href
+            };
+            history.replaceState(state, "", window.location.pathname+"?"+params);
+        };
         //fetches data from database
         url = `https://isbo-coddit-default-rtdb.firebaseio.com/${page}.json`
         fetch(url).then(response => {return response.json();}).then(function (data) {
@@ -208,7 +266,7 @@ function getpage(page,n,l) {
                 sortable.push([user, data[user][0], data[user][1]]);
             }
             //calls sort function to display+sort data
-            sortpage(n,l)
+            sortpage(sort,reload)
         });
     });
 }
@@ -222,7 +280,7 @@ function pastdata() {
             for (let i = 0; i < data.months.length; i++) {
                 let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
                 month += data.months[i].name.replace(" ","_");
-                month += "',n));>";
+                month += "',sort));>";
                 month += data.months[i].name;
                 month += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
                 month += (data.months[i].tooltip ? data.months[i].tooltip : `Data from ${data.months[i].name}`);
@@ -233,7 +291,7 @@ function pastdata() {
             for (let i = 0; i < data.years.length; i++) {
                 let year = "<li><button id='years' class='tablinks' onclick=load(getpage(page='";
                 year += data.years[i].name;
-                year += "',n));>";
+                year += "',sort));>";
                 year += data.years[i].name;
                 year += "<i style='color:grey;float:right;margin-right:1px' class='bi bi-info-circle' data-bs-toggle='tooltip' data-bs-placement='right' title='";
                 year += (data.years[i].tooltip ? data.years[i].tooltip : `Data from ${data.years[i].name}`);
