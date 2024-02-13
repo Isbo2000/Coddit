@@ -41,7 +41,7 @@ function start() {
         }
     };
     //define/initialize splash text and display table
-    $(document).ready(function () {
+    load($(document).ready(function () {
         pastdata();
         srch = false;
         storetable = [];
@@ -53,15 +53,15 @@ function start() {
         sort = params.get("sort") ? params.get("sort") : localStorage.getItem("sort") ? localStorage.getItem("sort") : "total"
         params.get("light_mode") ? darkmode() : localStorage.getItem("light_mode") == "true" ? darkmode() : null
         //get table
-        load(getpage(page, sort, true));
-    });
+        getpage(page, sort, true);
+    }));
 }
 
 //change cursor when loading things
-function load(func) {
+async function load(func) {
     document.body.classList.remove("load");
-    func
-    setTimeout(() => {document.body.classList.add("load");}, 200)
+    await func
+    setTimeout(() => {document.body.classList.add("load");}, 300)
 }
 
 //scroll to top button
