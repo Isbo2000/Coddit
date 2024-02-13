@@ -257,8 +257,10 @@ table {
 }
 
 .tab button.active {
-	background-color: rgb(212, 212, 212);
+	background-color: #1a1d1f;
 	transition: all 0.3s ease;
+	/*background-color: rgb(212, 212, 212);
+	transition: all 0.3s ease;*/
 }
 
 .tabcontent {
@@ -628,8 +630,10 @@ table {
 }
 
 .dark-mode .tab button.active {
-	background-color: #ccc;
+	background-color: #afafaf;
 	color: black;
+	/*background-color: #ccc;
+	color: black;*/
 }
 
 .dark-mode th {

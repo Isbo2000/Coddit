@@ -259,10 +259,23 @@ function sortpage(sort,reload) {
 //fetches data on page load or when different data selected
 function getpage(page,sort,reload) {
     $(document).ready(function () {
-        w3_close()
-        if (document.getElementById(page)) {
-            document.getElementById(page).style.backgroundColor = "blue"
+        //select tab of current page
+        tabs = document.getElementsByClassName("pages");
+        tab = document.getElementById(page)
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove("active");
         };
+        if (tab) {
+            console.log(page)
+            tab.classList.add("active");
+            if (tab.id.replace(" ","_") in document.getElementsByClassName("months")) {
+                document.getElementById("OldMonths").classList.add("active");
+            };
+            if (tab.id.replace(" ","_") in document.getElementsByClassName("years")) {
+                document.getElementById("OldYears").classList.add("active");
+            };
+        };
+        w3_close()
         //store page value
         localStorage.setItem("page", page);
         //set url params
@@ -298,7 +311,7 @@ function pastdata() {
             for (let i = 0; i < data.months.length; i++) {
                 let month = "<li><button id='"
                 month += data.months[i].name.replace(" ","_");
-                month += "' name='months' class='tablinks' onclick=load(getpage(page='";
+                month += "' name='months' class='tablinks pages months' onclick=load(getpage(page='";
                 month += data.months[i].name.replace(" ","_");
                 month += "',sort));>";
                 month += data.months[i].name;
@@ -311,7 +324,7 @@ function pastdata() {
             for (let i = 0; i < data.years.length; i++) {
                 let year = "<li><button id='"
                 year += data.years[i].name;
-                year += "' name='years' class='tablinks' onclick=load(getpage(page='";
+                year += "' name='years' class='tablinks pages years' onclick=load(getpage(page='";
                 year += data.years[i].name;
                 year += "',sort));>";
                 year += data.years[i].name;

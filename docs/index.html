@@ -38,28 +38,28 @@
 				<li id="listheader"> <b>Sort By</b></li>
 				<li>
 					<!--for all time-->
-					<button id="All Time" class="tablinks" onclick="load(getpage(page='All Time',sort));">
+					<button id="All Time" class="tablinks pages" onclick="load(getpage(page='All Time',sort));">
 						All Time
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this month-->
-					<button id="This Month" class="tablinks" onclick="load(getpage(page='This Month',sort));">
+					<button id="This Month" class="tablinks pages" onclick="load(getpage(page='This Month',sort));">
 						This Month
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this year-->
-					<button id="This Year" class="tablinks" onclick="load(getpage(page='This Year',sort));">
+					<button id="This Year" class="tablinks pages" onclick="load(getpage(page='This Year',sort));">
 						This Year
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current year"></i>
 					</button>
 				</li>
 				<li>
 					<!--dropdown of older months-->
-					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderMonths" id="OldMonths">
+					<button class="tablinks pages" data-bs-toggle="collapse" data-bs-target="#olderMonths" id="OldMonths">
 						Past Months
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous months"></i>
 						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
@@ -71,7 +71,7 @@
 
 				<li>
 					<!--dropdown of older years-->
-					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderYears" id="OldYears">
+					<button class="tablinks pages" data-bs-toggle="collapse" data-bs-target="#olderYears" id="OldYears">
 						Past Years
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous years"></i>
 						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
