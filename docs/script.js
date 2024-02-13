@@ -266,12 +266,11 @@ function getpage(page,sort,reload) {
             tabs[i].classList.remove("active");
         };
         if (tab) {
-            console.log(page)
             tab.classList.add("active");
             if (tab.id.replace(" ","_") in document.getElementsByClassName("months")) {
                 document.getElementById("OldMonths").classList.add("active");
             };
-            if (tab.id.replace(" ","_") in document.getElementsByClassName("years")) {
+            if (document.getElementsByClassName("years").namedItem(tab.id)) {
                 document.getElementById("OldYears").classList.add("active");
             };
         };
@@ -311,7 +310,7 @@ function pastdata() {
             for (let i = 0; i < data.months.length; i++) {
                 let month = "<li><button id='"
                 month += data.months[i].name.replace(" ","_");
-                month += "' name='months' class='tablinks pages months' onclick=load(getpage(page='";
+                month += "' class='tablinks pages months' onclick=load(getpage(page='";
                 month += data.months[i].name.replace(" ","_");
                 month += "',sort));>";
                 month += data.months[i].name;
@@ -324,7 +323,7 @@ function pastdata() {
             for (let i = 0; i < data.years.length; i++) {
                 let year = "<li><button id='"
                 year += data.years[i].name;
-                year += "' name='years' class='tablinks pages years' onclick=load(getpage(page='";
+                year += "' class='tablinks pages years' onclick=load(getpage(page='";
                 year += data.years[i].name;
                 year += "',sort));>";
                 year += data.years[i].name;
