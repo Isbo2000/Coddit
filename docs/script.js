@@ -41,27 +41,27 @@ function start() {
         }
     };
     //define/initialize splash text and display table
-    $(document).ready(function () {
+    load($(document).ready(function () {
         pastdata();
         srch = false;
         storetable = [];
         sortable = []
         splashtext();
-        //get url parameters
+        //get url parameters or stored variables
         const params = new URLSearchParams(window.location.search)
-        page = params.get("p") ? params.get("p") : "This Month"
-        sort = params.get("sort") ? params.get("sort") : "total"
-        params.get("light_mode") ? darkmode() : null
+        page = params.get("p") ? params.get("p") : localStorage.getItem("page") ? localStorage.getItem("page") : "This Month"
+        sort = params.get("sort") ? params.get("sort") : localStorage.getItem("sort") ? localStorage.getItem("sort") : "total"
+        params.get("light_mode") ? darkmode() : localStorage.getItem("light_mode") == "true" ? darkmode() : null
         //get table
-        load(getpage(page, sort, true));
-    });
+        getpage(page, sort, true);
+    }));
 }
 
 //change cursor when loading things
-function load(func) {
+async function load(func) {
     document.body.classList.remove("load");
-    func
-    setTimeout(() => {document.body.classList.add("load");}, 200)
+    await func
+    setTimeout(() => {document.body.classList.add("load");}, 300)
 }
 
 //scroll to top button
@@ -100,9 +100,11 @@ function darkmode() {
     document.body.classList.toggle("dark-mode");
     if (document.getElementById("theme").textContent == "Light Mode") {
         params.set("light_mode", true);
+        localStorage.setItem("light_mode", true);
         document.getElementById("theme").textContent = "Dark Mode"
     } else {
         params.delete("light_mode");
+        localStorage.setItem("light_mode", false);
         document.getElementById("theme").textContent = "Light Mode"
     };
 
@@ -173,6 +175,8 @@ function search(input) {
 function sortpage(sort,reload) {
     srch = false;
     $(document).ready(function () {
+        //store sort value
+        localStorage.setItem("sort", sort);
         //set url params
         if (!reload){
             const params = new URLSearchParams(window.location.search);
@@ -189,13 +193,22 @@ function sortpage(sort,reload) {
         //different sort methods
         if (sort=='total'){
             //total
+            document.getElementById("posts").style.color = ""
+            document.getElementById("comments").style.color = ""
+            document.getElementById("total").style.color = "rgb(100, 93, 200)"
             sortable.sort(function(a, b) {return (b[1]+b[2]) - (a[1]+a[2])});}
         else if (sort=='posts'){
             //posts
+            document.getElementById("total").style.color = ""
+            document.getElementById("comments").style.color = ""
+            document.getElementById("posts").style.color = "rgb(100, 93, 200)"
             sortable.sort(function(a, b) {return b[1] - a[1]});
         }
         else if (sort=='comments'){
             //comments
+            document.getElementById("posts").style.color = ""
+            document.getElementById("total").style.color = ""
+            document.getElementById("comments").style.color = "rgb(100, 93, 200)"
             sortable.sort(function(a, b) {return b[2] - a[2]});
         }
         //clears currently displayed table
@@ -239,14 +252,23 @@ function sortpage(sort,reload) {
             input = params.get("q")
             document.getElementById('searchtable').value = input
             load(search(input.toUpperCase()));
-        }
+        };
     })
 }
 
 //fetches data on page load or when different data selected
 function getpage(page,sort,reload) {
     $(document).ready(function () {
-        w3_close()
+        //select tab of current page
+        try {
+            selectTab(page);
+        } 
+        catch { 
+            waitForElementToDisplay(page,function(){selectTab(page);},1000,9000);
+        }
+        w3_close();
+        //store page value
+        localStorage.setItem("page", page);
         //set url params
         if (!reload){
             const params = new URLSearchParams(window.location.search);
@@ -278,7 +300,9 @@ function pastdata() {
         fetch(url).then(response => {return response.json();}).then(function (data) {
             //months
             for (let i = 0; i < data.months.length; i++) {
-                let month = "<li><button id='months' class='tablinks' onclick=load(getpage(page='";
+                let month = "<li><button id='"
+                month += data.months[i].name.replace(" ","_");
+                month += "' class='tablinks pages months' onclick=load(getpage(page='";
                 month += data.months[i].name.replace(" ","_");
                 month += "',sort));>";
                 month += data.months[i].name;
@@ -289,7 +313,9 @@ function pastdata() {
             }
             //years
             for (let i = 0; i < data.years.length; i++) {
-                let year = "<li><button id='years' class='tablinks' onclick=load(getpage(page='";
+                let year = "<li><button id='"
+                year += data.years[i].name;
+                year += "' class='tablinks pages years' onclick=load(getpage(page='";
                 year += data.years[i].name;
                 year += "',sort));>";
                 year += data.years[i].name;
@@ -300,4 +326,38 @@ function pastdata() {
             }
         });
     });
+}
+
+//select current page tablink
+function selectTab(page) {
+    tabs = document.getElementsByClassName("pages");
+    tab = document.getElementById(page)
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+    };
+    tab.classList.add("active");
+    if (tab.id.replace(" ","_") in document.getElementsByClassName("months")) {
+        document.getElementById("OldMonths").classList.add("active");
+    };
+    if (document.getElementsByClassName("years").namedItem(tab.id)) {
+        document.getElementById("OldYears").classList.add("active");
+    };
+}
+
+//function to wait for the pastdata tabs to show up
+function waitForElementToDisplay(selector, callback, checkFrequencyInMs, timeoutInMs) {
+    var startTimeInMs = Date.now();
+    (function loopSearch() {
+        if (document.getElementById(selector) != null) {
+            callback();
+            return;
+        }
+        else {
+            setTimeout(function () {
+            if (timeoutInMs && Date.now() - startTimeInMs > timeoutInMs)
+                return;
+            loopSearch();
+            }, checkFrequencyInMs);
+        }
+    })();
 }

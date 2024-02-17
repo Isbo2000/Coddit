@@ -103,8 +103,8 @@ table tr:nth-child(2):hover {
 }
 
 /**/
-table #sort:hover {color: rgb(93, 93, 255);}
-#sort {
+table .sort:hover {color: rgb(93, 93, 255);}
+.sort {
 	display: block;
 	background-color: transparent;
 	color: white;
@@ -115,7 +115,7 @@ table #sort:hover {color: rgb(93, 93, 255);}
 	font-size: 17px;
 	transition: all 0.3s ease;
 }
-.dark-mode #sort {
+.dark-mode .sort {
 	color: black;
 	border-right: none;
 }
@@ -186,7 +186,7 @@ table {
 	transform: rotate(-90deg);
 }
 
-#months {
+.tab button[name="months"] {
 	padding-left: 60px;
 }
 
@@ -195,7 +195,7 @@ table {
 	transform: rotate(-90deg);
 }
 
-#years {
+.tab button[name="years"] {
 	padding-left: 60px;
 }
 
@@ -257,8 +257,10 @@ table {
 }
 
 .tab button.active {
-	background-color: rgb(212, 212, 212);
+	background-color: #1a1d1f;
 	transition: all 0.3s ease;
+	/*background-color: rgb(212, 212, 212);
+	transition: all 0.3s ease;*/
 }
 
 .tabcontent {
@@ -432,7 +434,7 @@ table {
 		font-size: 2.5vw;
 		width: 80%;
 	}
-	#sort {
+	.sort {
 		margin-left: 10px;
 		margin-right: 10px;
 		font-size: 2.5vw;
@@ -557,7 +559,7 @@ table {
 .load table a {
 	cursor: pointer;
 }
-.load #sort {
+.load .sort {
 	cursor: pointer;
 }
 .load #tbhd {
@@ -628,8 +630,10 @@ table {
 }
 
 .dark-mode .tab button.active {
-	background-color: #ccc;
+	background-color: #afafaf;
 	color: black;
+	/*background-color: #ccc;
+	color: black;*/
 }
 
 .dark-mode th {

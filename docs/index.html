@@ -38,28 +38,28 @@
 				<li id="listheader"> <b>Sort By</b></li>
 				<li>
 					<!--for all time-->
-					<button class="tablinks" onclick="load(getpage(page='All Time',sort));">
+					<button id="All Time" class="tablinks pages" onclick="load(getpage(page='All Time',sort));">
 						All Time
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this month-->
-					<button class="tablinks" onclick="load(getpage(page='This Month',sort));">
+					<button id="This Month" class="tablinks pages" onclick="load(getpage(page='This Month',sort));">
 						This Month
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
 					</button>
 				</li>
 				<li>
 					<!--for this year-->
-					<button class="tablinks" onclick="load(getpage(page='This Year',sort));">
+					<button id="This Year" class="tablinks pages" onclick="load(getpage(page='This Year',sort));">
 						This Year
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current year"></i>
 					</button>
 				</li>
 				<li>
 					<!--dropdown of older months-->
-					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderMonths" id="OldMonths">
+					<button class="tablinks pages" data-bs-toggle="collapse" data-bs-target="#olderMonths" id="OldMonths">
 						Past Months
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous months"></i>
 						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
@@ -71,7 +71,7 @@
 
 				<li>
 					<!--dropdown of older years-->
-					<button class="tablinks" data-bs-toggle="collapse" data-bs-target="#olderYears" id="OldYears">
+					<button class="tablinks pages" data-bs-toggle="collapse" data-bs-target="#olderYears" id="OldYears">
 						Past Years
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data from previous years"></i>
 						<i style="margin-left:5px;display:inline-block;" class="bi bi-caret-left"></i>
@@ -192,9 +192,9 @@
 					<tr>
 						<th id="ltheader" style="width: 10%">Rank</th>
 						<th style="width: 30%"><a id="tbhd" href="https://www.reddit.com/users/">Username <i class="extlink bi bi-box-arrow-up-right" id="out"></i></a></th>
-						<th style="width: 20%"><button onclick="load(sortpage(sort='posts'));" id="sort">Posts</button></a></th>
-						<th style="width: 20%"><button onclick="load(sortpage(sort='comments'));" id="sort">Comments</button></a></th>
-						<th id="rtheader" style="width: 20%"><button onclick="load(sortpage(sort='total'));" id="sort">Total</button></a></th>
+						<th style="width: 20%"><button onclick="load(sortpage(sort='posts'));" id="posts" class="sort">Posts</button></a></th>
+						<th style="width: 20%"><button onclick="load(sortpage(sort='comments'));" id="comments" class="sort">Comments</button></a></th>
+						<th id="rtheader" style="width: 20%"><button onclick="load(sortpage(sort='total'));" id="total" class="sort">Total</button></a></th>
 					</tr>
 				</table>
 			</div>
