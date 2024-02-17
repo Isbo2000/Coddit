@@ -260,21 +260,13 @@ function sortpage(sort,reload) {
 function getpage(page,sort,reload) {
     $(document).ready(function () {
         //select tab of current page
-        tabs = document.getElementsByClassName("pages");
-        tab = document.getElementById(page)
-        for (let i = 0; i < tabs.length; i++) {
-            tabs[i].classList.remove("active");
-        };
-        if (tab) {
-            tab.classList.add("active");
-            if (tab.id.replace(" ","_") in document.getElementsByClassName("months")) {
-                document.getElementById("OldMonths").classList.add("active");
-            };
-            if (document.getElementsByClassName("years").namedItem(tab.id)) {
-                document.getElementById("OldYears").classList.add("active");
-            };
-        };
-        w3_close()
+        try {
+            selectTab(page);
+        } 
+        catch { 
+            waitForElementToDisplay(page,function(){selectTab(page);},1000,9000);
+        }
+        w3_close();
         //store page value
         localStorage.setItem("page", page);
         //set url params
@@ -334,4 +326,38 @@ function pastdata() {
             }
         });
     });
+}
+
+//select current page tablink
+function selectTab(page) {
+    tabs = document.getElementsByClassName("pages");
+    tab = document.getElementById(page)
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+    };
+    tab.classList.add("active");
+    if (tab.id.replace(" ","_") in document.getElementsByClassName("months")) {
+        document.getElementById("OldMonths").classList.add("active");
+    };
+    if (document.getElementsByClassName("years").namedItem(tab.id)) {
+        document.getElementById("OldYears").classList.add("active");
+    };
+}
+
+//function to wait for the pastdata tabs to show up
+function waitForElementToDisplay(selector, callback, checkFrequencyInMs, timeoutInMs) {
+    var startTimeInMs = Date.now();
+    (function loopSearch() {
+        if (document.getElementById(selector) != null) {
+            callback();
+            return;
+        }
+        else {
+            setTimeout(function () {
+            if (timeoutInMs && Date.now() - startTimeInMs > timeoutInMs)
+                return;
+            loopSearch();
+            }, checkFrequencyInMs);
+        }
+    })();
 }
