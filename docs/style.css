@@ -700,3 +700,45 @@ table {
 .dark-mode table a:hover {
     color: #0000EE;
 }
+
+/*dismissible banner*/
+.dismissible {
+	color: #222;
+	font-size: 25px;
+	line-height: 30px;
+	position: relative;
+	overflow: hidden;
+}
+.dismissible span {
+	background: #fff;
+	background-color: #ffcd00;
+	color: #000000;
+	text-align: center;
+	border: 3px solid rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, .2);
+	box-sizing: border-box;
+	display: block;
+	margin: 0 auto 0 auto;
+	padding: 10px;
+	position: relative;
+}
+.dismissible button {
+	background: rgba(0, 0, 0, 0.2);
+	border: 0;
+	border-radius: 100%;
+	color: #000000;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	height: 24px;
+	line-height: 20px;
+	margin-top: -12px;
+	right: 10px;
+	position: absolute;
+	top: 50%;
+	width: 24px;
+}
+.dismissible button:focus {
+	outline: none;
+}

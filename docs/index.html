@@ -27,6 +27,12 @@
 
 
 	<body onload="start();">
+		<!--dismissible banner-->
+		<div
+			data-component="dismissible-item"
+			data-type="dismissible"
+			data-value="<strong>Coddit is archived and is no longer counting posts or comments.</strong>"
+		></div>
 		<!-- scroll to top button -->
 		<button onclick="load(topFunction())" class="rounded-circle" id="backToTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
 		<!-- navigation sidebar -->
@@ -43,20 +49,20 @@
 						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for all time"></i>
 					</button>
 				</li>
-				<li>
+				<!-- <li> -->
 					<!--for this month-->
-					<button id="This Month" class="tablinks pages" onclick="load(getpage(page='This Month',sort));">
-						This Month
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i>
-					</button>
-				</li>
-				<li>
+					<!-- <button id="This Month" class="tablinks pages" onclick="load(getpage(page='This Month',sort));"> -->
+						<!-- This Month -->
+						<!-- <i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current month"></i> -->
+					<!-- </button> -->
+				<!-- </li> -->
+				<!-- <li> -->
 					<!--for this year-->
-					<button id="This Year" class="tablinks pages" onclick="load(getpage(page='This Year',sort));">
-						This Year
-						<i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current year"></i>
-					</button>
-				</li>
+					<!-- <button id="This Year" class="tablinks pages" onclick="load(getpage(page='This Year',sort));"> -->
+						<!-- This Year -->
+						<!-- <i style="color:grey;float:right;margin-right:1px" class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Data for the current year"></i> -->
+					<!-- </button> -->
+				<!-- </li> -->
 				<li>
 					<!--dropdown of older months-->
 					<button class="tablinks pages" data-bs-toggle="collapse" data-bs-target="#olderMonths" id="OldMonths">
