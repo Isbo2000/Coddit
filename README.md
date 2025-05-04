@@ -1,3 +1,5 @@
+### ***Archived: No longer functional.***
+#
 # Coddit
 Official r/teenagersbutpog coddit
 
